@@ -4,3 +4,5 @@ vercel-login.ps1
 vercel-login*.log
 npm-debug.log
 
+
+.vercel
