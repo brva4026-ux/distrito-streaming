@@ -263,6 +263,42 @@
     .analytics-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
     .analytics-row:last-child{border-bottom:none}
 
+    /* ─── LOADING SPINNER ─── */
+    .loading-overlay{position:fixed;inset:0;background:rgba(7,21,38,.7);backdrop-filter:blur(8px);display:none;place-items:center;z-index:100}
+    .loading-overlay.show{display:grid}
+    .spinner{width:48px;height:48px;border:4px solid rgba(8,119,255,.2);border-top-color:#0877ff;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-text{color:#fff;font-weight:700;font-size:14px;margin-top:12px}
+
+    /* ─── SKELETON LOADERS ─── */
+    .skeleton{background:linear-gradient(90deg,var(--soft) 25%,rgba(8,119,255,.08) 50%,var(--soft) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .skeleton-card{height:280px;border-radius:20px}
+    .skeleton-text{height:14px;margin:8px 0;border-radius:6px}
+    .skeleton-text.w60{width:60%}
+    .skeleton-text.w40{width:40%}
+    .skeleton-text.w80{width:80%}
+    .skeleton-circle{width:80px;height:80px;border-radius:50%}
+    .skeleton-btn{height:44px;border-radius:12px;margin-top:12px}
+
+    /* ─── OFFLINE BANNER ─── */
+    .offline-banner{display:none;position:fixed;top:0;left:0;right:0;background:#ef4444;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;z-index:200}
+    .offline-banner.show{display:block}
+
+    /* ─── TABLE MOBILE CARDS ─── */
+    @media(max-width:768px){
+      .table-wrap{border:none;background:transparent}
+      table{min-width:0}
+      thead{display:none}
+      tbody{display:grid;gap:10px}
+      tr{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+      td{padding:4px 0;border:none;font-size:12px}
+      td::before{content:attr(data-label);display:block;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+      td:first-child{grid-column:1/-1}
+      .op-product{flex-direction:row;gap:8px}
+      .row-actions{grid-column:1/-1;justify-content:flex-end}
+    }
+
     @keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
     @keyframes pulse{to{box-shadow:0 0 0 22px rgba(18,164,84,0)}}
     @keyframes loginIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
@@ -383,6 +419,8 @@
 </head>
 <body>
   <div id="root"></div>
+  <div id="loading" class="loading-overlay"><div><div class="spinner"></div><div class="loading-text">Cargando...</div></div></div>
+  <div id="offline" class="offline-banner">Sin conexion a internet - Algunas funciones pueden no estar disponibles</div>
   <div id="modal" class="modal"></div>
   <div id="alerts" class="alerts-panel"></div>
   <div id="toast" class="toast"></div>
@@ -438,8 +476,24 @@
       chart:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 20V10'/><path d='M12 20V4'/><path d='M6 20v-6'/></svg>"
     };
 
+    // ─── LOADING & OFFLINE ──────────────────────────────
+    function showLoading(msg="Cargando..."){
+      const el=$("#loading");
+      if(el){el.querySelector(".loading-text").textContent=msg;el.classList.add("show")}
+    }
+    function hideLoading(){$("#loading")?.classList.remove("show")}
+    function checkOnline(){
+      const banner=$("#offline");
+      if(!navigator.onLine){banner?.classList.add("show")}
+      else{banner?.classList.remove("show")}
+    }
+    window.addEventListener("online",checkOnline);
+    window.addEventListener("offline",checkOnline);
+    checkOnline();
+
     // ─── API ───────────────────────────────────────────
     async function api(path,opt={}){
+      if(!navigator.onLine) throw new Error("Sin conexion a internet");
       const res = await fetch(API + "/" + path, {
         ...opt,
         headers: {"Content-Type":"application/json", ...(token ? {"x-distrito-session":token} : {}), ...(opt.headers || {})}
@@ -450,7 +504,7 @@
     }
     function toast(msg,type=""){
       const node=$("#toast"); node.textContent=msg; node.className="toast show " + type;
-      setTimeout(()=>node.classList.remove("show"),2800);
+      setTimeout(()=>node.classList.remove("show"),3500);
     }
     function serviceClass(name=""){
       const n=name.toLowerCase();
@@ -511,9 +565,9 @@
             <button class="${currentRole==="Usuario"?"active":""}" onclick="setLoginRole('Usuario')"><span>US</span> Usuario</button>
             <button class="${currentRole==="Administrador"?"active":""}" onclick="setLoginRole('Administrador')"><span>AD</span> Administrador</button>
           </div>
-          <label class="field">${icons.mail}<input id="email" placeholder="Correo o usuario" autocomplete="username" value="${currentRole==="Administrador" ? "vargasblancobrayan@gmail.com" : ""}"></label>
+          <label class="field">${icons.mail}<input id="email" placeholder="Correo o usuario" autocomplete="username" value="${localStorage.dsRememberEmail || (currentRole==="Administrador" ? "vargasblancobrayan@gmail.com" : "")}"></label>
           <label class="field">${icons.lock}<input id="password" placeholder="Contrasena" type="password" autocomplete="current-password"></label>
-          <div class="login-options"><label class="check"><input type="checkbox" checked> Recordarme</label><a href="#">Olvidaste tu contrasena?</a></div>
+          <div class="login-options"><label class="check"><input type="checkbox" id="rememberMe" ${localStorage.dsRememberEmail?"checked":""}> Recordarme</label><a href="#">Olvidaste tu contrasena?</a></div>
           <button class="primary" onclick="login()">Ingresar al sistema <span>&rarr;</span></button>
           <div class="secure">Acceso seguro y encriptado</div>
         </section>
@@ -524,18 +578,24 @@
       try{
         const email=$("#email").value.trim(), password=$("#password").value;
         if(!email || !password) return toast("Ingresa correo y contrasena","bad");
+        showLoading("Ingresando...");
         const res=await api("login",{method:"POST",body:JSON.stringify({email,password})});
         token=res.token || res.session; localStorage.dsToken=token; state.user=res.user;
+        if($("#rememberMe")?.checked){localStorage.dsRememberEmail=email}else{localStorage.removeItem("dsRememberEmail")}
         await boot(); toast("Bienvenido, " + state.user.name,"ok");
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
     async function boot(){
-      const res=await api("bootstrap");
-      state={...emptyState(),...res,view:state.view || "home"};
-      if(!state.user) throw new Error("Sesion invalida");
-      normalizeViewForRole();
-      renderApp();
-      checkBalanceAlerts();
+      showLoading("Cargando datos...");
+      try{
+        const res=await api("bootstrap");
+        state={...emptyState(),...res,view:state.view || "home"};
+        if(!state.user) throw new Error("Sesion invalida");
+        normalizeViewForRole();
+        renderApp();
+        checkBalanceAlerts();
+      }finally{hideLoading()}
     }
     function logout(){localStorage.removeItem("dsToken");token="";state=emptyState();renderLogin()}
     function normalizeViewForRole(){
@@ -737,6 +797,7 @@
     }
     async function finishBuy(id){
       try{
+        showLoading("Procesando compra...");
         const qty=Number($("#buyQty").value||1);
         const res=await api("buy",{method:"POST",body:JSON.stringify({product_id:id,quantity:qty})});
         const delivered = res.orders||[];
@@ -745,6 +806,7 @@
         renderDelivery(delivered);
         await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
     function renderDelivery(orders){
       if(!orders.length) return toast("Compra registrada, pero el proveedor no devolvio datos","bad");
@@ -879,12 +941,14 @@
     }
     async function sendReport(){
       try{
+        showLoading("Enviando reporte...");
         const order_id=$("#rpOrder").value, o=state.orders.find(x=>x.id===order_id)||{};
         await api("reports",{method:"POST",body:JSON.stringify({order_id,product_name:o.product_name,account_data:o.delivered_data,reason:$("#rpReason").value,description:$("#rpDesc").value})});
         closeModal(); toast("Reporte enviado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
-    async function deleteReport(id){try{await api("reports?id="+id,{method:"DELETE"});toast("Reporte cerrado","ok");await boot()}catch(e){toast(e.message,"bad")}}
+    async function deleteReport(id){try{showLoading("Cerrando...");await api("reports?id="+id,{method:"DELETE"});toast("Reporte cerrado","ok");await boot()}catch(e){toast(e.message,"bad")}finally{hideLoading()}}
     function exportReportsCsv(){
       const rows=state.reports.map(r=>[r.code,r.product_name,r.reason,r.status,r.description,r.provider_response].map(csvCell).join(";")).join("\n");
       downloadFile("distrito-reportes.csv","\ufeffCodigo;Producto;Motivo;Estado;Descripcion;Respuesta\n"+rows);
@@ -923,11 +987,13 @@
     }
     async function createAd(){
       try{
+        showLoading("Publicando material...");
         const file=$("#adFile").files[0];
         const copy=[$("#adCopy").value,$("#adPrice").value?`Precio: ${$("#adPrice").value}`:"",file?`Archivo: ${file.name}`:""].filter(Boolean).join("\n");
         await api("ads",{method:"POST",body:JSON.stringify({title:$("#adTitle").value,short_text:$("#adCopy").value.slice(0,80),copy_text:copy,status:"Activa",file_name:file?.name||"",file_url:file?URL.createObjectURL(file):""})});
         toast("Material publicado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
     function previewAdFile(){
       const file=$("#adFile").files[0], box=$("#adPreview");
@@ -941,7 +1007,7 @@
       }
       box.className="copy-box";
     }
-    async function deleteAd(id){try{await api("ads?id="+id,{method:"DELETE"});toast("Material eliminado","ok");await boot()}catch(e){toast(e.message,"bad")}}
+    async function deleteAd(id){try{showLoading("Eliminando...");await api("ads?id="+id,{method:"DELETE"});toast("Material eliminado","ok");await boot()}catch(e){toast(e.message,"bad")}finally{hideLoading()}}
 
     // ─── USUARIOS ──────────────────────────────────────
     function users(){
@@ -987,15 +1053,19 @@
     }
     async function createUser(){
       try{
+        showLoading("Creando usuario...");
         await api("users",{method:"POST",body:JSON.stringify({name:$("#nuName").value,email:$("#nuEmail").value,password:$("#nuPass").value,role:$("#nuRole").value,balance:Number($("#nuBalance").value||0),margin:Number($("#nuMargin").value||2000)})});
         closeModal(); toast("Usuario creado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
     async function saveUser(id){
       try{
+        showLoading("Guardando...");
         await api("users",{method:"PATCH",body:JSON.stringify({id,balance:Number($("#bal-"+id).value||0),margin:Number($("#mar-"+id).value||0)})});
         toast("Usuario actualizado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
 
     // ─── LINKS DE REGISTRO ─────────────────────────────
@@ -1033,7 +1103,7 @@
       return `<div class="list-row"><div><b>${money(t.amount)} - ${t.method||"Nequi"}</b><p class="mini">${t.reference||"Sin referencia"}${isAdmin()?` | Ganancia: ${money(profit)}`:""}</p></div><div class="row-actions"><span class="tag ${t.status==="Pendiente"?"warn":""}">${t.status}</span>${t.status==="Pendiente"?`<button class="ok-btn" onclick="approveTopup('${t.id}')">Aprobar</button>`:""}</div></div>`;
     }
     async function approveTopup(id){
-      try{await api("topups",{method:"PATCH",body:JSON.stringify({id,status:"Aprobada"})});toast("Saldo aprobado","ok");await boot()}catch(e){toast(e.message,"bad")}
+      try{showLoading("Aprobando...");await api("topups",{method:"PATCH",body:JSON.stringify({id,status:"Aprobada"})});toast("Saldo aprobado","ok");await boot()}catch(e){toast(e.message,"bad")}finally{hideLoading()}
     }
     function openTopup(){
       openModal(`<div class="dialog-head"><div><small class="muted">RECARGAR SALDO</small><h2>Paga y reporta tu recarga</h2><p class="muted">Cuando el administrador valide, tu saldo queda disponible.</p></div><button class="close" onclick="closeModal()">&times;</button></div>
@@ -1047,11 +1117,13 @@
     }
     async function sendTopup(){
       try{
+        showLoading("Enviando recarga...");
         const file=$("#tpProof").files[0];
         const ref=[$("#tpRef").value,file?`Comprobante: ${file.name}`:""].filter(Boolean).join(" - ");
         await api("topups",{method:"POST",body:JSON.stringify({amount:Number($("#tpAmount").value),method:"Nequi/Wompi",reference:ref,proof_name:file?.name||""})});
         closeModal(); toast("Recarga enviada a revision","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
+      finally{hideLoading()}
     }
 
     // ─── ESTUDIO GENERAL (ANALYTICS) ───────────────────
