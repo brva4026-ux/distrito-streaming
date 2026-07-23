@@ -45,20 +45,27 @@
     .app-bg{min-height:100vh;background:linear-gradient(110deg,rgba(255,255,255,.6),rgba(229,240,255,.7)),radial-gradient(circle at 92% 0,rgba(8,119,255,.12),transparent 32%),radial-gradient(circle at 16% 88%,rgba(39,194,255,.08),transparent 28%),var(--bg)}
     body.dark .app-bg{background:radial-gradient(circle at 90% 0,rgba(8,119,255,.14),transparent 34%),radial-gradient(circle at 12% 88%,rgba(39,194,255,.07),transparent 28%),var(--bg)}
 
-    .login{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:24px;padding:24px;overflow:hidden}
-    .login-visual{height:calc(100vh - 48px);min-height:600px;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#e8f4ff,#d4e8ff);box-shadow:var(--shadow2);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both}
+    .login{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px;padding:32px;overflow:hidden}
+    .login-visual{height:calc(100vh - 64px);min-height:600px;border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#e8f4ff,#d4e8ff);box-shadow:var(--shadow2),0 0 0 1px rgba(8,119,255,.08);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both;position:relative}
     .login-visual img{width:100%;height:100%;object-fit:cover}
+    .login-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(8,119,255,.08));pointer-events:none}
     body.dark .login-visual{background:#071526}
-    body.dark .login-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,38,.12),rgba(7,21,38,.35));pointer-events:none}
-    .login-panel{width:min(480px,100%);justify-self:center;background:rgba(255,255,255,.95);border:1px solid rgba(216,230,248,.8);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.08);padding:36px 32px 28px;backdrop-filter:blur(16px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both}
-    body.dark .login-panel{background:rgba(13,29,49,.92);border-color:rgba(30,54,82,.6)}
-    .login-brand{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:16px}
-    .brand-logo{width:52px;height:52px;border-radius:14px;object-fit:cover;box-shadow:0 8px 24px rgba(8,119,255,.15);background:#eaf4ff}
-    .brand-title{font-weight:1000;font-size:24px;line-height:.9}
-    .brand-title em{display:block;color:var(--blue);font-style:italic;font-weight:900}
-    .login-panel h1{text-align:center;font-size:32px;line-height:1.1;margin-bottom:8px;font-weight:900}
-    .login-panel h1 span{color:var(--blue)}
-    .login-panel>p{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.5}
+    body.dark .login-visual::after{background:linear-gradient(180deg,transparent 60%,rgba(7,21,38,.4))}
+    .login-panel{width:min(460px,100%);justify-self:center;background:rgba(255,255,255,.98);border:1px solid rgba(216,230,248,.6);border-radius:24px;box-shadow:0 24px 64px rgba(0,0,0,.06),0 0 0 1px rgba(255,255,255,.8) inset;padding:40px 36px 32px;backdrop-filter:blur(20px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden}
+    .login-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(8,119,255,.3),transparent)}
+    .login-panel::after{content:"";position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(8,119,255,.03) 0%,transparent 70%);pointer-events:none}
+    body.dark .login-panel{background:rgba(13,29,49,.95);border-color:rgba(30,54,82,.5);box-shadow:0 24px 64px rgba(0,0,0,.3),0 0 0 1px rgba(59,130,246,.08) inset}
+    body.dark .login-panel::before{background:linear-gradient(90deg,transparent,rgba(59,130,246,.4),transparent)}
+    body.dark .login-panel::after{background:radial-gradient(circle,rgba(59,130,246,.04) 0%,transparent 70%)}
+    .login-brand{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:20px}
+    .brand-logo{width:56px;height:56px;border-radius:16px;object-fit:cover;box-shadow:0 8px 24px rgba(8,119,255,.18),0 0 0 2px rgba(8,119,255,.1);background:#eaf4ff;transition:transform .3s ease,box-shadow .3s ease}
+    .brand-logo:hover{transform:scale(1.05) rotate(-2deg);box-shadow:0 12px 32px rgba(8,119,255,.25),0 0 0 2px rgba(8,119,255,.15)}
+    .brand-title{font-weight:1000;font-size:26px;line-height:.85;letter-spacing:-.02em}
+    .brand-title em{display:block;color:var(--blue);font-style:italic;font-weight:900;font-size:28px;letter-spacing:-.01em}
+    .login-panel h1{text-align:center;font-size:34px;line-height:1.05;margin-bottom:10px;font-weight:900;letter-spacing:-.02em}
+    .login-panel h1 span{color:var(--blue);position:relative}
+    .login-panel h1 span::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:2px;opacity:.6}
+    .login-panel>p{text-align:center;color:var(--muted);font-size:14px;margin-bottom:24px;line-height:1.6;max-width:320px;margin-left:auto;margin-right:auto}
     .role-title{text-align:center;color:var(--blue);font-size:11px;font-weight:1000;letter-spacing:.14em;margin-bottom:8px}
     .role-toggle{display:grid;grid-template-columns:1fr 1fr;padding:6px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.6);box-shadow:inset 0 2px 8px rgba(15,23,42,.03)}
     body.dark .role-toggle{background:rgba(18,37,59,.8)}
@@ -66,26 +73,37 @@
     body.dark .role-toggle button{color:#8da0b8}
     .role-toggle button:hover:not(.active){background:var(--soft);color:var(--text)}
     .role-toggle button.active{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 28px rgba(8,119,255,.25)}
-    .field{height:50px;margin-top:12px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;background:rgba(255,255,255,.8);padding:0 16px;box-shadow:0 2px 8px rgba(15,23,42,.02);transition:border-color .2s,box-shadow .2s}
-    .field:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,119,255,.1),0 4px 12px rgba(8,119,255,.08)}
-    body.dark .field{background:rgba(18,37,59,.85);border-color:#1e3652}
+    .field{height:52px;margin-top:14px;display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:14px;background:rgba(255,255,255,.9);padding:0 18px;box-shadow:0 2px 8px rgba(15,23,42,.02),inset 0 1px 2px rgba(255,255,255,.8);transition:border-color .25s ease,box-shadow .25s ease,transform .2s ease}
+    .field:hover{border-color:rgba(8,119,255,.3);transform:translateY(-1px)}
+    .field:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px rgba(8,119,255,.1),0 4px 16px rgba(8,119,255,.1),inset 0 1px 2px rgba(255,255,255,.8);transform:translateY(-1px)}
+    body.dark .field{background:rgba(18,37,59,.9);border-color:#1e3652;box-shadow:0 2px 8px rgba(0,0,0,.15),inset 0 1px 2px rgba(255,255,255,.03)}
+    body.dark .field:hover{border-color:rgba(59,130,246,.4)}
+    body.dark .field:focus-within{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.15),0 4px 16px rgba(59,130,246,.1),inset 0 1px 2px rgba(255,255,255,.03)}
     body.dark .field svg,.body.dark .field .mini-ico svg{stroke:#4da6ff}
-    .field svg,.mini-ico svg{width:18px;height:18px;stroke:var(--muted);flex-shrink:0;transition:stroke .2s}
-    .field:focus-within svg{stroke:var(--blue)}
+    .field svg,.mini-ico svg{width:18px;height:18px;stroke:var(--muted);flex-shrink:0;transition:stroke .25s ease,transform .25s ease}
+    .field:focus-within svg{stroke:var(--blue);transform:scale(1.1)}
     .mini-ico{display:inline-flex;align-items:center;justify-content:center;min-width:20px}
-    .field input{width:100%;outline:0;background:transparent!important;color:var(--text);font-size:15px;-webkit-text-fill-color:var(--text);caret-color:var(--text)}
-    body.dark .field input{background:rgba(18,37,59,.95)!important;-webkit-text-fill-color:#eef6ff!important;color:#eef6ff!important;caret-color:#eef6ff}
-    .field input::placeholder{color:var(--muted);-webkit-text-fill-color:var(--muted)}
+    .field input{width:100%;outline:0;background:transparent!important;color:var(--text);font-size:15px;font-weight:500;-webkit-text-fill-color:var(--text);caret-color:var(--blue);transition:color .2s}
+    body.dark .field input{background:rgba(18,37,59,.98)!important;-webkit-text-fill-color:#eef6ff!important;color:#eef6ff!important;caret-color:#60a5fa}
+    .field input::placeholder{color:var(--muted);-webkit-text-fill-color:var(--muted);font-weight:400}
     input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,textarea:-webkit-autofill,select:-webkit-autofill{-webkit-text-fill-color:var(--text)!important;-webkit-box-shadow:0 0 0 1000px var(--panel) inset!important;transition:background-color 5000s ease-in-out 0s}
     body.dark input:-webkit-autofill,body.dark input:-webkit-autofill:hover,body.dark input:-webkit-autofill:focus,body.dark textarea:-webkit-autofill,body.dark select:-webkit-autofill{-webkit-text-fill-color:#eef6ff!important;-webkit-box-shadow:0 0 0 1000px rgba(13,29,49,.95) inset!important;background-color:rgba(13,29,49,.95)!important;color:#eef6ff!important}
-    .login-options{display:flex;justify-content:space-between;align-items:center;margin:14px 0 24px;font-size:13px;color:var(--muted)}
-    .check{display:flex;gap:7px;align-items:center}
-    .check input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px}
-    .primary,.ghost,.danger-btn,.ok-btn{border:0;border-radius:var(--radius);font-weight:1000;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;transition:transform .15s,box-shadow .15s}
-    .primary{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 24px rgba(8,119,255,.22);position:relative;overflow:hidden}
-    .primary::after{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .5s ease}
-    .primary:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(8,119,255,.28)}
+    .login-options{display:flex;justify-content:space-between;align-items:center;margin:16px 0 28px;font-size:13px;color:var(--muted)}
+    .check{display:flex;gap:8px;align-items:center;cursor:pointer;transition:color .2s}
+    .check:hover{color:var(--text)}
+    .check input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px;cursor:pointer;border-radius:4px}
+    .login-options a{font-weight:700;font-size:13px;transition:color .2s,transform .2s}
+    .login-options a:hover{color:var(--blue2);transform:translateX(2px)}
+    .primary,.ghost,.danger-btn,.ok-btn{border:0;border-radius:var(--radius);font-weight:1000;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;transition:transform .2s ease,box-shadow .2s ease}
+    .primary{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 28px rgba(8,119,255,.25);position:relative;overflow:hidden}
+    .primary::after{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s ease}
+    .primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(8,119,255,.32)}
     .primary:hover::after{left:120%}
+    .primary:active{transform:translateY(0);box-shadow:0 8px 20px rgba(8,119,255,.2)}
+    .primary.loading{pointer-events:none;opacity:.85}
+    .primary.loading .btn-text{opacity:0}
+    .primary.loading::before{content:"";position:absolute;width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
     .ghost{background:var(--panel);border:1px solid var(--line);color:var(--blue);transition:all .18s ease}
     .ghost:hover{background:rgba(8,119,255,.06);border-color:rgba(8,119,255,.3);transform:translateY(-1px)}
     .danger-btn{background:#fff6ed;border:1px solid #ffd6ad;color:#e65100}
@@ -94,23 +112,27 @@
     .login-panel .primary{width:100%;height:52px;font-size:16px;border-radius:12px;font-weight:800;letter-spacing:.3px}
 
     /* ─── DOWNLOAD SECTION ─── */
-    .download-section{margin-top:24px;text-align:center}
-    .download-title{font-size:11px;font-weight:1000;color:var(--muted);letter-spacing:.12em;margin-bottom:12px;text-transform:uppercase}
-    .download-buttons{display:flex;gap:10px;justify-content:center}
-    .download-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s ease;border:2px solid transparent;min-width:140px}
-    .download-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-    .download-btn:active{transform:translateY(0)}
-    .download-btn.android{background:#000;color:#fff;border-color:#000}
-    .download-btn.android:hover{background:#1a1a1a;box-shadow:0 8px 20px rgba(0,0,0,.3)}
-    .download-btn.ios{background:#000;color:#fff;border-color:#000}
-    .download-btn.ios:hover{background:#1a1a1a;box-shadow:0 8px 20px rgba(0,0,0,.3)}
-    .download-btn svg{flex-shrink:0}
-    body.dark .download-btn.android{background:rgba(18,37,59,.8);border-color:#1e3652}
-    body.dark .download-btn.android:hover{background:rgba(25,50,80,.9)}
-    body.dark .download-btn.ios{background:rgba(18,37,59,.8);border-color:#1e3652}
-    body.dark .download-btn.ios:hover{background:rgba(25,50,80,.9)}
+    .download-section{margin-top:28px;text-align:center}
+    .download-divider{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+    .download-divider::before,.download-divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+    .download-divider span{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+    .download-buttons{display:flex;gap:12px;justify-content:center}
+    .download-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;transition:all .25s ease;border:2px solid transparent;min-width:150px;letter-spacing:.01em}
+    .download-btn:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.25)}
+    .download-btn:active{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
+    .download-btn.android{background:linear-gradient(135deg,#1a1a1a,#000);color:#fff;border-color:rgba(255,255,255,.1)}
+    .download-btn.android:hover{background:linear-gradient(135deg,#2a2a2a,#111);box-shadow:0 12px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1)}
+    .download-btn.ios{background:linear-gradient(135deg,#1a1a1a,#000);color:#fff;border-color:rgba(255,255,255,.1)}
+    .download-btn.ios:hover{background:linear-gradient(135deg,#2a2a2a,#111);box-shadow:0 12px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1)}
+    .download-btn svg{flex-shrink:0;transition:transform .2s}
+    .download-btn:hover svg{transform:scale(1.1)}
+    body.dark .download-btn.android{background:linear-gradient(135deg,rgba(30,54,82,.9),rgba(18,37,59,.95));border-color:rgba(59,130,246,.2)}
+    body.dark .download-btn.android:hover{background:linear-gradient(135deg,rgba(40,70,100,.95),rgba(25,50,80,1));box-shadow:0 12px 28px rgba(0,0,0,.4),0 0 0 1px rgba(59,130,246,.3)}
+    body.dark .download-btn.ios{background:linear-gradient(135deg,rgba(30,54,82,.9),rgba(18,37,59,.95));border-color:rgba(59,130,246,.2)}
+    body.dark .download-btn.ios:hover{background:linear-gradient(135deg,rgba(40,70,100,.95),rgba(25,50,80,1));box-shadow:0 12px 28px rgba(0,0,0,.4),0 0 0 1px rgba(59,130,246,.3)}
 
-    .secure{text-align:center;color:var(--muted);font-weight:700;margin-top:16px;font-size:12px}
+    .secure{text-align:center;color:var(--muted);font-weight:600;margin-top:20px;font-size:12px;display:flex;align-items:center;justify-content:center;gap:4px;opacity:.8}
+    .secure svg{opacity:.7}
 
     .app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
     .side{position:sticky;top:0;height:100vh;background:rgba(255,255,255,.85);border-right:1px solid var(--line);padding:20px 14px;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:10}
@@ -426,14 +448,22 @@
     @keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
     @keyframes pulse{to{box-shadow:0 0 0 22px rgba(18,164,84,0)}}
     @keyframes loginIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
-    @keyframes heroIn{from{opacity:0;transform:translateX(-16px) scale(.985)}to{opacity:1;transform:none}}
+    @keyframes heroIn{from{opacity:0;transform:translateX(-20px) scale(.98)}to{opacity:1;transform:none}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
     @media(max-width:1020px){
-      .login{grid-template-columns:1fr;padding:16px;gap:0}
+      .login{grid-template-columns:1fr;padding:20px;gap:0;align-content:center}
       .login-visual{display:none}
-      .login-panel{padding:32px 24px;max-width:100%}
-      .login-panel h1{font-size:28px}
-      .login-panel>p{font-size:14px}
+      .login-panel{padding:36px 28px;max-width:100%;border-radius:20px}
+      .login-panel h1{font-size:28px;letter-spacing:-.01em}
+      .login-panel h1 span::after{height:2px;bottom:-1px}
+      .login-panel>p{font-size:13px;max-width:280px}
+      .brand-logo{width:48px;height:48px}
+      .brand-title{font-size:22px}
+      .brand-title em{font-size:24px}
+      .field{height:48px}
+      .download-btn{min-width:130px;padding:12px 20px;font-size:13px}
       .app{grid-template-columns:1fr}
       .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:8px 6px env(safe-area-inset-bottom,8px);border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--panel);backdrop-filter:blur(16px)}
       body.dark .side{background:rgba(13,29,49,.95)}
@@ -791,14 +821,14 @@
         <section class="login-visual"><img src="${ASSETS}distrito-login-brand.png" alt="Distrito Streaming"></section>
         <section class="login-panel">
           <div class="login-brand"><img class="brand-logo" src="${ASSETS}distrito-angel-blue-v1.png" alt=""><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
-          <h1>Bienvenido <span>de nuevo</span></h1>
-          <p>Accede a tu panel de ventas y gestiona tus cuentas con total control.</p>
-          <label class="field">${icons.mail}<input id="email" placeholder="Usuario o Email" autocomplete="username" value="${localStorage.dsRememberEmail || ""}"></label>
-          <label class="field">${icons.lock}<input id="password" placeholder="Contraseña" type="password" autocomplete="current-password"></label>
-          <div class="login-options"><label class="check"><input type="checkbox" id="rememberMe" ${localStorage.dsRememberEmail?"checked":""}> Recordarme</label><a href="#">Olvidaste tu contrasena?</a></div>
-          <button class="primary" onclick="login()">Ingresar al portal</button>
+          <h1 style="animation:fadeIn .5s ease .1s both">Bienvenido <span>de nuevo</span></h1>
+          <p style="animation:fadeIn .5s ease .2s both">Accede a tu panel de ventas y gestiona tus cuentas con total control.</p>
+          <label class="field" style="animation:fadeIn .5s ease .3s both">${icons.mail}<input id="email" placeholder="Usuario o Email" autocomplete="username" value="${localStorage.dsRememberEmail || ""}"></label>
+          <label class="field" style="animation:fadeIn .5s ease .4s both">${icons.lock}<input id="password" placeholder="Contraseña" type="password" autocomplete="current-password"></label>
+          <div class="login-options" style="animation:fadeIn .5s ease .5s both"><label class="check"><input type="checkbox" id="rememberMe" ${localStorage.dsRememberEmail?"checked":""}> Recordarme</label><a href="#">Olvidaste tu contraseña?</a></div>
+          <button class="primary" id="loginBtn" onclick="login()" style="animation:fadeIn .5s ease .6s both"><span class="btn-text">Ingresar al portal</span></button>
           <div class="download-section">
-            <div class="download-title">INSTALAR APP</div>
+            <div class="download-divider"><span>o instala la app</span></div>
             <div class="download-buttons">
               <button class="download-btn android" onclick="downloadApp('android')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.56.69.56 1.19s-.22.92-.56 1.19l-2.29 1.29-2.5-2.5 2.5-2.5 2.29 1.34M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
@@ -810,7 +840,7 @@
               </button>
             </div>
           </div>
-          <div class="secure">Acceso seguro y encriptado</div>
+          <div class="secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acceso seguro y encriptado</div>
         </section>
       </main>`;
     }
@@ -829,16 +859,18 @@
     }
     // Role is now determined by server, not user selection
     async function login(){
+      const btn=$("#loginBtn");
       try{
         const email=$("#email").value.trim(), password=$("#password").value;
-        if(!email || !password) return toast("Ingresa correo y contrasena","bad");
+        if(!email || !password) return toast("Ingresa correo y contraseña","bad");
+        btn?.classList.add("loading");
         showLoading("Ingresando...");
         const res=await api("login",{method:"POST",body:JSON.stringify({email,password})});
         token=res.token || res.session; localStorage.dsToken=token; state.user=res.user;
         if($("#rememberMe")?.checked){localStorage.dsRememberEmail=email}else{localStorage.removeItem("dsRememberEmail")}
         await boot(); toast("Bienvenido, " + state.user.name,"ok");
       }catch(e){toast(e.message,"bad")}
-      finally{hideLoading()}
+      finally{btn?.classList.remove("loading");hideLoading()}
     }
     async function boot(){
       showLoading("Cargando datos...");
