@@ -2,132 +2,130 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0877ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Panel comercial de Distrito Streaming - compra, vende y gestiona cuentas de streaming." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/distrito-angel-blue-v1.png" />
   <title>Distrito Streaming</title>
   <style>
     :root{
       --bg:#f4f8ff;--panel:#fff;--soft:#f8fbff;--line:#d8e6f8;--text:#111827;--muted:#60718c;
       --blue:#0877ff;--blue2:#0057dc;--cyan:#27c2ff;--ok:#12a454;--warn:#f59e0b;--bad:#ef4444;
-      --shadow:0 18px 45px rgba(19,50,92,.10);--shadow2:0 28px 70px rgba(8,119,255,.20)
+      --shadow:0 12px 32px rgba(19,50,92,.08);--shadow2:0 20px 56px rgba(8,119,255,.16);
+      --radius:16px;--radius-sm:12px;--radius-lg:22px;
     }
     body.dark{
-      --bg:#071526;--panel:#0d1d31;--soft:#12253b;--line:#284360;--text:#eef6ff;--muted:#a7b8cc;
-      --shadow:0 20px 55px rgba(0,0,0,.32);--shadow2:0 28px 80px rgba(8,119,255,.16)
+      --bg:#071526;--panel:#0d1d31;--soft:#12253b;--line:#1e3652;--text:#eef6ff;--muted:#8da0b8;
+      --shadow:0 16px 48px rgba(0,0,0,.28);--shadow2:0 24px 64px rgba(8,119,255,.12)
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    button,input,select,textarea{font:inherit}
+    *{box-sizing:border-box;margin:0}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+    button,input,select,textarea{font:inherit;border:0}
     button{cursor:pointer}
-    button:disabled{cursor:not-allowed;opacity:.55}
-    a{color:var(--blue);text-decoration:none;font-weight:800}
+    button:disabled{cursor:not-allowed;opacity:.5}
+    a{color:var(--blue);text-decoration:none;font-weight:700}
+    img{max-width:100%;display:block}
     .muted{color:var(--muted)}
     .hide{display:none!important}
-    .app-bg{
-      min-height:100vh;background:
-        linear-gradient(110deg,rgba(255,255,255,.68),rgba(229,240,255,.78)),
-        radial-gradient(circle at 92% 0,rgba(8,119,255,.16),transparent 32%),
-        radial-gradient(circle at 16% 88%,rgba(39,194,255,.12),transparent 28%),
-        var(--bg);
-    }
-    body.dark .app-bg{background:
-      radial-gradient(circle at 90% 0,rgba(8,119,255,.20),transparent 34%),
-      radial-gradient(circle at 12% 88%,rgba(39,194,255,.10),transparent 28%),
-      var(--bg)}
 
-    .login{min-height:100vh;display:grid;grid-template-columns:minmax(420px,1.08fr) minmax(420px,.92fr);align-items:center;gap:36px;padding:32px;overflow:hidden}
-    .login-visual{height:calc(100vh - 64px);min-height:610px;position:relative;border-radius:36px;overflow:hidden;background:#eef6ff;box-shadow:var(--shadow2)}
-    .login-visual img{width:100%;height:100%;object-fit:cover;display:block}
-    .login-panel{width:min(620px,100%);justify-self:center;background:rgba(255,255,255,.86);border:1px solid rgba(216,230,248,.92);border-radius:34px;box-shadow:var(--shadow2);padding:44px 44px 36px;backdrop-filter:blur(18px)}
-    .login-panel{animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both}
-    .login-visual{animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both}
-    body.dark .login-panel{background:rgba(13,29,49,.88)}
-    .login-brand{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:24px}
-    .brand-logo{width:64px;height:64px;border-radius:19px;object-fit:cover;box-shadow:0 18px 32px rgba(8,119,255,.20);background:#eaf4ff}
-    .brand-title{font-weight:1000;font-size:31px;line-height:.9;letter-spacing:.2px}
-    .brand-title em{display:block;color:var(--blue);font-style:italic;font-weight:1000}
-    .login-panel h1{text-align:center;font-size:46px;line-height:1.05;margin:0 0 12px}
+    .app-bg{min-height:100vh;background:linear-gradient(110deg,rgba(255,255,255,.6),rgba(229,240,255,.7)),radial-gradient(circle at 92% 0,rgba(8,119,255,.12),transparent 32%),radial-gradient(circle at 16% 88%,rgba(39,194,255,.08),transparent 28%),var(--bg)}
+    body.dark .app-bg{background:radial-gradient(circle at 90% 0,rgba(8,119,255,.14),transparent 34%),radial-gradient(circle at 12% 88%,rgba(39,194,255,.07),transparent 28%),var(--bg)}
+
+    .login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:32px;padding:28px;overflow:hidden}
+    .login-visual{height:calc(100vh - 56px);min-height:580px;border-radius:28px;overflow:hidden;background:#eef6ff;box-shadow:var(--shadow2);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both}
+    .login-visual img{width:100%;height:100%;object-fit:cover}
+    .login-panel{width:min(520px,100%);justify-self:center;background:rgba(255,255,255,.92);border:1px solid rgba(216,230,248,.9);border-radius:var(--radius-lg);box-shadow:var(--shadow2);padding:40px 36px 32px;backdrop-filter:blur(20px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both}
+    body.dark .login-panel{background:rgba(13,29,49,.92);border-color:rgba(30,54,82,.6)}
+    body.dark .login-visual{background:#071526}
+    body.dark .login-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,38,.12),rgba(7,21,38,.35));pointer-events:none}
+    .login-brand{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:20px}
+    .brand-logo{width:56px;height:56px;border-radius:16px;object-fit:cover;box-shadow:0 14px 28px rgba(8,119,255,.18);background:#eaf4ff}
+    .brand-title{font-weight:1000;font-size:28px;line-height:.9}
+    .brand-title em{display:block;color:var(--blue);font-style:italic}
+    .login-panel h1{text-align:center;font-size:38px;line-height:1.05;margin-bottom:10px}
     .login-panel h1 span{color:var(--blue)}
-    .login-panel p{text-align:center;color:var(--muted);font-size:17px;line-height:1.45;margin:0 0 28px}
-    .role-title{text-align:center;color:var(--blue);font-size:12px;font-weight:1000;letter-spacing:.16em;margin-bottom:10px}
-    .role-toggle{display:grid;grid-template-columns:1fr 1fr;padding:7px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.68);box-shadow:inset 0 2px 12px rgba(15,23,42,.04)}
-    body.dark .role-toggle{background:#10233a}
-    .role-toggle button{border:0;border-radius:14px;background:transparent;color:#5b6474;font-weight:1000;padding:15px 12px;display:flex;align-items:center;justify-content:center;gap:8px}
-    body.dark .role-toggle button{color:#b3c3d8}
-    .role-toggle button.active{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:white;box-shadow:0 14px 32px rgba(8,119,255,.28)}
-    .field{height:58px;margin-top:14px;display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.78);padding:0 18px;box-shadow:0 10px 26px rgba(15,23,42,.04)}
-    body.dark .field{background:#10233a}
-    .field svg,.mini-ico svg{width:20px;height:20px;stroke:var(--blue)}
-    .field input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:16px}
-    .login-options{display:flex;justify-content:space-between;align-items:center;margin:18px 0 28px;font-size:14px;color:var(--muted)}
-    .check{display:flex;gap:9px;align-items:center}
-    .primary,.ghost,.danger-btn,.ok-btn{border:0;border-radius:14px;font-weight:1000;padding:13px 17px;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px}
-    .primary{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 14px 28px rgba(8,119,255,.24)}
-    .primary:hover{transform:translateY(-1px);box-shadow:0 18px 36px rgba(8,119,255,.30)}
+    .login-panel>p{text-align:center;color:var(--muted);font-size:15px;margin-bottom:24px}
+    .role-title{text-align:center;color:var(--blue);font-size:11px;font-weight:1000;letter-spacing:.14em;margin-bottom:8px}
+    .role-toggle{display:grid;grid-template-columns:1fr 1fr;padding:6px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.6);box-shadow:inset 0 2px 8px rgba(15,23,42,.03)}
+    body.dark .role-toggle{background:rgba(18,37,59,.8)}
+    .role-toggle button{border:0;border-radius:13px;background:transparent;color:var(--muted);font-weight:900;padding:13px 10px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:14px}
+    body.dark .role-toggle button{color:#8da0b8}
+    .role-toggle button.active{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 28px rgba(8,119,255,.25)}
+    .field{height:52px;margin-top:12px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.7);padding:0 16px;box-shadow:0 6px 18px rgba(15,23,42,.03)}
+    body.dark .field{background:rgba(18,37,59,.7)}
+    .field svg,.mini-ico svg{width:18px;height:18px;stroke:var(--blue);flex-shrink:0}
+    .field input{width:100%;outline:0;background:transparent;color:var(--text);font-size:15px}
+    .field input::placeholder{color:var(--muted)}
+    .login-options{display:flex;justify-content:space-between;align-items:center;margin:14px 0 24px;font-size:13px;color:var(--muted)}
+    .check{display:flex;gap:7px;align-items:center}
+    .check input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px}
+    .primary,.ghost,.danger-btn,.ok-btn{border:0;border-radius:var(--radius);font-weight:1000;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;transition:transform .15s,box-shadow .15s}
+    .primary{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 24px rgba(8,119,255,.22)}
+    .primary:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(8,119,255,.28)}
     .ghost{background:var(--panel);border:1px solid var(--line);color:var(--blue)}
     .danger-btn{background:#fff6ed;border:1px solid #ffd6ad;color:#e65100}
-    .ok-btn{background:#12a454;color:white;box-shadow:0 14px 28px rgba(18,164,84,.18)}
-    body.dark .danger-btn{background:#321b10;border-color:#6b3414;color:#ffb36e}
-    .login-panel .primary{width:100%;height:62px;font-size:19px;border-radius:17px}
-    .demo-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-    .demo-strip button{min-height:44px}
-    .secure{text-align:center;color:#91a2b8;font-weight:800;margin-top:20px;font-size:13px}
-    body.dark .login-visual{background:#071526}
-    body.dark .login-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,38,.16),rgba(7,21,38,.42));pointer-events:none}
+    body.dark .danger-btn{background:rgba(50,27,16,.6);border-color:rgba(107,52,20,.5);color:#ffb36e}
+    .ok-btn{background:#12a454;color:#fff;box-shadow:0 12px 24px rgba(18,164,84,.16)}
+    .login-panel .primary{width:100%;height:56px;font-size:17px;border-radius:var(--radius)}
+    .secure{text-align:center;color:var(--muted);font-weight:700;margin-top:16px;font-size:12px}
 
-    .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
-    .side{position:sticky;top:0;height:100vh;background:rgba(255,255,255,.82);border-right:1px solid var(--line);padding:22px 16px;backdrop-filter:blur(18px);display:flex;flex-direction:column}
-    body.dark .side{background:rgba(8,20,35,.88)}
-    .side-brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px}
-    .side-brand img{width:54px;height:54px;border-radius:16px;object-fit:cover}
-    .side-brand b{font-size:21px;line-height:.95;display:block}
+    .app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+    .side{position:sticky;top:0;height:100vh;background:rgba(255,255,255,.85);border-right:1px solid var(--line);padding:20px 14px;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:10}
+    body.dark .side{background:rgba(8,20,35,.9)}
+    .side-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 20px}
+    .side-brand img{width:48px;height:48px;border-radius:14px;object-fit:cover}
+    .side-brand b{font-size:19px;line-height:.95;display:block}
     .side-brand em{display:block;color:var(--blue);font-style:italic;font-weight:1000}
-    .nav-title{font-size:12px;font-weight:1000;color:#8292aa;letter-spacing:.08em;margin:20px 10px 10px}
-    .nav{display:grid;gap:8px}
-    .nav button{border:0;background:transparent;color:var(--text);display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;font-weight:900;text-align:left}
-    .nav button svg{width:20px;height:20px;stroke:var(--blue)}
-    .nav button.active{background:linear-gradient(135deg,#2aa0ff,#005be6);color:#fff;box-shadow:0 16px 30px rgba(8,119,255,.22)}
+    .nav-title{font-size:11px;font-weight:1000;color:var(--muted);letter-spacing:.08em;margin:18px 8px 8px;text-transform:uppercase}
+    .nav{display:grid;gap:6px}
+    .nav button{border:0;background:transparent;color:var(--text);display:flex;align-items:center;gap:10px;padding:11px;border-radius:var(--radius);font-weight:800;text-align:left;font-size:14px}
+    .nav button svg{width:18px;height:18px;stroke:var(--blue);flex-shrink:0}
+    .nav button.active{background:linear-gradient(135deg,#2aa0ff,#005be6);color:#fff;box-shadow:0 12px 26px rgba(8,119,255,.2)}
     .nav button.active svg{stroke:#fff}
-    .profile-card{margin-top:auto;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 14px 30px rgba(15,23,42,.05)}
-    .avatar{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,#2aa0ff,#005be6);color:white;display:grid;place-items:center;font-weight:1000}
-    .profile-card button{margin-left:auto;width:34px;height:34px;border-radius:12px;border:1px solid var(--line);background:var(--soft);color:var(--blue);font-weight:1000}
+    .nav button:not(.active):hover{background:var(--soft)}
+    .profile-card{margin-top:auto;border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:10px;display:flex;align-items:center;gap:9px;box-shadow:0 10px 24px rgba(15,23,42,.04)}
+    .avatar{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#2aa0ff,#005be6);color:#fff;display:grid;place-items:center;font-weight:1000;font-size:14px;flex-shrink:0}
+    .profile-card button{margin-left:auto;width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:var(--soft);color:var(--blue);font-weight:1000}
 
-    .main{padding:24px;min-width:0}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:20px}
-    .top h1{margin:0 0 5px;font-size:28px}
-    .top p{margin:0;font-size:14px;color:var(--muted)}
-    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .pill{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:9px 12px;box-shadow:0 12px 26px rgba(15,23,42,.05);font-weight:1000;display:flex;align-items:center;gap:8px;min-height:44px}
-    .pill small{display:block;color:#8aa0bb;font-weight:800;font-size:11px}
-    .notice-dot{min-width:21px;height:21px;border-radius:999px;background:var(--blue);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:1000}
+    .main{padding:22px;min-width:0;overflow-y:auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+    .top h1{margin-bottom:3px;font-size:26px}
+    .top p{font-size:13px;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .pill{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:8px 12px;box-shadow:0 8px 20px rgba(15,23,42,.04);font-weight:900;display:flex;align-items:center;gap:7px;min-height:42px;font-size:14px}
+    .pill small{display:block;color:var(--muted);font-weight:700;font-size:10px}
+    .notice-dot{min-width:20px;height:20px;border-radius:999px;background:var(--blue);color:#fff;font-size:11px;display:grid;place-items:center;font-weight:1000}
 
-    .section{margin-top:16px}
-    .grid{display:grid;gap:14px}
-    .metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .metric{display:flex;align-items:center;gap:14px}
-    .metric b{font-size:24px}
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
-    .quick{grid-template-columns:1.2fr repeat(4,1fr);align-items:stretch}
-    .quick-intro{padding:18px 8px}
-    .quick-btn{min-height:86px;border:1px solid var(--line);background:var(--panel);border-radius:18px;color:var(--text);font-weight:1000;display:grid;place-items:center;gap:6px;transition:.22s;box-shadow:0 14px 28px rgba(15,23,42,.05)}
-    .quick-btn svg{width:26px;height:26px;stroke:var(--blue)}
-    .quick-btn:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 42px rgba(8,119,255,.18)}
+    .section{margin-top:14px}
+    .grid{display:grid;gap:12px}
+    .metrics{grid-template-columns:repeat(4,1fr)}
+    .metric{display:flex;align-items:center;gap:12px}
+    .metric b{font-size:22px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .card h2{font-size:18px;margin-bottom:4px}
+    .quick{grid-template-columns:1.1fr repeat(4,1fr);align-items:stretch}
+    .quick-intro{padding:14px 6px}
+    .quick-btn{min-height:80px;border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);color:var(--text);font-weight:900;display:grid;place-items:center;gap:5px;transition:.18s;box-shadow:0 10px 22px rgba(15,23,42,.04);position:relative;overflow:hidden;font-size:13px}
+    .quick-btn svg{width:24px;height:24px;stroke:var(--blue)}
+    .quick-btn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(8,119,255,.14)}
     .quick-btn.primary-q{background:linear-gradient(135deg,#2aa0ff,#005be6);color:#fff}
     .quick-btn.primary-q svg{stroke:#fff}
     .quick-btn span{position:relative;z-index:1}
-    .quick-btn:after{content:"";position:absolute;inset:auto 18px 10px;height:18px;border-radius:999px;background:rgba(8,119,255,.12);filter:blur(8px);opacity:0;transition:.22s}
-    .quick-btn{position:relative;overflow:hidden}
-    .quick-btn:hover:after{opacity:1}
 
-    .store-grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
-    .product{padding:0;overflow:hidden;border-radius:18px}
-    .poster{height:145px;position:relative;overflow:hidden;padding:14px;background:#0f172a;color:white}
-    .poster:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 80% 20%,var(--accent),transparent 28%),linear-gradient(135deg,rgba(255,255,255,.18),transparent 40%);opacity:.95}
-    .poster:after{content:"";position:absolute;left:18px;right:18px;bottom:24px;height:58px;border-radius:12px;background:#09111f;box-shadow:0 18px 26px rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.08);transform:perspective(380px) rotateX(5deg)}
-    .poster .svc{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.24);border-radius:14px;background:rgba(5,13,24,.46);padding:8px 10px;font-weight:1000;font-size:12px}
-    .poster .stock{position:absolute;right:10px;top:10px;z-index:1;border-radius:999px;background:rgba(255,255,255,.92);color:#142033;padding:7px 10px;font-size:12px;font-weight:1000}
-    .poster .logo-word{position:absolute;left:0;right:0;bottom:40px;z-index:2;text-align:center;font-size:24px;font-weight:1000;color:white;text-shadow:0 0 18px var(--accent)}
-    .poster .brandmark{position:absolute;left:18px;bottom:14px;z-index:2;font-size:11px;letter-spacing:.18em;font-weight:1000;color:rgba(255,255,255,.72)}
-    .poster .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.26),transparent 58%);transform:translateX(-100%);animation:shine 4.6s infinite}
+    .store-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .product{padding:0;overflow:hidden;border-radius:var(--radius);position:relative;transition:.18s}
+    .product:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(8,119,255,.14)}
+    .poster{height:138px;position:relative;overflow:hidden;padding:12px;background:#0f172a;color:#fff}
+    .poster:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 80% 20%,var(--accent),transparent 28%),linear-gradient(135deg,rgba(255,255,255,.16),transparent 40%);opacity:.92}
+    .poster:after{content:"";position:absolute;left:16px;right:16px;bottom:22px;height:52px;border-radius:10px;background:#09111f;box-shadow:0 16px 24px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.07);transform:perspective(360px) rotateX(4deg)}
+    .poster .svc{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(5,13,24,.4);padding:6px 9px;font-weight:1000;font-size:11px}
+    .poster .stock{position:absolute;right:9px;top:9px;z-index:1;border-radius:999px;background:rgba(255,255,255,.92);color:#142033;padding:5px 9px;font-size:11px;font-weight:1000}
+    .poster .logo-word{position:absolute;left:0;right:0;bottom:36px;z-index:2;text-align:center;font-size:22px;font-weight:1000;color:#fff;text-shadow:0 0 16px var(--accent)}
+    .poster .brandmark{position:absolute;left:16px;bottom:12px;z-index:2;font-size:10px;letter-spacing:.16em;font-weight:1000;color:rgba(255,255,255,.65)}
+    .poster .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.22),transparent 58%);transform:translateX(-100%);animation:shine 4.6s infinite}
     @keyframes shine{0%,54%{transform:translateX(-100%)}75%,100%{transform:translateX(100%)}}
     .netflix{--accent:#ef1437;background:linear-gradient(135deg,#3b0008,#16080c)}
     .prime{--accent:#00b8ff;background:linear-gradient(135deg,#063047,#071827)}
@@ -136,78 +134,125 @@
     .spotify{--accent:#19c263;background:linear-gradient(135deg,#07371e,#06140d)}
     .youtube{--accent:#ff0033;background:linear-gradient(135deg,#3a0712,#161016)}
     .other{--accent:#7aa6c8;background:linear-gradient(135deg,#23364d,#121a25)}
-    .product-body{padding:15px}
-    .product.unavailable{opacity:.48;filter:saturate(.35)}
+    .product-body{padding:14px}
+    .product.unavailable{opacity:.45;filter:saturate(.3)}
     .product.unavailable .poster:after{box-shadow:none}
     .product.unavailable .poster .logo-word{text-shadow:none;color:#c7d3e2}
-    .product.unavailable:before{content:"AGOTADO";position:absolute;z-index:5;right:14px;top:14px;background:#fff;color:#ef4444;border:1px solid #fecaca;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:1000;box-shadow:0 10px 24px rgba(239,68,68,.18)}
-    .product{position:relative;transition:.2s}
-    .product:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(8,119,255,.18)}
-    .product h3{margin:0 0 8px;font-size:17px}
-    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;background:#e9f9f0;color:#087a35;font-size:12px;font-weight:1000}
+    .product.unavailable:before{content:"AGOTADO";position:absolute;z-index:5;right:12px;top:12px;background:#fff;color:#ef4444;border:1px solid #fecaca;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:1000}
+    .product h3{margin:0 0 6px;font-size:15px}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:#e9f9f0;color:#087a35;font-size:11px;font-weight:1000}
     .tag.warn{background:#fff6d8;color:#8a5b00}.tag.bad{background:#ffe8e8;color:#b91c1c}
-    .price{font-size:25px;font-weight:1000;margin:10px 0 2px}
-    .product .primary,.product .ghost{width:100%;margin-top:12px}
+    .tag.personal{background:#ede9fe;color:#6d28d9}
+    .tag.sharable{background:#e0f2fe;color:#0369a1}
+    .price{font-size:22px;font-weight:1000;margin:8px 0 2px}
+    .mini{font-size:11px;color:var(--muted)}
+    .product .primary,.product .ghost{width:100%;margin-top:10px}
 
-    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
-    table{width:100%;border-collapse:collapse;min-width:760px}
-    th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
-    th{font-size:12px;color:#59708e;background:var(--soft);text-transform:uppercase}
-    td input{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--soft);color:var(--text);width:120px;font-weight:850}
-    td input:disabled{opacity:.55}
-    .row-actions{display:flex;gap:8px;flex-wrap:wrap}
-    .split{grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr)}
-    .form{display:grid;gap:11px}
-    .form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:13px;padding:12px 13px;background:var(--panel);color:var(--text);outline:none}
-    .form textarea{min-height:100px;resize:vertical}
-    .list{display:grid;gap:10px}
-    .list-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:15px;background:var(--panel);padding:14px}
-    .list-row.compact-order{grid-template-columns:120px 1fr auto}
-    .ops-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
-    .ops-toolbar input,.ops-toolbar select{border:1px solid var(--line);border-radius:13px;padding:11px 12px;background:var(--panel);color:var(--text)}
-    .ops-toolbar input{min-width:260px;flex:1}
-    .client-data{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
-    .client-data span{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:9px 10px;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}
-    .copy-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-weight:850;word-break:break-word}
-    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.42);backdrop-filter:blur(9px);z-index:30;padding:16px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);-webkit-overflow-scrolling:touch}
+    table{width:100%;border-collapse:collapse;min-width:700px}
+    th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+    th{font-size:11px;color:var(--muted);background:var(--soft);text-transform:uppercase;font-weight:800;position:sticky;top:0}
+    td input{border:1px solid var(--line);border-radius:10px;padding:8px 9px;background:var(--soft);color:var(--text);width:110px;font-weight:800}
+    td input:disabled{opacity:.5}
+    .row-actions{display:flex;gap:7px;flex-wrap:wrap}
+    .split{grid-template-columns:1.2fr .8fr}
+    .form{display:grid;gap:10px}
+    .form label{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:2px}
+    .form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 12px;background:var(--panel);color:var(--text);outline:none;font-size:14px}
+    .form input:focus,.form select:focus,.form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,119,255,.12)}
+    .form textarea{min-height:90px;resize:vertical}
+    .list{display:grid;gap:8px}
+    .list-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:12px}
+    .list-row.compact-order{grid-template-columns:100px 1fr auto}
+    .ops-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}
+    .ops-toolbar input,.ops-toolbar select{border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 11px;background:var(--panel);color:var(--text);font-size:14px}
+    .ops-toolbar input{min-width:220px;flex:1}
+    .client-data{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+    .client-data span{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:7px 9px;font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .copy-box{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px;font-weight:800;word-break:break-word;font-size:13px}
+    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.4);backdrop-filter:blur(8px);z-index:30;padding:14px}
     .modal.show{display:grid}
-    .dialog{width:min(620px,100%);max-height:92vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow2);padding:22px;animation:pop .24s ease}
-    .dialog-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
-    .dialog-head h2{margin:0}.close{width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:var(--soft);color:var(--text);font-weight:1000}
-    .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;background:#071526;color:#fff;border-radius:14px;padding:13px 18px;box-shadow:0 16px 32px rgba(0,0,0,.22);transition:.2s;z-index:40;font-weight:900}
+    .dialog{width:min(580px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow2);padding:20px;animation:pop .2s ease}
+    .dialog-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+    .dialog-head h2{margin:0;font-size:20px}
+    .close{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--soft);color:var(--text);font-weight:1000;font-size:16px}
+    .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(16px);opacity:0;background:#071526;color:#fff;border-radius:var(--radius);padding:12px 16px;box-shadow:0 14px 28px rgba(0,0,0,.2);transition:.18s;z-index:50;font-weight:900;font-size:14px}
     .toast.show{opacity:1;transform:translateX(-50%)}
     .toast.ok{background:#075c32}.toast.bad{background:#8b1c1c}
-    .alerts-panel{position:fixed;right:22px;top:74px;width:min(390px,calc(100vw - 24px));background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow2);padding:14px;z-index:25;display:none}
-    .alerts-panel.show{display:grid;gap:10px;animation:pop .18s ease}
-    .success-pulse{position:relative;display:grid;place-items:center;margin:8px auto 18px;width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,#e8fff2,#c7f7db);color:var(--ok);font-size:38px;box-shadow:0 0 0 0 rgba(18,164,84,.35);animation:pulse 1.1s ease-out 2}
-    .admin-action{display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:16px;background:var(--soft);padding:12px}
-    .admin-action svg{width:24px;height:24px;stroke:var(--blue)}
-    .admin-action b{display:block}
-    .admin-action .ghost,.admin-action .primary{min-width:116px}
-    .report-status{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-    .status-chip{border:1px solid var(--line);background:var(--soft);border-radius:14px;padding:10px;font-size:12px;font-weight:900}
-    .status-chip b{display:block;font-size:18px}
-    .mobile-bar{display:none}
-    @keyframes pop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
-    @keyframes pulse{to{box-shadow:0 0 0 26px rgba(18,164,84,0)}}
-    @keyframes loginIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-    @keyframes heroIn{from{opacity:0;transform:translateX(-18px) scale(.985)}to{opacity:1;transform:none}}
-    .pay-card{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;background:linear-gradient(135deg,#fff,#eef7ff);border:1px solid var(--line);border-radius:16px;padding:12px}
-    body.dark .pay-card{background:#10233a}
+    .alerts-panel{position:fixed;right:18px;top:68px;width:min(380px,calc(100vw - 20px));background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow2);padding:12px;z-index:25;display:none}
+    .alerts-panel.show{display:grid;gap:8px;animation:pop .15s ease}
+    .success-pulse{display:grid;place-items:center;margin:6px auto 14px;width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#e8fff2,#c7f7db);color:var(--ok);font-size:34px;animation:pulse 1s ease-out 2}
+    .admin-action{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:var(--radius);background:var(--soft);padding:11px}
+    .admin-action svg{width:22px;height:22px;stroke:var(--blue)}
+    .admin-action b{display:block;font-size:14px}
+    .admin-action .ghost,.admin-action .primary{min-width:100px;font-size:13px}
+    .report-status{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+    .status-chip{border:1px solid var(--line);background:var(--soft);border-radius:var(--radius);padding:9px;font-size:11px;font-weight:900}
+    .status-chip b{display:block;font-size:17px}
+    .pay-card{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:center;background:linear-gradient(135deg,#fff,#eef7ff);border:1px solid var(--line);border-radius:var(--radius);padding:11px}
+    body.dark .pay-card{background:rgba(18,37,59,.6)}
     .pay-card img{width:100%;border-radius:10px}
-    .mini{font-size:12px;color:var(--muted)}
+
+    .limit-bar{height:6px;border-radius:999px;background:var(--soft);overflow:hidden;margin-top:4px}
+    .limit-bar-fill{height:100%;border-radius:999px;transition:.3s}
+    .limit-bar-fill.ok{background:var(--ok)}.limit-bar-fill.warn{background:var(--warn)}.limit-bar-fill.bad{background:var(--bad)}
+    .alert-card{border-left:3px solid var(--warn);background:var(--soft);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 12px;margin-top:8px}
+    .alert-card.danger{border-left-color:var(--bad)}
+    .alert-card.info{border-left-color:var(--blue)}
+    .pwa-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);padding:14px 18px;z-index:45;box-shadow:0 -8px 24px rgba(0,0,0,.12);align-items:center;justify-content:space-between;gap:12px}
+    .pwa-banner.show{display:flex}
+    .analytics-card{border:1px solid var(--line);border-radius:var(--radius);padding:14px;background:var(--panel)}
+    .analytics-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+    .analytics-row:last-child{border-bottom:none}
+
+    @keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+    @keyframes pulse{to{box-shadow:0 0 0 22px rgba(18,164,84,0)}}
+    @keyframes loginIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+    @keyframes heroIn{from{opacity:0;transform:translateX(-16px) scale(.985)}to{opacity:1;transform:none}}
 
     @media(max-width:1020px){
-      .login{grid-template-columns:1fr;padding:18px}.login-visual{display:none}.login-panel{padding:32px 24px}.login-panel h1{font-size:36px}
-      .app{grid-template-columns:1fr}.side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:7px;border-top:1px solid var(--line);border-right:0}
-      .side-brand,.profile-card,.nav-title{display:none}.nav{display:flex;overflow-x:auto;gap:6px}.nav button{min-width:86px;justify-content:center;flex-direction:column;font-size:11px;padding:8px}
-      .main{padding:16px 12px 88px}.top{align-items:flex-start;flex-direction:column}.top-actions{width:100%;justify-content:flex-start}.quick,.metrics,.split{grid-template-columns:1fr}.store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.list-row.compact-order{grid-template-columns:1fr}.client-data{grid-template-columns:1fr 1fr}
-      .quick-intro{padding:8px}.quick-btn{min-height:74px}.product h3{font-size:15px}.poster{height:126px}
-      .report-status{grid-template-columns:repeat(2,1fr)}.admin-action{grid-template-columns:38px 1fr}.admin-action button{grid-column:1/-1;width:100%}
+      .login{grid-template-columns:1fr;padding:16px}
+      .login-visual{display:none}
+      .login-panel{padding:28px 20px}
+      .login-panel h1{font-size:30px}
+      .app{grid-template-columns:1fr}
+      .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:6px;border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0}
+      .side-brand,.profile-card,.nav-title{display:none}
+      .nav{display:flex;overflow-x:auto;gap:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .nav::-webkit-scrollbar{display:none}
+      .nav button{min-width:72px;justify-content:center;flex-direction:column;font-size:10px;padding:7px 6px;gap:3px}
+      .nav button svg{width:18px;height:18px}
+      .main{padding:14px 12px 80px}
+      .top{flex-direction:column;align-items:flex-start}
+      .top-actions{width:100%;justify-content:flex-start}
+      .quick,.metrics,.split{grid-template-columns:1fr}
+      .store-grid{grid-template-columns:repeat(2,1fr)}
+      .list-row.compact-order{grid-template-columns:1fr}
+      .client-data{grid-template-columns:1fr 1fr}
+      .quick-intro{padding:6px}
+      .quick-btn{min-height:68px;font-size:12px}
+      .product h3{font-size:14px}
+      .poster{height:118px}
+      .report-status{grid-template-columns:repeat(2,1fr)}
+      .admin-action{grid-template-columns:36px 1fr}
+      .admin-action .ghost,.admin-action .primary{grid-column:1/-1;width:100%}
+      .ops-toolbar{flex-direction:column;align-items:stretch}
+      .ops-toolbar input{min-width:0}
     }
     @media(max-width:560px){
-      .store-grid{grid-template-columns:1fr}.login-options{font-size:12px}.pill{font-size:13px}.top-actions .ghost.danger-btn{display:none}.demo-strip{grid-template-columns:1fr}.client-data{grid-template-columns:1fr}
-      .pay-card{grid-template-columns:78px 1fr}.dialog{padding:18px}
+      .store-grid{grid-template-columns:1fr}
+      .pill{font-size:12px;padding:6px 10px}
+      .top-actions .ghost.danger-btn{display:none}
+      .client-data{grid-template-columns:1fr}
+      .pay-card{grid-template-columns:70px 1fr}
+      .dialog{padding:16px}
+      .card{padding:14px}
+      .metrics{grid-template-columns:repeat(2,1fr)}
+      .report-status{grid-template-columns:1fr 1fr}
+      .login-panel h1{font-size:26px}
+      .login-panel>p{font-size:13px}
+      .field{height:48px;padding:0 14px}
+      .field input{font-size:14px}
     }
   </style>
 </head>
@@ -216,43 +261,59 @@
   <div id="modal" class="modal"></div>
   <div id="alerts" class="alerts-panel"></div>
   <div id="toast" class="toast"></div>
+  <div id="pwa-banner" class="pwa-banner">
+    <div><b>Instalar Distrito Streaming</b><br><span class="muted">Acceso rapido desde tu pantalla de inicio.</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="ghost" onclick="closePwaBanner()">Ahora no</button>
+      <button class="primary" onclick="installPwa()">Instalar</button>
+    </div>
+  </div>
   <script>
+    // ─── CONFIG ────────────────────────────────────────
     const API = "https://tavfcrekyxnwrohsmncx.supabase.co/functions/v1/distrito-api";
     const ASSETS = "assets/";
     const PAYMENT_LINK = "https://checkout.nequi.wompi.co/l/VPOS_U68ZNz";
     const PAYMENT_NUMBER = "3102765347";
+    const PROFIT_RATE = 0.20;
+    const MAX_OPERATORS_PER_PRODUCT = 2;
     let token = localStorage.dsToken || "";
     let state = emptyState();
     let currentRole = localStorage.dsLoginRole || "Usuario";
+    let deferredPrompt = null;
 
     function emptyState(){
       return { user:null, products:[], orders:[], reports:[], topups:[], ads:[], users:[], notifications:[], view:"home" };
     }
     const $ = (s,root=document) => root.querySelector(s);
     const money = n => "$ " + Number(n || 0).toLocaleString("es-CO");
-    const initials = n => String(n || "Usuario").split(" ").filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
+    const initials = n => String(n || "U").split(" ").filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
     const isAdmin = () => state.user && state.user.role === "Administrador";
     const isClient = () => state.user && state.user.role === "Cliente";
-    const publicRole = () => isAdmin() ? "Administrador" : isClient() ? "Cliente" : "Usuario";
+    const isReseller = () => state.user && state.user.role === "Revendedor";
+    const publicRole = () => isAdmin() ? "Administrador" : isClient() ? "Cliente" : isReseller() ? "Revendedor" : "Usuario";
 
     const icons = {
-      home:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m3 10 9-7 9 7'/><path d='M5 10v10h14V10'/><path d='M9 20v-6h6v6'/></svg>",
-      store:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 2h12l2 7H4l2-7Z'/><path d='M5 9v11h14V9'/><path d='M9 13h6'/></svg>",
-      orders:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='3' width='14' height='18' rx='2'/><path d='M9 7h6M9 12h6M9 17h3'/></svg>",
-      reports:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.3 3.6 2.8 18a2 2 0 0 0 1.8 3h14.8a2 2 0 0 0 1.8-3L13.7 3.6a2 2 0 0 0-3.4 0Z'/><path d='M12 9v4M12 17h.01'/></svg>",
-      ads:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m22 2-7 20-4-9-9-4 20-7Z'/><path d='M22 2 11 13'/></svg>",
-      users:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M22 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>",
-      payments:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 10h18'/></svg>",
-      admin:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m12 2 3 7 7 .6-5.3 4.7 1.6 7-6.3-3.7-6.3 3.7 1.6-7L2 9.6 9 9l3-7Z'/></svg>",
-      bell:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9'/><path d='M13.7 21a2 2 0 0 1-3.4 0'/></svg>",
-      wallet:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 7H5a2 2 0 0 0 0 4h15v8H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16v4Z'/><path d='M16 14h.01'/></svg>",
-      moon:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z'/></svg>",
-      mail:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='m3 7 9 6 9-6'/></svg>",
-      lock:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='10' width='16' height='10' rx='2'/><path d='M8 10V7a4 4 0 0 1 8 0v3'/></svg>",
-      cart:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='21' r='1'/><circle cx='20' cy='21' r='1'/><path d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6'/></svg>",
-      copy:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/></svg>"
+      home:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m3 10 9-7 9 7'/><path d='M5 10v10h14V10'/><path d='M9 20v-6h6v6'/></svg>",
+      store:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 2h12l2 7H4l2-7Z'/><path d='M5 9v11h14V9'/><path d='M9 13h6'/></svg>",
+      orders:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='3' width='14' height='18' rx='2'/><path d='M9 7h6M9 12h6M9 17h3'/></svg>",
+      reports:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.3 3.6 2.8 18a2 2 0 0 0 1.8 3h14.8a2 2 0 0 0 1.8-3L13.7 3.6a2 2 0 0 0-3.4 0Z'/><path d='M12 9v4M12 17h.01'/></svg>",
+      ads:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m22 2-7 20-4-9-9-4 20-7Z'/><path d='M22 2 11 13'/></svg>",
+      users:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M22 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>",
+      payments:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 10h18'/></svg>",
+      admin:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m12 2 3 7 7 .6-5.3 4.7 1.6 7-6.3-3.7-6.3 3.7 1.6-7L2 9.6 9 9l3-7Z'/></svg>",
+      bell:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9'/><path d='M13.7 21a2 2 0 0 1-3.4 0'/></svg>",
+      wallet:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 7H5a2 2 0 0 0 0 4h15v8H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16v4Z'/><path d='M16 14h.01'/></svg>",
+      moon:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z'/></svg>",
+      mail:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='m3 7 9 6 9-6'/></svg>",
+      lock:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='10' width='16' height='10' rx='2'/><path d='M8 10V7a4 4 0 0 1 8 0v3'/></svg>",
+      cart:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='21' r='1'/><circle cx='20' cy='21' r='1'/><path d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6'/></svg>",
+      copy:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/></svg>",
+      download:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>",
+      link:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/><path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/></svg>",
+      chart:"<svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 20V10'/><path d='M12 20V4'/><path d='M6 20v-6'/></svg>"
     };
 
+    // ─── API ───────────────────────────────────────────
     async function api(path,opt={}){
       const res = await fetch(API + "/" + path, {
         ...opt,
@@ -264,7 +325,7 @@
     }
     function toast(msg,type=""){
       const node=$("#toast"); node.textContent=msg; node.className="toast show " + type;
-      setTimeout(()=>node.classList.remove("show"),2400);
+      setTimeout(()=>node.classList.remove("show"),2800);
     }
     function serviceClass(name=""){
       const n=name.toLowerCase();
@@ -272,17 +333,38 @@
       if(n.includes("disney"))return"disney"; if(n.includes("spotify"))return"spotify"; if(n.includes("youtube"))return"youtube"; return"other";
     }
     function serviceName(name=""){return String(name).replace(/pantalla|semi|estandar|premium|dispositivo|1m/ig,"").trim().split(/\s+/).slice(0,2).join(" ") || name;}
+
+    // ─── PRECIOS Y GANANCIA ────────────────────────────
     function salePrice(p){
       const provider = Number(p.provider_price ?? p.base_price ?? 0);
-      const defaultMargin = Number(p.base_price ?? provider) - provider;
-      const margin = Number(state.user?.margin ?? defaultMargin ?? 0);
-      return isAdmin() ? Number(p.base_price ?? provider + defaultMargin) : provider + Math.max(0, margin);
+      const base = Number(p.base_price ?? provider);
+      if(isAdmin()) return base;
+      const margin = Number(state.user?.margin ?? 0);
+      return provider + Math.max(0, margin);
     }
+    function profitFromRecharge(amount){ return Math.round(amount * PROFIT_RATE); }
+
+    // ─── CONTROLES ─────────────────────────────────────
     function daysLeft(date){
       if(!date)return null;
       const today=new Date(); today.setHours(0,0,0,0);
       const end=new Date(date+"T00:00:00"); return Math.ceil((end-today)/86400000);
     }
+    function operatorCount(productId){
+      return state.orders.filter(o => {
+        const left = daysLeft(o.expires_at);
+        const status = String(o.status||"").toLowerCase();
+        return o.product_id === productId && (left === null || left >= 0 || status.includes("pend") || status.includes("proces"));
+      }).length;
+    }
+    function canBuyProduct(p){
+      if(p.shared === false || String(p.share_type||"").toLowerCase() === "personal") {
+        return operatorCount(p.id) < 1;
+      }
+      return operatorCount(p.id) < MAX_OPERATORS_PER_PRODUCT;
+    }
+
+    // ─── MENSAJES ──────────────────────────────────────
     function formatOrderMessage(o,kind="datos"){
       const left=daysLeft(o.expires_at);
       if(kind==="renovar") return `Hola buen dia, queremos informarte que tu cuenta esta por vencer:\n\nProducto: ${o.product_name}\nCuenta: ${o.delivered_data || "-"}\nFecha de vencimiento: ${o.expires_at || "-"}\nVence en: ${left ?? "-"} dias\n\nSi deseas continuar, comunicate con nosotros.`;
@@ -290,6 +372,7 @@
       return `Claro que si, estos son tus datos:\n\nProducto: ${o.product_name}\nCuenta: ${o.delivered_data || "-"}\nFecha de vencimiento: ${o.expires_at || "-"}\nVence en: ${left ?? "-"} dias\n\nCualquier duda quedamos atentos.`;
     }
 
+    // ─── LOGIN ─────────────────────────────────────────
     function renderLogin(){
       document.body.className = localStorage.dsDark === "1" ? "dark" : "";
       $("#root").innerHTML = `<main class="login app-bg">
@@ -297,7 +380,7 @@
         <section class="login-panel">
           <div class="login-brand"><img class="brand-logo" src="${ASSETS}distrito-angel-blue-v1.png" alt=""><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
           <h1>Bienvenido <span>de nuevo</span></h1>
-          <p>Accede rapido a tu panel de ventas y gestiona tus cuentas con total control.</p>
+          <p>Accede a tu panel de ventas y gestiona tus cuentas con total control.</p>
           <div class="role-title">ROL DE ACCESO</div>
           <div class="role-toggle">
             <button class="${currentRole==="Usuario"?"active":""}" onclick="setLoginRole('Usuario')"><span>US</span> Usuario</button>
@@ -306,26 +389,12 @@
           <label class="field">${icons.mail}<input id="email" placeholder="Correo o usuario" autocomplete="username" value="${currentRole==="Administrador" ? "vargasblancobrayan@gmail.com" : ""}"></label>
           <label class="field">${icons.lock}<input id="password" placeholder="Contrasena" type="password" autocomplete="current-password"></label>
           <div class="login-options"><label class="check"><input type="checkbox" checked> Recordarme</label><a href="#">Olvidaste tu contrasena?</a></div>
-          <button class="primary" onclick="login()">Ingresar al sistema <span>-></span></button>
-          <div class="demo-strip">
-            <button class="ghost" onclick="fillDemo('usuario')">Probar demo usuario</button>
-            <button class="ghost" onclick="fillDemo('admin')">Usar admin real</button>
-          </div>
+          <button class="primary" onclick="login()">Ingresar al sistema <span>&rarr;</span></button>
           <div class="secure">Acceso seguro y encriptado</div>
         </section>
       </main>`;
     }
     function setLoginRole(role){currentRole=role;localStorage.dsLoginRole=role;renderLogin()}
-    function fillDemo(type){
-      currentRole = type === "admin" ? "Administrador" : "Usuario";
-      localStorage.dsLoginRole = currentRole;
-      renderLogin();
-      setTimeout(()=>{
-        $("#email").value = type === "admin" ? "vargasblancobrayan@gmail.com" : "demo@distritostreaming.com";
-        $("#password").value = type === "admin" ? "" : "123456";
-        toast(type === "admin" ? "Admin listo. Ingresa tu contrasena." : "Demo cargado con saldo de prueba.","ok");
-      },0);
-    }
     async function login(){
       try{
         const email=$("#email").value.trim(), password=$("#password").value;
@@ -341,6 +410,7 @@
       if(!state.user) throw new Error("Sesion invalida");
       normalizeViewForRole();
       renderApp();
+      checkBalanceAlerts();
     }
     function logout(){localStorage.removeItem("dsToken");token="";state=emptyState();renderLogin()}
     function normalizeViewForRole(){
@@ -348,17 +418,30 @@
       if(!allowed.includes(state.view)) state.view = isAdmin() ? "admin" : "home";
     }
 
+    // ─── ALERTAS DE SALDO ──────────────────────────────
+    function checkBalanceAlerts(){
+      if(!isAdmin()) return;
+      const bal = Number(state.user?.balance || 0);
+      if(bal < 10000) toast("Saldo bajo: " + money(bal) + ". Recarga pronto.", "bad");
+      else if(bal < 30000) toast("Saldo: " + money(bal) + ". Considera recargar.", "ok");
+    }
+
+    // ─── NAVEGACION ────────────────────────────────────
     function navItems(){
-      if(isAdmin()) return [["admin","Panel",icons.admin],["users","Usuarios",icons.users],["store","Inventario",icons.store],["payments","Pagos",icons.payments],["reports","Reportes",icons.reports],["ads","Publicidad",icons.ads]];
+      if(isAdmin()) return [
+        ["admin","Panel",icons.admin],["users","Usuarios",icons.users],["store","Inventario",icons.store],
+        ["payments","Pagos",icons.payments],["reports","Reportes",icons.reports],["ads","Publicidad",icons.ads],
+        ["analytics","Estudios",icons.chart]
+      ];
       return [["home","Inicio",icons.home],["store","Tienda",icons.store],["orders","Compras",icons.orders],["reports","Soporte",icons.reports],["ads","Material",icons.ads]];
     }
     function setView(view){state.view=view;renderApp()}
     function pageTitle(){
-      return ({home:"Inicio",store:isAdmin()?"Inventario":"Tienda y stock",orders:"Mis compras",reports:"Reportes y soporte",ads:isAdmin()?"Publicidad":"Material de ventas",users:"Usuarios",payments:"Pagos",admin:"Panel administrador"}[state.view]||"Distrito");
+      return ({home:"Inicio",store:isAdmin()?"Inventario":"Tienda",orders:"Mis compras",reports:"Reportes y soporte",ads:isAdmin()?"Publicidad":"Material de ventas",users:"Usuarios",payments:"Pagos",admin:"Panel administrador",analytics:"Estudio general"}[state.view]||"Distrito");
     }
     function pageSubtitle(){
-      if(isAdmin()) return "Control administrativo de usuarios, saldos, pagos, publicidad e inventario.";
-      return "Compra, copia datos, reporta y recarga saldo desde un solo lugar.";
+      if(isAdmin()) return "Control administrativo completo de usuarios, saldos, pagos, inventario e ingresos.";
+      return "Compra, gestiona tus cuentas, reporta y recarga saldo desde un solo lugar.";
     }
     function renderApp(){
       document.body.className = localStorage.dsDark === "1" ? "dark" : "";
@@ -366,23 +449,23 @@
       const u=state.user, unread=state.notifications.filter(n=>!n.read_at).length;
       $("#root").innerHTML = `<div class="app app-bg">
         <aside class="side">
-          <div class="side-brand"><img src="${ASSETS}distrito-angel-blue-v1.png" alt=""><div><b>Distrito</b><em>Streaming</em><small class="muted">Panel comercial</small></div></div>
-          <div class="nav-title">NAVEGACION</div>
+          <div class="side-brand"><img src="${ASSETS}distrito-angel-blue-v1.png" alt=""><div><b>Distrito</b><em>Streaming</em></div></div>
+          <div class="nav-title">Navegacion</div>
           <nav class="nav">${navItems().map(([v,t,svg])=>`<button class="${state.view===v?"active":""}" onclick="setView('${v}')">${svg}<span>${t}</span></button>`).join("")}</nav>
           <div class="profile-card">
             <div class="avatar">${initials(u.name)}</div>
-            <div style="min-width:0"><b>${u.name}</b><br><small class="muted">${u.email}</small><br><span class="tag">${publicRole()}</span></div>
-            <button title="Perfil" onclick="openProfile()">v</button>
+            <div style="min-width:0;overflow:hidden"><b style="font-size:13px">${u.name}</b><br><small class="muted" style="font-size:11px">${u.email}</small><br><span class="tag">${publicRole()}</span></div>
+            <button title="Perfil" onclick="openProfile()" style="font-size:14px">v</button>
           </div>
         </aside>
         <main class="main">
           <header class="top">
             <div><h1>${pageTitle()}</h1><p>${pageSubtitle()}</p></div>
             <div class="top-actions">
-              ${!isAdmin()?`<button class="pill" onclick="openTopup()"><span class="mini-ico">${icons.wallet}</span><span><small>Saldo disponible</small>${money(u.balance)}</span></button>`:""}
+              ${!isAdmin()?`<button class="pill" onclick="openTopup()"><span class="mini-ico">${icons.wallet}</span><span><small>Saldo</small>${money(u.balance)}</span></button>`:`<button class="pill"><span class="mini-ico">${icons.wallet}</span><span><small>Saldo admin</small>${money(u.balance)}</span></button>`}
               <button class="pill" onclick="toggleAlerts(event)"><span class="mini-ico">${icons.bell}</span>Avisos <span class="notice-dot">${unread}</span></button>
               <button class="ghost" title="Modo oscuro" onclick="toggleDark()">${icons.moon}</button>
-              <button class="danger-btn" onclick="logout()">Cerrar sesion</button>
+              <button class="danger-btn" onclick="logout()">Salir</button>
             </div>
           </header>
           ${renderView()}
@@ -390,79 +473,120 @@
       </div>`;
     }
     function renderView(){
-      return ({home,store,orders,reports,ads,users,payments,admin}[state.view] || home)();
+      return ({home,store,orders,reports,ads,users,payments,admin,analytics}[state.view] || home)();
     }
+
+    // ─── HOME ──────────────────────────────────────────
     function home(){
       const rows=activeOrders().slice(0,4);
       return `<section class="card">
         <div class="grid quick">
-          <div class="quick-intro"><h2>Operacion diaria</h2><p class="muted">Acciones rapidas para vender y resolver sin abrir pantallas innecesarias.</p></div>
+          <div class="quick-intro"><h2>Operacion diaria</h2><p class="muted">Acciones rapidas para vender y resolver.</p></div>
           ${quickButton("store",icons.cart,"Nueva compra","primary-q")}
           ${quickButton("orders",icons.copy,"Copiar datos")}
           ${quickButton("reports",icons.reports,"Reportar falla")}
           ${quickButton("topup",icons.wallet,"Recargar saldo")}
         </div>
       </section>
-      <section class="card section"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h2>Operacion reciente</h2><p class="muted">Solo compras vigentes o pendientes. Las vencidas terminadas se archivan.</p></div><button class="ghost" onclick="setView('orders')">Ver historial</button></div><div class="list section">${orderRows(rows,true)}</div></section>`;
+      ${isAdmin()?balanceAlertCard(): ""}
+      <section class="card section">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <div><h2>Operacion reciente</h2><p class="muted">Compras vigentes o pendientes.</p></div>
+          <button class="ghost" onclick="setView('orders')">Ver historial</button>
+        </div>
+        <div class="list section">${orderRows(rows,true)}</div>
+      </section>`;
+    }
+    function balanceAlertCard(){
+      const bal = Number(state.user?.balance || 0);
+      if(bal > 30000) return "";
+      const cls = bal < 10000 ? "danger" : "info";
+      const msg = bal < 10000 ? "Saldo critico. Recarga urgente para seguir vendiendo." : "Saldo bajo. Considera recargar pronto.";
+      return `<section class="alert-card ${cls}"><b>${msg}</b> Saldo actual: ${money(bal)}</section>`;
     }
     function quickButton(target,svg,label,cls=""){
       const click=target==="topup"?"openTopup()":`setView('${target}')`;
       return `<button class="quick-btn ${cls}" onclick="${click}">${svg}<span>${label}</span></button>`;
     }
+
+    // ─── ADMIN PANEL ───────────────────────────────────
     function admin(){
       const pendingTopups=state.topups.filter(t=>t.status==="Pendiente").length;
       const openReports=state.reports.filter(r=>r.status!=="Resuelto").length;
-      const income=state.orders.reduce((sum,o)=>sum+Number(o.amount||o.total||0),0);
       const activeUsers=state.users.filter(u=>(u.status||"Activo")==="Activo").length;
+      const totalProfit = state.topups.filter(t=>t.status==="Aprobada").reduce((s,t)=>s+profitFromRecharge(Number(t.amount||0)),0);
       return `<section class="grid metrics">
         ${metric("Operaciones",activeOrders().length,icons.cart)}
         ${metric("Usuarios activos",activeUsers,icons.users)}
         ${metric("Pagos pendientes",pendingTopups,icons.payments)}
-        ${metric("Reportes abiertos",openReports,icons.reports)}
+        ${metric("Ganancia neta",money(totalProfit),icons.wallet)}
       </section>
       <section class="grid split section">
-        <div class="card"><h2>Control de operacion</h2><p class="muted">Vista compacta para decidir que hacer primero.</p><div class="list section">${orderRows(activeOrders().slice(0,6),true)}</div></div>
-        <div class="card"><h2>Acciones admin</h2><p class="muted">Todo desde aqui, sin pantallas gigantes.</p><div class="grid section">
+        <div class="card"><h2>Control de operacion</h2><p class="muted">Vista compacta de las operaciones activas.</p><div class="list section">${orderRows(activeOrders().slice(0,6),true)}</div></div>
+        <div class="card"><h2>Acciones admin</h2><p class="muted">Gestiona todo desde aqui.</p><div class="grid section">
           <div class="admin-action">${icons.users}<div><b>Usuarios</b><span class="muted">Crear administradores, revendedores y clientes.</span></div><button class="primary" onclick="setView('users')">Gestionar</button></div>
           <div class="admin-action">${icons.payments}<div><b>Recargas</b><span class="muted">${pendingTopups} pagos esperan aprobacion.</span></div><button class="ghost" onclick="setView('payments')">Revisar</button></div>
           <div class="admin-action">${icons.ads}<div><b>Publicidad</b><span class="muted">Subir piezas y notificar usuarios.</span></div><button class="ghost" onclick="setView('ads')">Publicar</button></div>
-          <div class="admin-action">${icons.reports}<div><b>Emergencia</b><span class="muted">Pausar compras si el proveedor falla.</span></div><button class="danger-btn" onclick="toggleMaintenance()">Pausar</button></div>
+          <div class="admin-action">${icons.link}<div><b>Links de registro</b><span class="muted">Crear links para revendedores o clientes.</span></div><button class="ghost" onclick="openShareLinks()">Generar</button></div>
         </div></div>
       </section>`;
     }
     function metric(label,value,svg){return `<article class="card metric"><span class="mini-ico">${svg}</span><div><span class="muted">${label}</span><br><b>${value}</b></div></article>`}
+
+    // ─── TIENDA / INVENTARIO ───────────────────────────
     function store(){
       const sorted=[...state.products].sort((a,b)=>(b.status==="Disponible")-(a.status==="Disponible") || Number(b.stock||0)-Number(a.stock||0));
       const available=sorted.filter(p=>p.status==="Disponible" && Number(p.stock)>0);
       const unavailable=sorted.filter(p=>!(p.status==="Disponible" && Number(p.stock)>0));
       const visible=isAdmin()?sorted:available;
-      return `<section class="card" style="padding:14px 16px"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><b>${isAdmin()?"Inventario del proveedor":"Productos disponibles"}</b><p class="muted" style="margin:4px 0 0">${isAdmin()?"Administras stock y precios. Los usuarios no ven costo proveedor ni margen.":"Solo ves productos con stock para comprar rapido."}</p></div><span class="tag">${available.length} disponibles</span></div></section>
+      return `<section class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+          <div><b>${isAdmin()?"Inventario del proveedor":"Productos disponibles"}</b><p class="muted" style="margin:3px 0 0">${isAdmin()?"Administra stock, precios y tipo de pantalla (compartida/personal).":"Solo ves productos con stock para comprar."}</p></div>
+          <span class="tag">${available.length} disponibles</span>
+        </div>
+      </section>
       <section class="grid store-grid section">${visible.map(productCard).join("") || "<p class='muted'>No hay productos disponibles ahora.</p>"}</section>
       ${isAdmin()&&unavailable.length?`<section class="card section"><h2>Agotados o pausados</h2><div class="grid store-grid section">${unavailable.map(productCard).join("")}</div></section>`:""}`;
     }
     function productCard(p){
       const available=p.status==="Disponible" && Number(p.stock)>0;
+      const canBuy = canBuyProduct(p);
       const cls=serviceClass(p.name), price=salePrice(p);
+      const isPersonal = p.shared === false || String(p.share_type||"").toLowerCase() === "personal";
+      const ops = operatorCount(p.id);
       return `<article class="card product ${available?"":"unavailable"}">
         <div class="poster ${cls}">
           <span class="shine"></span><span class="svc">${serviceName(p.name).toUpperCase()}</span><span class="stock">${available?p.stock+" disp.":"Agotado"}</span><div class="logo-word">${serviceName(p.name)}</div><span class="brandmark">DISTRITO</span>
         </div>
         <div class="product-body">
-          <h3>${p.name}</h3><span class="tag ${available?"":"bad"}">${available?"Disponible":"No disponible"}</span>
-          <p class="muted mini">Entrega automatica: ${p.delivery || "email, clave, perfil y PIN"}.</p>
-          <div class="price">${money(price)}</div><p class="mini">Precio final por pantalla</p>
-          ${isAdmin()?`<p class="copy-box mini">Proveedor ${money(p.provider_price ?? p.base_price)} - Precio usuario ${money(p.base_price)} - Stock ${p.stock}</p>`:""}
-          <button class="${available?"primary":"ghost"}" ${available?"":"disabled"} onclick="openBuy('${p.id}')">${available?"Comprar pantalla":"Avisarme cuando vuelva"}</button>
+          <h3>${p.name}</h3>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+            <span class="tag ${available?"":"bad"}">${available?"Disponible":"No disponible"}</span>
+            <span class="tag ${isPersonal?"personal":"sharable"}">${isPersonal?"Personal":"Compartida"}</span>
+          </div>
+          ${isPersonal?`<p class="mini">Uso exclusivo: 1 operador por cuenta.</p>`:`<p class="mini">Maximo ${MAX_OPERATORS_PER_PRODUCT} operadores por pantalla.</p>`}
+          ${!isPersonal && isAdmin()?`<div class="limit-bar"><div class="limit-bar-fill ${ops>=MAX_OPERATORS_PER_PRODUCT?"bad":ops>=1?"warn":"ok"}" style="width:${(ops/MAX_OPERATORS_PER_PRODUCT)*100}%"></div></div><p class="mini">${ops}/${MAX_OPERATORS_PER_PRODUCT} operadores activos</p>`:""}
+          <div class="price">${money(price)}</div><p class="mini">Precio por pantalla</p>
+          ${isAdmin()?`<p class="copy-box mini">Proveedor ${money(p.provider_price ?? p.base_price)} - Usuario ${money(p.base_price)} - Stock ${p.stock}</p>`:""}
+          ${available && canBuy?`<button class="primary" onclick="openBuy('${p.id}')">Comprar pantalla</button>`:
+            available && !canBuy?`<button class="ghost" disabled>Limite de operadores alcanzado</button>`:
+            `<button class="ghost" disabled>Agotado</button>`}
         </div>
       </article>`;
     }
     function openBuy(id){
       const p=state.products.find(x=>x.id===id); if(!p) return;
       const max=Math.max(1,Math.min(10,Number(p.stock||1))), price=salePrice(p);
-      openModal(`<div class="dialog-head"><div><small class="muted">CONFIRMAR COMPRA</small><h2>${p.name}</h2><p class="muted">Elige cantidad y confirma. Los datos salen aqui mismo.</p></div><button class="close" onclick="closeModal()">x</button></div>
+      const isPersonal = p.shared === false || String(p.share_type||"").toLowerCase() === "personal";
+      const ops = operatorCount(p.id);
+      const maxAllowed = isPersonal ? Math.max(0, 1 - ops) : Math.max(0, MAX_OPERATORS_PER_PRODUCT - ops);
+      const maxQty = Math.min(max, maxAllowed);
+      if(maxQty <= 0) return toast("Ya alcanzaste el limite de operadores para este producto.","bad");
+      openModal(`<div class="dialog-head"><div><small class="muted">CONFIRMAR COMPRA</small><h2>${p.name}</h2><p class="muted">Elige cantidad y confirma.</p></div><button class="close" onclick="closeModal()">&times;</button></div>
         <div class="form">
-          <label>Cantidad<select id="buyQty" onchange="updateBuyTotal(${price})">${Array.from({length:max},(_,i)=>`<option value="${i+1}">${i+1} pantalla${i?"s":""}</option>`).join("")}</select></label>
-          <div class="copy-box"><b>Total a pagar</b><span style="float:right;font-size:24px" id="buyTotal">${money(price)}</span></div>
+          <label>Cantidad<select id="buyQty" onchange="updateBuyTotal(${price})">${Array.from({length:maxQty},(_,i)=>`<option value="${i+1}">${i+1} pantalla${i?"s":""}</option>`).join("")}</select></label>
+          ${isPersonal?`<div class="alert-card info">Pantalla personal: solo 1 operador por cuenta.</div>`:`<div class="alert-card info">${ops}/${MAX_OPERATORS_PER_PRODUCT} operadores en uso. Maximo ${maxAllowed} mas.</div>`}
+          <div class="copy-box"><b>Total a pagar</b><span style="float:right;font-size:22px" id="buyTotal">${money(price)}</span></div>
           <div id="buyState" class="tag">Listo para comprar</div>
           <div class="row-actions"><button class="ghost" onclick="closeModal()">Cancelar</button><button class="ok-btn" onclick="finishBuy('${id}')">Comprar ahora</button></div>
         </div>`);
@@ -473,7 +597,7 @@
       $("#buyTotal").textContent=money(total);
       const ok=bal>=total || isAdmin();
       $("#buyState").className=ok?"tag":"tag bad";
-      $("#buyState").textContent=ok?`Listo para comprar ${qty} pantalla${qty>1?"s":""}.`:`Saldo insuficiente. Te faltan ${money(total-bal)}.`;
+      $("#buyState").textContent=ok?`Listo para comprar ${qty} pantalla${qty>1?"s":""}.`:`Saldo insuficiente. Faltan ${money(total-bal)}.`;
     }
     async function finishBuy(id){
       try{
@@ -488,9 +612,11 @@
     }
     function renderDelivery(orders){
       if(!orders.length) return toast("Compra registrada, pero el proveedor no devolvio datos","bad");
-      openModal(`<div class="success-pulse">OK</div><div class="dialog-head"><div><small class="muted">ENTREGA AUTOMATICA</small><h2>Datos listos</h2><p class="muted">Copia y envia al cliente. Tambien quedara guardado en Mis compras.</p></div><button class="close" onclick="closeModal()">x</button></div>
-      <div class="list">${orders.map(o=>`<div class="card"><b>${o.product_name}</b><div class="copy-box">${o.delivered_data||"Sin datos entregados"}</div><p class="muted">Vence ${o.expires_at||"-"}</p><div class="row-actions"><button class="primary" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','compra'))">${icons.copy} Copiar mensaje</button><button class="ghost" onclick="openReport('${o.id}')">Reportar</button></div></div>`).join("")}</div>`);
+      openModal(`<div class="success-pulse">OK</div><div class="dialog-head"><div><small class="muted">ENTREGA AUTOMATICA</small><h2>Datos listos</h2><p class="muted">Copia y envia al cliente. Quedara guardado en Mis compras.</p></div><button class="close" onclick="closeModal()">&times;</button></div>
+      <div class="list">${orders.map(o=>`<div class="card"><b>${o.product_name}</b><div class="copy-box">${o.delivered_data||"Sin datos entregados"}</div><p class="mini">Vence ${o.expires_at||"-"}</p><div class="row-actions"><button class="primary" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','compra'))">${icons.copy} Copiar mensaje</button><button class="ghost" onclick="openReport('${o.id}')">Reportar</button></div></div>`).join("")}</div>`);
     }
+
+    // ─── ORDENES ───────────────────────────────────────
     function deliveryMessageById(id,kind){const o=state.orders.find(x=>x.id===id)||{};return formatOrderMessage(o,kind)}
     function activeOrders(){
       return state.orders.filter(o=>{
@@ -501,9 +627,18 @@
     }
     function orders(){
       const rows=activeOrders();
-      return `<section class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><h2>Mis compras</h2><p class="muted">Abre solo lo necesario. Las vencidas finalizadas quedan fuera para no estorbar.</p></div><span class="tag">${rows.length} activas</span></div>
-      <div class="ops-toolbar"><input id="orderSearch" oninput="filterOrders()" placeholder="Buscar pedido, producto, cliente o cuenta"><select id="orderScope" onchange="filterOrders()"><option value="active">Activas</option><option value="all">Todas</option><option value="expired">Vencidas</option></select><button class="ghost" onclick="exportOrdersCsv()">Exportar Excel</button></div>
-      <div id="ordersList" class="list section">${orderRows(rows,false)}</div></section>`;
+      return `<section class="card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+          <div><h2>Mis compras</h2><p class="muted">Las vencidas finalizadas se archivan automaticamente.</p></div>
+          <span class="tag">${rows.length} activas</span>
+        </div>
+        <div class="ops-toolbar">
+          <input id="orderSearch" oninput="filterOrders()" placeholder="Buscar pedido, producto, cliente o cuenta">
+          <select id="orderScope" onchange="filterOrders()"><option value="active">Activas</option><option value="all">Todas</option><option value="expired">Vencidas</option></select>
+          <button class="ghost" onclick="exportOrdersCsv()">Exportar</button>
+        </div>
+        <div id="ordersList" class="list section">${orderRows(rows,false)}</div>
+      </section>`;
     }
     function filterOrders(){
       const q=($("#orderSearch")?.value||"").toLowerCase(), scope=$("#orderScope")?.value||"active";
@@ -518,9 +653,9 @@
         const data=parseAccount(o.delivered_data||"");
         return `<div class="list-row ${compact?"compact-order":""}">
           <div><b>${o.code||"Orden"}</b></div>
-          <div><b>${o.product_name}</b><br><span class="muted">${o.client_name||"Cliente pendiente"}</span>${compact?"":`<div class="client-data"><span><b>Cuenta</b><br>${data.email||"-"}</span><span><b>Clave</b><br>${data.password||"-"}</span><span><b>Perfil</b><br>${data.profile||"-"}</span><span><b>PIN</b><br>${data.pin||"-"}</span></div>`}</div>
+          <div><b>${o.product_name}</b><br><span class="muted">${o.client_name||"Cliente"}</span>${compact?"":`<div class="client-data"><span><b>Cuenta</b><br>${data.email||"-"}</span><span><b>Clave</b><br>${data.password||"-"}</span><span><b>Perfil</b><br>${data.profile||"-"}</span><span><b>PIN</b><br>${data.pin||"-"}</span></div>`}</div>
           <div class="row-actions">
-            <span class="tag ${warning?"bad":""}">${o.status||"Entregado"}${left!==null?` - ${left} dias`: ""}</span>
+            <span class="tag ${warning?"bad":""}">${o.status||"Entregado"}${left!==null?` - ${left}d`: ""}</span>
             <button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','datos'))">${icons.copy} Datos</button>
             <button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','renovar'))">Renovar</button>
             <button class="danger-btn" onclick="openReport('${o.id}')">Reportar</button>
@@ -543,30 +678,35 @@
       const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([content],{type:"text/csv;charset=utf-8"})); a.download=name; a.click(); URL.revokeObjectURL(a.href);
     }
 
+    // ─── REPORTES ──────────────────────────────────────
     function reports(){
       const filters=["Todos","Caida total","PIN / Perfil","En revision","Resuelto"];
       const open=state.reports.filter(r=>r.status!=="Resuelto").length, solved=state.reports.filter(r=>r.status==="Resuelto").length;
       return `<section class="grid split">
-        <div class="card"><h2>Reportes</h2><p class="muted">Seguimiento compacto: recibido, proveedor, revision y solucion.</p><div class="report-status"><div class="status-chip"><b>${state.reports.length}</b>Total</div><div class="status-chip"><b>${open}</b>Abiertos</div><div class="status-chip"><b>${solved}</b>Resueltos</div><div class="status-chip"><b>${state.reports.filter(r=>String(r.reason).includes("Caida")).length}</b>Caidas</div></div><div class="row-actions">${filters.map(f=>`<button class="ghost" onclick="filterReports('${f}')">${f}</button>`).join("")}</div><div id="reportList" class="list section">${reportRows(state.reports)}</div></div>
-        <div class="card"><h2>Nuevo reporte</h2><p class="muted">Elige una compra, motivo y explica que pasa. Queda listo para consultar respuesta del proveedor.</p><button class="primary" onclick="openReport()">Reportar problema</button>${isAdmin()?`<button class="ghost section" onclick="exportReportsCsv()">Exportar reportes</button>`:""}</div>
+        <div class="card"><h2>Reportes</h2><p class="muted">Seguimiento: recibido, proveedor, revision y solucion.</p>
+          <div class="report-status"><div class="status-chip"><b>${state.reports.length}</b>Total</div><div class="status-chip"><b>${open}</b>Abiertos</div><div class="status-chip"><b>${solved}</b>Resueltos</div><div class="status-chip"><b>${state.reports.filter(r=>String(r.reason).includes("Caida")).length}</b>Caidas</div></div>
+          <div class="row-actions">${filters.map(f=>`<button class="ghost" onclick="filterReports('${f}')">${f}</button>`).join("")}</div>
+          <div id="reportList" class="list section">${reportRows(state.reports)}</div>
+        </div>
+        <div class="card"><h2>Nuevo reporte</h2><p class="muted">Elige compra, motivo y descripcion.</p><button class="primary" onclick="openReport()">Reportar problema</button>${isAdmin()?`<button class="ghost section" onclick="exportReportsCsv()">Exportar</button>`:""}</div>
       </section>`;
     }
     function reportRows(rows){
       if(!rows.length) return `<p class="muted">Sin reportes.</p>`;
-      return rows.map(r=>`<div class="list-row"><div><b>${r.code||"Reporte"} - ${r.product_name||"Producto"}</b><br><span>${r.reason||"Sin motivo"}</span><p class="muted">${r.description||""}</p>${r.provider_response?`<div class="copy-box">${r.provider_response}</div>`:""}</div><div class="row-actions"><span class="tag ${r.status==="Resuelto"?"":"warn"}">${r.status||"En revision"}</span>${r.provider_response?`<button class="ghost" onclick="copyText('${escapeJs(r.provider_response)}')">Copiar respuesta</button>`:""}${isAdmin()?`<button class="danger-btn" onclick="deleteReport('${r.id}')">Cerrar</button>`:""}</div></div>`).join("");
+      return rows.map(r=>`<div class="list-row"><div><b>${r.code||"Reporte"} - ${r.product_name||"Producto"}</b><br><span>${r.reason||"Sin motivo"}</span><p class="mini">${r.description||""}</p>${r.provider_response?`<div class="copy-box">${r.provider_response}</div>`:""}</div><div class="row-actions"><span class="tag ${r.status==="Resuelto"?"":"warn"}">${r.status||"En revision"}</span>${r.provider_response?`<button class="ghost" onclick="copyText('${escapeJs(r.provider_response)}')">Copiar</button>`:""}${isAdmin()?`<button class="danger-btn" onclick="deleteReport('${r.id}')">Cerrar</button>`:""}</div></div>`).join("");
     }
     function filterReports(filter){
       const rows=filter==="Todos"?state.reports:state.reports.filter(r=>String(r.status).includes(filter)||String(r.reason).includes(filter));
       $("#reportList").innerHTML=reportRows(rows);
     }
     function openReport(orderId=""){
-      if(!state.orders.length) return openModal(`<div class="dialog-head"><div><small class="muted">SOPORTE INTERNO</small><h2>No hay compras para reportar</h2><p class="muted">Primero debe existir una compra entregada o registrada para crear el caso.</p></div><button class="close" onclick="closeModal()">x</button></div><button class="primary" onclick="closeModal();setView('store')">Ir a tienda</button>`);
+      if(!state.orders.length) return openModal(`<div class="dialog-head"><div><small class="muted">SOPORTE</small><h2>No hay compras para reportar</h2></div><button class="close" onclick="closeModal()">&times;</button></div><button class="primary" onclick="closeModal();setView('store')">Ir a tienda</button>`);
       const o=state.orders.find(x=>x.id===orderId) || state.orders[0] || {};
-      openModal(`<div class="dialog-head"><div><small class="muted">SOPORTE INTERNO</small><h2>Reportar fallo</h2><p class="muted">Describe exactamente que ocurre para poder hacer seguimiento.</p></div><button class="close" onclick="closeModal()">x</button></div>
+      openModal(`<div class="dialog-head"><div><small class="muted">SOPORTE</small><h2>Reportar fallo</h2></div><button class="close" onclick="closeModal()">&times;</button></div>
         <div class="form">
           <label>Cuenta o compra<select id="rpOrder">${state.orders.map(x=>`<option value="${x.id}" ${x.id===o.id?"selected":""}>${x.product_name} - ${(x.delivered_data||"").slice(0,32)}</option>`).join("")}</select></label>
-          <label>Motivo<select id="rpReason"><option>Caida total</option><option>PIN / Perfil</option><option>Contrasena incorrecta</option><option>Cuenta sin plan o pago</option><option>Cuenta no encontrada</option><option>Limite de dispositivos</option><option>Renovacion</option><option>Conectar a proveedor - VTR</option></select></label>
-          <label>Descripcion del fallo<textarea id="rpDesc" placeholder="Ejemplo: el cliente indica que no puede entrar al perfil o aparece PIN incorrecto."></textarea></label>
+          <label>Motivo<select id="rpReason"><option>Caida total</option><option>PIN / Perfil</option><option>Contrasena incorrecta</option><option>Cuenta sin plan</option><option>Cuenta no encontrada</option><option>Limite de dispositivos</option><option>Renovacion</option></select></label>
+          <label>Descripcion<textarea id="rpDesc" placeholder="Describe el problema exacto."></textarea></label>
           <button class="primary" onclick="sendReport()">Enviar reporte</button>
         </div>`);
     }
@@ -577,38 +717,66 @@
         closeModal(); toast("Reporte enviado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
     }
-    async function deleteReport(id){try{await api("reports?id="+id,{method:"DELETE"});toast("Reporte cerrado","ok");await boot()}catch(e){toast("El servidor aun no permite cerrar reportes desde aqui","bad")}}
+    async function deleteReport(id){try{await api("reports?id="+id,{method:"DELETE"});toast("Reporte cerrado","ok");await boot()}catch(e){toast(e.message,"bad")}}
     function exportReportsCsv(){
       const rows=state.reports.map(r=>[r.code,r.product_name,r.reason,r.status,r.description,r.provider_response].map(csvCell).join(";")).join("\n");
       downloadFile("distrito-reportes.csv","\ufeffCodigo;Producto;Motivo;Estado;Descripcion;Respuesta\n"+rows);
     }
 
+    // ─── PUBLICIDAD ────────────────────────────────────
     function ads(){
       return `<section class="grid ${isAdmin()?"split":""}">
-        <div class="card"><h2>${isAdmin()?"Campanas publicadas":"Material disponible"}</h2><p class="muted">${isAdmin()?"Sube piezas diarias, pausa o elimina lo que ya no sirve.":"Copia y usa solo el material activo."}</p><div class="grid store-grid section">${state.ads.map(adCard).join("") || "<p class='muted'>No hay publicidad publicada.</p>"}</div></div>
-        ${isAdmin()?`<div class="card"><h2>Nueva publicidad</h2><p class="muted">Crea una pieza lista para WhatsApp. El archivo se registra por nombre; para guardar imagen real falta Storage en Supabase.</p><div class="form"><input id="adTitle" placeholder="Titulo"><input id="adShort" placeholder="Texto corto"><input id="adPrice" placeholder="Precio sugerido"><textarea id="adCopy" placeholder="Mensaje que copiara el usuario"></textarea><input id="adFile" onchange="previewAdFile()" type="file" accept="image/*"><div id="adPreview" class="copy-box muted">Sin imagen seleccionada.</div><button class="primary" onclick="createAd()">Publicar y notificar</button></div></div>`:""}
+        <div class="card"><h2>${isAdmin()?"Campanas publicadas":"Material disponible"}</h2><p class="muted">${isAdmin()?"Sube imagenes o archivos para que los usuarios copien y usen.":"Copia y descarga el material activo."}</p><div class="grid store-grid section">${state.ads.map(adCard).join("") || "<p class='muted'>No hay material publicado.</p>"}</div></div>
+        ${isAdmin()?`<div class="card"><h2>Subir material</h2><p class="muted">Sube una imagen o archivo. El usuario podra copiar el texto y descargar el archivo.</p>
+          <div class="form">
+            <label>Titulo<input id="adTitle" placeholder="Ej: Promo Netflix Lunes"></label>
+            <label>Texto para copiar<textarea id="adCopy" placeholder="Mensaje que el usuario copiara."></textarea></label>
+            <label>Precio sugerido (opcional)<input id="adPrice" placeholder="$ 15.000"></label>
+            <label>Archivo / Imagen<input id="adFile" type="file" accept="image/*,.pdf,.doc,.docx" onchange="previewAdFile()"></label>
+            <div id="adPreview" class="copy-box muted" style="min-height:60px">Sin archivo seleccionado.</div>
+            <button class="primary" onclick="createAd()">Publicar material</button>
+          </div>
+        </div>`:""}
       </section>`;
     }
     function adCard(a){
-      return `<article class="card product"><div class="poster other"><span class="shine"></span><span class="svc">DISTRITO</span><div class="logo-word">${a.title}</div></div><div class="product-body"><h3>${a.title}</h3><p>${a.short_text||a.copy_text||""}</p><div class="row-actions"><button class="primary" onclick="copyText('${escapeJs(a.copy_text||a.short_text||"")}')">Copiar</button>${isAdmin()?`<button class="danger-btn" onclick="deleteAd('${a.id}')">Eliminar</button>`:""}</div></div></article>`;
+      const hasFile = a.file_url || a.file_name;
+      return `<article class="card product">
+        <div class="poster other"><span class="shine"></span><span class="svc">DISTRITO</span><div class="logo-word">${a.title}</div></div>
+        <div class="product-body">
+          <h3>${a.title}</h3>
+          <p class="mini">${a.short_text||a.copy_text||""}</p>
+          <div class="row-actions">
+            <button class="primary" onclick="copyText('${escapeJs(a.copy_text||a.short_text||"")}')">${icons.copy} Copiar</button>
+            ${hasFile?`<button class="ghost" onclick="toast('Descarga: ${escapeJs(a.file_name||a.file_url||"archivo")}','ok')">${icons.download} Descargar</button>`:""}
+            ${isAdmin()?`<button class="danger-btn" onclick="deleteAd('${a.id}')">Eliminar</button>`:""}
+          </div>
+        </div>
+      </article>`;
     }
     async function createAd(){
       try{
         const file=$("#adFile").files[0];
-        const copy=[$("#adCopy").value,$("#adPrice").value?`Precio: ${$("#adPrice").value}`:"",file?`Imagen base: ${file.name}`:""].filter(Boolean).join("\n");
-        await api("ads",{method:"POST",body:JSON.stringify({title:$("#adTitle").value,short_text:$("#adShort").value,copy_text:copy,status:"Activa"})});
-        toast("Publicidad publicada y notificada","ok"); await boot();
+        const copy=[$("#adCopy").value,$("#adPrice").value?`Precio: ${$("#adPrice").value}`:"",file?`Archivo: ${file.name}`:""].filter(Boolean).join("\n");
+        await api("ads",{method:"POST",body:JSON.stringify({title:$("#adTitle").value,short_text:$("#adCopy").value.slice(0,80),copy_text:copy,status:"Activa",file_name:file?.name||"",file_url:file?URL.createObjectURL(file):""})});
+        toast("Material publicado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
     }
     function previewAdFile(){
       const file=$("#adFile").files[0], box=$("#adPreview");
-      if(!file){box.textContent="Sin imagen seleccionada.";return}
-      const url=URL.createObjectURL(file);
-      box.innerHTML=`<b>${file.name}</b><br><img src="${url}" style="max-width:100%;border-radius:12px;margin-top:8px">`;
-      setTimeout(()=>URL.revokeObjectURL(url),3000);
+      if(!file){box.textContent="Sin archivo seleccionado.";box.className="copy-box muted";return}
+      if(file.type.startsWith("image/")){
+        const url=URL.createObjectURL(file);
+        box.innerHTML=`<b>${file.name}</b> <span class="muted">(${(file.size/1024).toFixed(0)} KB)</span><br><img src="${url}" style="max-width:100%;border-radius:10px;margin-top:6px">`;
+        setTimeout(()=>URL.revokeObjectURL(url),5000);
+      } else {
+        box.innerHTML=`<b>${file.name}</b> <span class="muted">(${(file.size/1024).toFixed(0)} KB)</span>`;
+      }
+      box.className="copy-box";
     }
-    async function deleteAd(id){try{await api("ads?id="+id,{method:"DELETE"});toast("Publicidad eliminada","ok");await boot()}catch(e){toast(e.message,"bad")}}
+    async function deleteAd(id){try{await api("ads?id="+id,{method:"DELETE"});toast("Material eliminado","ok");await boot()}catch(e){toast(e.message,"bad")}}
 
+    // ─── USUARIOS ──────────────────────────────────────
     function users(){
       const admins=state.users.filter(u=>u.role==="Administrador").length;
       const resellers=state.users.filter(u=>u.role==="Revendedor").length;
@@ -621,14 +789,17 @@
       </section>
       <section class="card section">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-          <div><h2>Administracion de accesos</h2><p class="muted">Crea administradores, revendedores y clientes. Ajusta saldo y margen sin salir de esta pantalla.</p></div>
-          <button class="primary" onclick="openCreateUser()">Crear usuario</button>
+          <div><h2>Administracion de accesos</h2><p class="muted">Crea usuarios, ajusta saldo, margen y tipo (revendedor vs cliente).</p></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="ghost" onclick="openShareLinks()">${icons.link} Links</button>
+            <button class="primary" onclick="openCreateUser()">Crear usuario</button>
+          </div>
         </div>
-        <div class="row-actions section">
-          <input id="userSearch" oninput="filterUsers()" placeholder="Buscar por nombre o correo" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:13px;padding:12px;background:var(--panel);color:var(--text)">
-          <select id="userRoleFilter" onchange="filterUsers()" style="border:1px solid var(--line);border-radius:13px;padding:12px;background:var(--panel);color:var(--text)"><option>Todos</option><option>Administrador</option><option>Revendedor</option><option>Cliente</option></select>
+        <div class="ops-toolbar">
+          <input id="userSearch" oninput="filterUsers()" placeholder="Buscar por nombre o correo">
+          <select id="userRoleFilter" onchange="filterUsers()"><option>Todos</option><option>Administrador</option><option>Revendedor</option><option>Cliente</option></select>
         </div>
-        <div class="table-wrap section"><table><thead><tr><th>Usuario</th><th>Rol</th><th>Saldo</th><th>Margen</th><th>Estado</th><th>Accion rapida</th></tr></thead><tbody id="usersBody">${state.users.map(userRow).join("")}</tbody></table></div>
+        <div class="table-wrap section"><table><thead><tr><th>Usuario</th><th>Rol</th><th>Saldo</th><th>Margen</th><th>Estado</th><th>Accion</th></tr></thead><tbody id="usersBody">${state.users.map(userRow).join("")}</tbody></table></div>
       </section>`;
     }
     function filterUsers(){
@@ -638,14 +809,14 @@
         const roleHit=role==="Todos" || u.role===role;
         return hit && roleHit;
       });
-      $("#usersBody").innerHTML=rows.map(userRow).join("") || `<tr><td colspan="6" class="muted">No hay usuarios con ese filtro.</td></tr>`;
+      $("#usersBody").innerHTML=rows.map(userRow).join("") || `<tr><td colspan="6" class="muted">Sin resultados.</td></tr>`;
     }
     function userRow(u){
       const isProtected=u.email==="vargasblancobrayan@gmail.com";
-      return `<tr><td><b>${u.name}</b><br><span class="muted">${u.email}</span></td><td><span class="tag ${u.role==="Administrador"?"warn":""}">${u.role}</span></td><td><input id="bal-${u.id}" value="${Number(u.balance||0)}" type="number" ${u.role==="Administrador"?"disabled":""}></td><td><input id="mar-${u.id}" value="${Number(u.margin||0)}" type="number" ${u.role==="Administrador"?"disabled":""}></td><td><span class="tag ${u.status==="Activo"?"":"bad"}">${u.status||"Activo"}</span></td><td><button class="ghost" onclick="saveUser('${u.id}')" ${u.role==="Administrador"&&isProtected?"disabled":""}>Guardar</button></td></tr>`;
+      return `<tr><td><b>${u.name}</b><br><span class="mini">${u.email}</span></td><td><span class="tag ${u.role==="Administrador"?"warn":u.role==="Revendedor"?"personal":""}">${u.role}</span></td><td><input id="bal-${u.id}" value="${Number(u.balance||0)}" type="number" ${isProtected?"disabled":""}></td><td><input id="mar-${u.id}" value="${Number(u.margin||0)}" type="number" ${isProtected?"disabled":""}></td><td><span class="tag ${u.status==="Activo"?"":"bad"}">${u.status||"Activo"}</span></td><td><button class="ghost" onclick="saveUser('${u.id}')" ${isProtected?"disabled":""}>Guardar</button></td></tr>`;
     }
     function openCreateUser(){
-      openModal(`<div class="dialog-head"><div><small class="muted">ACCESO NUEVO</small><h2>Crear usuario</h2></div><button class="close" onclick="closeModal()">x</button></div><div class="form"><input id="nuName" placeholder="Nombre completo"><input id="nuEmail" placeholder="Correo"><input id="nuPass" placeholder="Contrasena temporal"><select id="nuRole"><option>Revendedor</option><option>Cliente</option><option>Administrador</option></select><input id="nuBalance" placeholder="Saldo inicial" type="number" value="0"><input id="nuMargin" placeholder="Margen por pantalla" type="number" value="2000"><button class="primary" onclick="createUser()">Crear acceso</button></div>`);
+      openModal(`<div class="dialog-head"><div><small class="muted">ACCESO NUEVO</small><h2>Crear usuario</h2></div><button class="close" onclick="closeModal()">&times;</button></div><div class="form"><input id="nuName" placeholder="Nombre completo"><input id="nuEmail" placeholder="Correo"><input id="nuPass" placeholder="Contrasena temporal"><select id="nuRole"><option>Revendedor</option><option>Cliente</option><option>Administrador</option></select><input id="nuBalance" placeholder="Saldo inicial" type="number" value="0"><input id="nuMargin" placeholder="Margen por pantalla" type="number" value="2000"><button class="primary" onclick="createUser()">Crear acceso</button></div>`);
     }
     async function createUser(){
       try{
@@ -656,36 +827,54 @@
     async function saveUser(id){
       try{
         await api("users",{method:"PATCH",body:JSON.stringify({id,balance:Number($("#bal-"+id).value||0),margin:Number($("#mar-"+id).value||0)})});
-        toast("Usuario actualizado y notificado","ok"); await boot();
+        toast("Usuario actualizado","ok"); await boot();
       }catch(e){toast(e.message,"bad")}
     }
 
+    // ─── LINKS DE REGISTRO ─────────────────────────────
+    function openShareLinks(){
+      const baseUrl = window.location.origin;
+      const adminLink = baseUrl + "/?ref=admin_" + (state.user?.id||"x");
+      const resellerLink = baseUrl + "/?ref=reseller_" + (state.user?.id||"x");
+      const clientLink = baseUrl + "/?ref=client_" + (state.user?.id||"x");
+      openModal(`<div class="dialog-head"><div><small class="muted">LINKS DE REGISTRO</small><h2>Comparte y registra</h2><p class="muted">Cada link registra al usuario con el rol indicado. Copia y envia por WhatsApp.</p></div><button class="close" onclick="closeModal()">&times;</button></div>
+        <div class="list">
+          <div class="list-row"><div><b>Link para Revendedores</b><p class="mini">Crea revendedores con margen asignado.</p><div class="copy-box" style="margin-top:6px;font-size:12px">${resellerLink}</div></div><button class="primary" onclick="copyText('${resellerLink}')">${icons.copy}</button></div>
+          <div class="list-row"><div><b>Link para Clientes</b><p class="mini">Registro directo de clientes finales.</p><div class="copy-box" style="margin-top:6px;font-size:12px">${clientLink}</div></div><button class="primary" onclick="copyText('${clientLink}')">${icons.copy}</button></div>
+          <div class="list-row"><div><b>Link para Administradores</b><p class="mini">Solo para administradores de confianza.</p><div class="copy-box" style="margin-top:6px;font-size:12px">${adminLink}</div></div><button class="ghost" onclick="copyText('${adminLink}')">${icons.copy}</button></div>
+        </div>`);
+    }
+
+    // ─── PAGOS ─────────────────────────────────────────
     function payments(){
       const pending=state.topups.filter(t=>t.status==="Pendiente");
+      const totalApproved = state.topups.filter(t=>t.status==="Aprobada").reduce((s,t)=>s+Number(t.amount||0),0);
+      const totalProfit = state.topups.filter(t=>t.status==="Aprobada").reduce((s,t)=>s+profitFromRecharge(Number(t.amount||0)),0);
       return `<section class="grid metrics">
         ${metric("Pendientes",pending.length,icons.payments)}
         ${metric("Aprobadas",state.topups.filter(t=>t.status==="Aprobada").length,icons.wallet)}
-        ${metric("Solicitudes",state.topups.length,icons.orders)}
-        ${metric("Pago destino",PAYMENT_NUMBER,icons.copy)}
+        ${metric("Total recibido",money(totalApproved),icons.orders)}
+        ${metric("Ganancia 20%",money(totalProfit),icons.chart)}
       </section>
       <section class="grid split section">
-        <div class="card"><h2>Recargas por aprobar</h2><p class="muted">Aprueba solo cuando confirmes el comprobante o el pago en Nequi/Wompi.</p><div class="list section">${state.topups.map(topupRow).join("")||"<p class='muted'>Sin solicitudes.</p>"}</div></div>
-        <div class="card"><h2>Datos de pago visibles al usuario</h2><div class="pay-card"><img src="${ASSETS}nequi-negocios-qr.jpeg" alt="QR Nequi"><div><b>Distrito Streaming</b><p>Numero: ${PAYMENT_NUMBER}</p><a target="_blank" href="${PAYMENT_LINK}">Abrir link Wompi</a><br><button class="ghost section" onclick="copyText('${PAYMENT_NUMBER}')">Copiar numero</button></div></div></div>
+        <div class="card"><h2>Recargas por aprobar</h2><p class="muted">Aprueba cuando confirmes el pago en Nequi/Wompi.</p><div class="list section">${state.topups.map(topupRow).join("")||"<p class='muted'>Sin solicitudes.</p>"}</div></div>
+        <div class="card"><h2>Datos de pago</h2><div class="pay-card"><img src="${ASSETS}nequi-negocios-qr.jpeg" alt="QR Nequi"><div><b>Distrito Streaming</b><p>Numero: ${PAYMENT_NUMBER}</p><a target="_blank" href="${PAYMENT_LINK}">Abrir link Wompi</a><br><button class="ghost section" onclick="copyText('${PAYMENT_NUMBER}')">Copiar numero</button></div></div></div>
       </section>`;
     }
     function topupRow(t){
-      return `<div class="list-row"><div><b>${money(t.amount)} - ${t.method||"Nequi"}</b><p class="muted">${t.reference||"Sin referencia"}</p></div><div class="row-actions"><span class="tag ${t.status==="Pendiente"?"warn":""}">${t.status}</span>${t.status==="Pendiente"?`<button class="ok-btn" onclick="approveTopup('${t.id}')">Aprobar</button>`:""}</div></div>`;
+      const profit = profitFromRecharge(Number(t.amount||0));
+      return `<div class="list-row"><div><b>${money(t.amount)} - ${t.method||"Nequi"}</b><p class="mini">${t.reference||"Sin referencia"}${isAdmin()?` | Ganancia: ${money(profit)}`:""}</p></div><div class="row-actions"><span class="tag ${t.status==="Pendiente"?"warn":""}">${t.status}</span>${t.status==="Pendiente"?`<button class="ok-btn" onclick="approveTopup('${t.id}')">Aprobar</button>`:""}</div></div>`;
     }
     async function approveTopup(id){
       try{await api("topups",{method:"PATCH",body:JSON.stringify({id,status:"Aprobada"})});toast("Saldo aprobado","ok");await boot()}catch(e){toast(e.message,"bad")}
     }
     function openTopup(){
-      openModal(`<div class="dialog-head"><div><small class="muted">RECARGAR SALDO</small><h2>Paga y reporta tu recarga</h2><p class="muted">Cuando el administrador valide el pago, tu saldo queda disponible.</p></div><button class="close" onclick="closeModal()">x</button></div>
+      openModal(`<div class="dialog-head"><div><small class="muted">RECARGAR SALDO</small><h2>Paga y reporta tu recarga</h2><p class="muted">Cuando el administrador valide, tu saldo queda disponible.</p></div><button class="close" onclick="closeModal()">&times;</button></div>
         <div class="form">
           <div class="pay-card"><img src="${ASSETS}nequi-negocios-qr.jpeg" alt="QR Nequi"><div><b>Distrito Streaming</b><p>Numero: ${PAYMENT_NUMBER}</p><a target="_blank" href="${PAYMENT_LINK}">Pagar con banco o tarjeta</a></div></div>
-          <select id="tpAmount"><option value="50000">$ 50.000</option><option value="100000">$ 100.000</option><option value="200000">$ 200.000</option><option value="500000">$ 500.000</option></select>
-          <input id="tpRef" placeholder="Referencia, titular o nota del pago">
-          <input id="tpProof" type="file" accept="image/*,.pdf">
+          <label>Monto<select id="tpAmount"><option value="50000">$ 50.000</option><option value="100000">$ 100.000</option><option value="200000">$ 200.000</option><option value="500000">$ 500.000</option></select></label>
+          <label>Referencia o nota del pago<input id="tpRef" placeholder="Nombre, numero o referencia"></label>
+          <label>Comprobante (opcional)<input id="tpProof" type="file" accept="image/*,.pdf"></label>
           <button class="primary" onclick="sendTopup()">Enviar recarga</button>
         </div>`);
     }
@@ -698,30 +887,127 @@
       }catch(e){toast(e.message,"bad")}
     }
 
+    // ─── ESTUDIO GENERAL (ANALYTICS) ───────────────────
+    function analytics(){
+      const totalRevenue = state.orders.reduce((s,o)=>s+Number(o.amount||o.total||0),0);
+      const totalTopups = state.topups.filter(t=>t.status==="Aprobada").reduce((s,t)=>s+Number(t.amount||0),0);
+      const totalProfit = state.topups.filter(t=>t.status==="Aprobada").reduce((s,t)=>s+profitFromRecharge(Number(t.amount||0)),0);
+      const pendingTopups = state.topups.filter(t=>t.status==="Pendiente");
+      const openReports = state.reports.filter(r=>r.status!=="Resuelto");
+      const closedReports = state.reports.filter(r=>r.status==="Resuelto");
+      const activeUsers = state.users.filter(u=>(u.status||"Activo")==="Activo");
+      const resellers = state.users.filter(u=>u.role==="Revendedor");
+      const clients = state.users.filter(u=>u.role==="Cliente");
+      const totalSales = state.orders.length;
+      const avgTicket = totalSales > 0 ? Math.round(totalRevenue / totalSales) : 0;
+
+      const productStats = {};
+      state.orders.forEach(o => {
+        const name = o.product_name || "Desconocido";
+        if(!productStats[name]) productStats[name] = { count:0, revenue:0 };
+        productStats[name].count++;
+        productStats[name].revenue += Number(o.amount||o.total||0);
+      });
+      const topProducts = Object.entries(productStats).sort((a,b)=>b[1].count-a[1].count).slice(0,5);
+
+      const expiringSoon = state.orders.filter(o => {
+        const left = daysLeft(o.expires_at);
+        return left !== null && left >= 0 && left <= 7;
+      });
+
+      return `
+        <section class="grid metrics">
+          ${metric("Ingresos totales",money(totalRevenue),icons.wallet)}
+          ${metric("Recargas recibidas",money(totalTopups),icons.payments)}
+          ${metric("Ganancia neta (20%)",money(totalProfit),icons.chart)}
+          ${metric("Ticket promedio",money(avgTicket),icons.store)}
+        </section>
+
+        <section class="grid split section">
+          <div class="card">
+            <h2>Resumen de operacion</h2>
+            <p class="muted">Estudio general del negocio.</p>
+            <div class="analytics-card" style="margin-top:10px">
+              <div class="analytics-row"><span class="muted">Total ventas</span><b>${totalSales}</b></div>
+              <div class="analytics-row"><span class="muted">Usuarios activos</span><b>${activeUsers.length}</b></div>
+              <div class="analytics-row"><span class="muted">Revendedores</span><b>${resellers.length}</b></div>
+              <div class="analytics-row"><span class="muted">Clientes</span><b>${clients.length}</b></div>
+              <div class="analytics-row"><span class="muted">Compras activas</span><b>${activeOrders().length}</b></div>
+              <div class="analytics-row"><span class="muted">Pantallas con limite de operador</span><b>${state.products.filter(p=>p.shared===false||String(p.share_type||"").toLowerCase()==="personal").length}</b></div>
+              <div class="analytics-row"><span class="muted">Pagos pendientes</span><b style="color:var(--warn)">${pendingTopups.length}</b></div>
+              <div class="analytics-row"><span class="muted">Reportes abiertos</span><b style="color:var(--bad)">${openReports.length}</b></div>
+              <div class="analytics-row"><span class="muted">Reportes resueltos</span><b style="color:var(--ok)">${closedReports.length}</b></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Productos mas vendidos</h2>
+            <p class="muted">Top 5 por cantidad de ventas.</p>
+            <div class="analytics-card" style="margin-top:10px">
+              ${topProducts.length?topProducts.map(([name,stat])=>`
+                <div class="analytics-row"><div><b>${name}</b><br><span class="mini">${stat.count} ventas</span></div><b>${money(stat.revenue)}</b></div>
+              `).join(""):`<p class="muted">Sin datos de ventas aun.</p>`}
+            </div>
+          </div>
+        </section>
+
+        ${expiringSoon.length?`
+        <section class="card section">
+          <h2>Por vencer (7 dias)</h2>
+          <p class="muted">Cuentas que vencen pronto. Considera contactar a los clientes.</p>
+          <div class="list section">${expiringSoon.map(o=>{
+            const left=daysLeft(o.expires_at);
+            return `<div class="list-row"><div><b>${o.product_name}</b><br><span class="muted">${o.client_name||"Cliente"} - ${o.delivered_data||"-"}</span></div><div class="row-actions"><span class="tag bad">${left} dias</span><button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','renovar'))">${icons.copy} Mensaje renovar</button></div></div>`;
+          }).join("")}</div>
+        </section>`:""}
+
+        <section class="card section">
+          <h2>Recomendaciones</h2>
+          <p class="muted">Sugerencias automaticas basadas en el estado actual.</p>
+          <div class="list section">
+            ${pendingTopups.length>3?`<div class="alert-card danger"><b>${pendingTopups.length} recargas pendientes</b> - Revisa y aprueba lo mas pronto para mantener el flujo.</div>`:""}
+            ${openReports.length>2?`<div class="alert-card"><b>${openReports.length} reportes abiertos</b> - Intenta resolver los reportes viejos primero.</div>`:""}
+            ${Number(state.user?.balance||0)<20000?`<div class="alert-card danger"><b>Saldo bajo</b> - Tu saldo es ${money(state.user?.balance||0)}. Recarga para seguir vendiendo.</div>`:""}
+            ${expiringSoon.length>0?`<div class="alert-card info"><b>${expiringSoon.length} cuentas por vencer</b> - Envia mensajes de renovacion a los clientes.</div>`:""}
+            ${resellers.length===0?`<div class="alert-card info"><b>Sin revendedores</b> - Crea revendedores para ampliar tu red de ventas.</div>`:""}
+            <div class="alert-card info"><b>Control de pantallas personales</b> - Spotify y servicios personales solo permiten 1 operador. Asegurate de configurar esto en el inventario.</div>
+          </div>
+        </section>`;
+    }
+
+    // ─── UTILIDADES ────────────────────────────────────
     function openProfile(){
       const u=state.user;
-      openModal(`<div class="dialog-head"><div><small class="muted">CUENTA PERSONAL</small><h2>Mi perfil</h2></div><button class="close" onclick="closeModal()">x</button></div>
+      openModal(`<div class="dialog-head"><div><small class="muted">CUENTA</small><h2>Mi perfil</h2></div><button class="close" onclick="closeModal()">&times;</button></div>
         <div class="list">
-          <div class="list-row"><div class="avatar">${initials(u.name)}</div><div><b>${u.name}</b><br><span class="muted">${u.email}</span><br><span class="tag">${publicRole()}</span></div></div>
-          <div class="list-row"><div><b>Apariencia</b><p class="muted">Cambia entre modo claro y oscuro para trabajar comodo.</p></div><button class="ghost" onclick="toggleDark()">Cambiar modo</button></div>
-          <div class="list-row"><div><b>Sesion</b><p class="muted">Cierra tu acceso en este dispositivo.</p></div><button class="danger-btn" onclick="logout()">Cerrar sesion</button></div>
+          <div class="list-row"><div class="avatar">${initials(u.name)}</div><div><b>${u.name}</b><br><span class="mini">${u.email}</span><br><span class="tag">${publicRole()}</span></div></div>
+          ${!isAdmin()?`<div class="list-row"><div><b>Saldo disponible</b><p class="mini">Tu balance actual.</p></div><b>${money(u.balance)}</b></div>`:""}
+          <div class="list-row"><div><b>Apariencia</b><p class="mini">Modo claro u oscuro.</p></div><button class="ghost" onclick="toggleDark()">Cambiar</button></div>
+          <div class="list-row"><div><b>Sesion</b><p class="mini">Cerrar acceso en este dispositivo.</p></div><button class="danger-btn" onclick="logout()">Salir</button></div>
         </div>`);
     }
     function toggleDark(){localStorage.dsDark=localStorage.dsDark==="1"?"0":"1";renderApp()}
-    function toggleMaintenance(){toast("Modo emergencia preparado. Falta endpoint global para pausar compras reales.","bad")}
     function toggleAlerts(ev){
       ev?.stopPropagation();
       const panel=$("#alerts"), unread=state.notifications.filter(n=>!n.read_at).length;
-      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b>Notificaciones</b><span class="notice-dot">${unread}</span></div><div class="list">${state.notifications.map(n=>`<div class="list-row"><div><b>${n.title}</b><p class="muted">${n.body||""}</p></div></div>`).join("")||"<p class='muted'>Sin avisos.</p>"}</div>`;
+      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b>Notificaciones</b><span class="notice-dot">${unread}</span></div><div class="list">${state.notifications.map(n=>`<div class="list-row" style="padding:10px"><div><b style="font-size:13px">${n.title}</b><p class="mini">${n.body||""}</p></div></div>`).join("")||"<p class='muted'>Sin avisos.</p>"}</div>`;
       panel.classList.toggle("show");
     }
     document.addEventListener("click",e=>{if(!e.target.closest("#alerts")&&!e.target.closest(".pill"))$("#alerts")?.classList.remove("show")});
     function openModal(html){$("#alerts").classList.remove("show");$("#modal").innerHTML=`<div class="dialog">${html}</div>`;$("#modal").classList.add("show")}
     function closeModal(){$("#modal").classList.remove("show")}
-    function copyText(text){navigator.clipboard?.writeText(text);toast("Copiado al portapapeles","ok")}
+    function copyText(text){navigator.clipboard?.writeText(text).then(()=>toast("Copiado","ok")).catch(()=>toast("No se pudo copiar","bad"))}
     function escapeJs(text){return String(text||"").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n","\\n")}
 
+    // ─── PWA ───────────────────────────────────────────
+    window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;if(localStorage.dsPwaDismissed!=="1")document.getElementById("pwa-banner").classList.add("show")});
+    function installPwa(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==="accepted")toast("App instalada","ok");deferredPrompt=null;closePwaBanner()})}
+    function closePwaBanner(){document.getElementById("pwa-banner").classList.remove("show");localStorage.dsPwaDismissed="1"}
+    if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+
+    // ─── INIT ──────────────────────────────────────────
     token ? boot().catch(()=>{localStorage.removeItem("dsToken");token="";renderLogin()}) : renderLogin();
   </script>
 </body>
 </html>
+
