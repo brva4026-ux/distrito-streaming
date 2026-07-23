@@ -1050,7 +1050,7 @@
     window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;if(localStorage.dsPwaDismissed!=="1")document.getElementById("pwa-banner").classList.add("show")});
     function installPwa(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==="accepted")toast("App instalada","ok");deferredPrompt=null;closePwaBanner()})}
     function closePwaBanner(){document.getElementById("pwa-banner").classList.remove("show");localStorage.dsPwaDismissed="1"}
-    if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+    if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(r=>r.unregister()));caches.keys().then(keys=>keys.forEach(k=>caches.delete(k)));navigator.serviceWorker.register("sw.js").catch(()=>{})}
 
     // ─── INIT ──────────────────────────────────────────
     token ? boot().catch(()=>{localStorage.removeItem("dsToken");token="";renderLogin()}) : renderLogin();
