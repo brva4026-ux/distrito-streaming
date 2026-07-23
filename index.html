@@ -273,6 +273,92 @@
     .analytics-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
     .analytics-row:last-child{border-bottom:none}
 
+    /* ═══════════════════════════════════════════════════════
+       EFFECTS SYSTEM - Premium Visual Effects
+       ═══════════════════════════════════════════════════════ */
+
+    /* ─── AMBIENT BACKGROUND ─── */
+    .app-bg{position:relative;overflow:hidden}
+    .app-bg::before{content:"";position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%,rgba(8,119,255,.04) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(39,194,255,.03) 0%,transparent 50%);animation:ambientFloat 20s ease-in-out infinite;pointer-events:none;z-index:-1}
+    @keyframes ambientFloat{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(2%,1%) rotate(1deg)}50%{transform:translate(-1%,2%) rotate(-1deg)}75%{transform:translate(1%,-1%) rotate(0.5deg)}}
+
+    /* ─── PAGE TRANSITIONS ─── */
+    .main{animation:pageIn .4s cubic-bezier(.2,.8,.2,1)}
+    @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    .card,.list-row,.product,.quick-btn{animation:elementIn .5s cubic-bezier(.2,.8,.2,1) backwards}
+    .card:nth-child(1){animation-delay:.05s}
+    .card:nth-child(2){animation-delay:.1s}
+    .card:nth-child(3){animation-delay:.15s}
+    @keyframes elementIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+
+    /* ─── CARD HOVER EFFECTS ─── */
+    .card{transition:all .3s cubic-bezier(.2,.8,.2,1)}
+    .card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 40px rgba(8,119,255,.1)}
+    body.dark .card:hover{box-shadow:0 20px 40px rgba(0,0,0,.25),0 0 0 1px rgba(59,130,246,.1)}
+
+    /* ─── PRODUCT 3D TILT ─── */
+    .product{transform-style:preserve-3d;perspective:1000px}
+    .product:hover{transform:translateY(-8px) rotateX(2deg) rotateY(-2deg);box-shadow:0 25px 60px rgba(8,119,255,.25),0 0 40px rgba(8,119,255,.1)}
+
+    /* ─── BUTTON RIPPLE EFFECT ─── */
+    .primary,.ok-btn,.quick-btn{position:relative;overflow:hidden}
+    .primary::before,.ok-btn::before,.quick-btn::before{content:"";position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.25);border-radius:50%;transform:translate(-50%,-50%);transition:width .5s,height .5s}
+    .primary:active::before,.ok-btn:active::before,.quick-btn:active::before{width:300px;height:300px}
+
+    /* ─── GLOW EFFECTS ─── */
+    .primary{box-shadow:0 8px 24px rgba(8,119,255,.25),0 0 0 0 rgba(8,119,255,0)}
+    .primary:hover{box-shadow:0 12px 32px rgba(8,119,255,.35),0 0 20px rgba(8,119,255,.2)}
+    .product .primary{box-shadow:0 8px 24px rgba(0,212,255,.25),0 0 0 0 rgba(0,212,255,0)}
+    .product .primary:hover{box-shadow:0 12px 32px rgba(0,212,255,.4),0 0 25px rgba(0,212,255,.2)}
+
+    /* ─── SUCCESS ANIMATION ─── */
+    .success-pulse{animation:successBounce .6s cubic-bezier(.68,-.55,.265,1.55)}
+    @keyframes successBounce{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .toast.ok{animation:toastSlideIn .4s cubic-bezier(.2,.8,.2,1)}
+    @keyframes toastSlideIn{from{opacity:0;transform:translateX(-50%) translateY(20px) scale(.9)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+
+    /* ─── ICON MICRO-INTERACTIONS ─── */
+    .nav button svg,.quick-btn svg,.profile-action svg{transition:all .2s ease}
+    .nav button:hover svg,.quick-btn:hover svg{transform:scale(1.15)}
+    .nav button:active svg,.quick-btn:active svg{transform:scale(.95)}
+
+    /* ─── TAG ANIMATIONS ─── */
+    .tag{transition:all .2s cubic-bezier(.2,.8,.2,1)}
+    .tag:hover{transform:scale(1.05)}
+    .notice-dot{animation:noticePulse 2s ease-in-out infinite}
+    @keyframes noticePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+    /* ─── MODAL ANIMATIONS ─── */
+    .dialog{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+    @keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.95)}to{opacity:1;transform:none}}
+    .modal.show{animation:modalOverlay .3s ease}
+    @keyframes modalOverlay{from{opacity:0}to{opacity:1}}
+
+    /* ─── LOADING SKELETON GLOW ─── */
+    .skeleton{position:relative;overflow:hidden}
+    .skeleton::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);animation:skeletonGlow 2s infinite}
+    @keyframes skeletonGlow{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+    /* ─── GRADIENT BORDER EFFECT ─── */
+    .product{background:linear-gradient(180deg,rgba(13,29,49,.95),rgba(7,21,38,.98));border:none;position:relative}
+    .product::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(39,194,255,.1),rgba(59,130,246,.05));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .product:hover::before{background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(39,194,255,.2),rgba(59,130,246,.1))}
+
+    /* ─── PULSE RING EFFECT ─── */
+    .avatar{position:relative}
+    .avatar::after{content:"";position:absolute;inset:-3px;border-radius:14px;border:2px solid rgba(8,119,255,.3);animation:avatarRing 3s ease-in-out infinite}
+    @keyframes avatarRing{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.6;transform:scale(1.02)}}
+
+    /* ─── FLOATING LABELS ─── */
+    .form label{transition:all .2s ease}
+    .form label:focus-within{color:var(--blue);transform:translateX(4px)}
+
+    /* ─── SCROLL PROGRESS ─── */
+    .main{scrollbar-width:thin;scrollbar-color:rgba(8,119,255,.3) transparent}
+    .main::-webkit-scrollbar{width:6px}
+    .main::-webkit-scrollbar-thumb{background:rgba(8,119,255,.3);border-radius:999px}
+    .main::-webkit-scrollbar-thumb:hover{background:rgba(8,119,255,.5)}
+
     /* ─── LOADING SPINNER ─── */
     .loading-overlay{position:fixed;inset:0;background:rgba(7,21,38,.7);backdrop-filter:blur(8px);display:none;place-items:center;z-index:100}
     .loading-overlay.show{display:grid}
@@ -515,7 +601,61 @@
     window.addEventListener("offline",checkOnline);
     checkOnline();
 
-    // ─── PULL TO REFRESH ─────────────────────────────
+    // ─── VISUAL EFFECTS ────────────────────────────────
+    function initEffects(){
+      // 3D Tilt on product cards
+      document.querySelectorAll(".product").forEach(card=>{
+        card.addEventListener("mousemove",e=>{
+          const rect=card.getBoundingClientRect();
+          const x=e.clientX-rect.left;
+          const y=e.clientY-rect.top;
+          const centerX=rect.width/2;
+          const centerY=rect.height/2;
+          const rotateX=(y-centerY)/20;
+          const rotateY=(centerX-x)/20;
+          card.style.transform=`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        });
+        card.addEventListener("mouseleave",()=>{
+          card.style.transform="perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+        });
+      });
+
+      // Ripple effect on buttons
+      document.querySelectorAll(".primary,.ok-btn,.quick-btn").forEach(btn=>{
+        btn.addEventListener("click",e=>{
+          const ripple=document.createElement("span");
+          ripple.style.cssText=`position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:ripple .6s linear;pointer-events:none`;
+          const rect=btn.getBoundingClientRect();
+          const size=Math.max(rect.width,rect.height);
+          ripple.style.width=ripple.style.height=size+"px";
+          ripple.style.left=(e.clientX-rect.left-size/2)+"px";
+          ripple.style.top=(e.clientY-rect.top-size/2)+"px";
+          btn.appendChild(ripple);
+          setTimeout(()=>ripple.remove(),600);
+        });
+      });
+
+      // Scroll reveal for cards
+      const observer=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.style.opacity="1";
+            entry.target.style.transform="translateY(0)";
+          }
+        });
+      },{threshold:0.1});
+      document.querySelectorAll(".card,.list-row,.product").forEach(el=>{
+        el.style.opacity="0";
+        el.style.transform="translateY(20px)";
+        el.style.transition="all .5s cubic-bezier(.2,.8,.2,1)";
+        observer.observe(el);
+      });
+    }
+
+    // Add ripple keyframe dynamically
+    const style=document.createElement("style");
+    style.textContent="@keyframes ripple{to{transform:scale(4);opacity:0}}";
+    document.head.appendChild(style);
     let pullStartY=0,pullCurrentY=0,isPulling=false,isRefreshing=false;
     const pullIndicator=$("#pullIndicator"),pullText=$("#pullText");
     const PULL_THRESHOLD=80;
@@ -745,7 +885,7 @@
           ${renderView()}
         </main>
       </div>`;
-      setTimeout(()=>initPullToRefresh(),100);
+      setTimeout(()=>{initPullToRefresh();initEffects()},100);
     }
     function renderView(){
       return ({home,store,orders,reports,ads,users,payments,admin,analytics}[state.view] || home)();
