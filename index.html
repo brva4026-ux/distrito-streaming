@@ -285,6 +285,15 @@
     .offline-banner{display:none;position:fixed;top:0;left:0;right:0;background:#ef4444;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;z-index:200}
     .offline-banner.show{display:block}
 
+    /* ─── PULL TO REFRESH ─── */
+    .pull-indicator{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-60px);width:40px;height:40px;border-radius:50%;background:var(--panel);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;z-index:35;transition:transform .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .pull-indicator.show{transform:translateX(-50%) translateY(16px)}
+    .pull-indicator.refreshing{transform:translateX(-50%) translateY(16px)}
+    .pull-indicator svg{width:20px;height:20px;stroke:var(--blue);transition:transform .3s}
+    .pull-indicator.refreshing svg{animation:spin .8s linear infinite}
+    .pull-text{position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--muted);z-index:35;opacity:0;transition:all .3s;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .pull-text.show{transform:translateX(-50%) translateY(0);opacity:1}
+
     /* ─── TABLE MOBILE CARDS ─── */
     @media(max-width:768px){
       .table-wrap{border:none;background:transparent}
@@ -421,6 +430,8 @@
   <div id="root"></div>
   <div id="loading" class="loading-overlay"><div><div class="spinner"></div><div class="loading-text">Cargando...</div></div></div>
   <div id="offline" class="offline-banner">Sin conexion a internet - Algunas funciones pueden no estar disponibles</div>
+  <div id="pullIndicator" class="pull-indicator"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></div>
+  <div id="pullText" class="pull-text">Desliza para actualizar</div>
   <div id="modal" class="modal"></div>
   <div id="alerts" class="alerts-panel"></div>
   <div id="toast" class="toast"></div>
@@ -490,6 +501,55 @@
     window.addEventListener("online",checkOnline);
     window.addEventListener("offline",checkOnline);
     checkOnline();
+
+    // ─── PULL TO REFRESH ─────────────────────────────
+    let pullStartY=0,pullCurrentY=0,isPulling=false,isRefreshing=false;
+    const pullIndicator=$("#pullIndicator"),pullText=$("#pullText");
+    const PULL_THRESHOLD=80;
+    function initPullToRefresh(){
+      const main=$(".main");
+      if(!main)return;
+      main.addEventListener("touchstart",e=>{
+        if(main.scrollTop<=0&&!isRefreshing){pullStartY=e.touches[0].clientY;isPulling=true}
+      },{passive:true});
+      main.addEventListener("touchmove",e=>{
+        if(!isPulling||isRefreshing)return;
+        pullCurrentY=e.touches[0].clientY;
+        const diff=pullCurrentY-pullStartY;
+        if(diff>0&&main.scrollTop<=0){
+          const progress=Math.min(diff/PULL_THRESHOLD,1);
+          pullIndicator.style.transform=`translateX(-50%) translateY(${Math.min(diff*0.5,60)-60}px)`;
+          pullIndicator.style.opacity=progress;
+          pullText.style.opacity=progress;
+          pullText.style.transform=`translateX(-50%) translateY(${Math.min(diff*0.5,60)-40}px)`;
+          if(progress>=1){pullText.textContent="Suelta para actualizar"}else{pullText.textContent="Desliza para actualizar"}
+        }
+      },{passive:true});
+      main.addEventListener("touchend",()=>{
+        if(!isPulling||isRefreshing)return;
+        const diff=pullCurrentY-pullStartY;
+        if(diff>PULL_THRESHOLD&&main.scrollTop<=0){refreshData()}
+        else{resetPull()}
+        isPulling=false;
+      });
+    }
+    async function refreshData(){
+      isRefreshing=true;
+      pullIndicator.classList.add("refreshing");
+      pullText.textContent="Actualizando...";
+      pullText.classList.add("show");
+      try{await boot();toast("Datos actualizados","ok")}
+      catch(e){toast("Error al actualizar","bad")}
+      finally{resetPull();isRefreshing=false}
+    }
+    function resetPull(){
+      pullIndicator.classList.remove("show","refreshing");
+      pullIndicator.style.transform="translateX(-50%) translateY(-60px)";
+      pullIndicator.style.opacity="0";
+      pullText.classList.remove("show");
+      pullText.style.opacity="0";
+      pullText.style.transform="translateX(-50%) translateY(-20px)";
+    }
 
     // ─── API ───────────────────────────────────────────
     async function api(path,opt={}){
@@ -661,6 +721,7 @@
           ${renderView()}
         </main>
       </div>`;
+      setTimeout(()=>initPullToRefresh(),100);
     }
     function renderView(){
       return ({home,store,orders,reports,ads,users,payments,admin,analytics}[state.view] || home)();
