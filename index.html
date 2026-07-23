@@ -141,21 +141,18 @@
     .quick-btn.primary-q svg{stroke:#fff}
     .quick-btn span{position:relative;z-index:1}
 
-    .store-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-    .product{padding:0;overflow:hidden;border-radius:20px;position:relative;transition:.25s;background:linear-gradient(180deg,rgba(13,29,49,.9),rgba(7,21,38,.95));border:1px solid rgba(59,130,246,.15);backdrop-filter:blur(12px)}
-    .product:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(8,119,255,.2),0 0 30px rgba(8,119,255,.08);border-color:rgba(59,130,246,.3)}
-    .poster{height:auto;padding:24px 14px 8px;overflow:hidden;position:relative;background:transparent;display:flex;align-items:center;justify-content:center}
+    .store-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .product{padding:0;overflow:hidden;border-radius:20px;position:relative;transition:.25s;background:linear-gradient(180deg,rgba(13,29,49,.95),rgba(7,21,38,.98));border:1px solid rgba(59,130,246,.12);backdrop-filter:blur(12px)}
+    .product:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(8,119,255,.2),0 0 30px rgba(8,119,255,.08);border-color:rgba(59,130,246,.25)}
+    .poster{height:140px;padding:20px 14px 8px;overflow:hidden;position:relative;background:transparent;display:flex;align-items:center;justify-content:center}
     .poster:before,.poster:after,.poster .svc,.poster .shine,.poster .brandmark{display:none}
-    .poster .logo-word{position:relative;left:auto;right:auto;bottom:auto;margin:0 auto;width:fit-content;display:flex;align-items:center;justify-content:center}
-    .poster .logo-word svg{width:130px;height:auto;max-height:70px}
-    .poster .logo-word img{width:130px;height:auto;max-height:70px;object-fit:contain}
+    .poster .logo-word{position:relative;left:auto;right:auto;bottom:auto;margin:0 auto;width:fit-content;display:flex;align-items:center;justify-content:center;height:100%}
     .poster .stock{position:absolute;right:14px;top:14px;z-index:2;border-radius:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);padding:6px 12px;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px)}
-    .product-body{padding:8px 20px 20px;text-align:center}
-    .product h3{margin:0 0 4px;font-size:18px;font-weight:800;color:#fff}
-    .product .mini{color:rgba(255,255,255,.5);font-size:11px;margin-bottom:12px;display:block}
-    .product .price{font-size:28px;font-weight:1000;color:#00d4ff;margin:12px 0 16px;text-shadow:0 0 20px rgba(0,212,255,.3)}
-    .product .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.3),transparent);margin:0 0 16px}
-    .product .primary{width:100%;background:linear-gradient(135deg,#0891ff,#00d4ff);border:none;border-radius:12px;padding:14px;font-size:14px;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(0,212,255,.25);transition:all .2s}
+    .product-body{padding:4px 20px 20px;text-align:center}
+    .product .mini{color:rgba(255,255,255,.5);font-size:11px;margin-bottom:8px;display:block}
+    .product .price{font-size:26px;font-weight:1000;color:#00d4ff;margin:8px 0 14px;text-shadow:0 0 20px rgba(0,212,255,.3)}
+    .product .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.3),transparent);margin:0 0 14px}
+    .product .primary{width:100%;background:linear-gradient(135deg,#0891ff,#00d4ff);border:none;border-radius:12px;padding:13px;font-size:13px;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(0,212,255,.25);transition:all .2s}
     .product .primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,212,255,.35)}
     .product.unavailable{opacity:.4;filter:saturate(.3)}
     .product.unavailable:before{content:"AGOTADO";position:absolute;z-index:5;right:14px;top:14px;background:rgba(239,68,68,.9);color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:1000;backdrop-filter:blur(8px)}
@@ -646,13 +643,13 @@
       const isPersonal = p.shared === false || String(p.share_type||"").toLowerCase() === "personal";
       const ops = operatorCount(p.id);
       const logos = {
-        netflix:`<div style="width:120px;height:60px;background:#E50914;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;color:#fff;font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:2px">N</div>`,
-        spotify:`<div style="width:80px;height:80px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="#000"><path d="M6 15c-.2 0-.4-.1-.6-.2-.5-.3-.6-.9-.3-1.4 1.7-3 5.2-3.9 8.4-2.7.5.2.7.8.5 1.3-.2.5-.8.7-1.3.5-2.3-.8-5.3-.2-6.9 2.1-.3.4-.8.6-1.2.5l1.4.4zM14.3 12.3c-.2 0-.3-.1-.5-.2-1.2-1.8-3.7-2.3-5.9-1.6-.5.2-.9-.1-1.1-.5-.2-.5.1-.9.5-1.1 2.7-.8 5.7-.3 7.3 2 .4.5.2 1.1-.4 1.4z"/><path d="M16 10.5c-.2 0-.3 0-.5-.1-1.5-2.4-4.5-3-6.8-2.1-.5.2-1.1-.1-1.3-.6-.2-.5.1-1.1.6-1.3 2.8-1 6.2-.4 8.1 2.4.5.6.2 1.2-.5 1.5-.1.1-.3.2-.6.2z"/></svg></div>`,
-        max:`<div style="width:120px;height:60px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:#fff;font-family:'Arial',sans-serif;letter-spacing:2px">max</div>`,
-        prime:`<div style="width:120px;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1"><span style="font-size:22px;font-weight:700;color:#00A8E1;font-family:'Arial',sans-serif">prime</span><span style="font-size:16px;color:#fff;font-family:'Arial',sans-serif">video</span><svg width="80" height="8" viewBox="0 0 80 8"><path d="M0 6 Q40 0 80 6" stroke="#00A8E1" stroke-width="2" fill="none"/></svg></div>`,
-        disney:`<div style="width:120px;height:60px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;font-family:'Arial',sans-serif">Disney+</div>`,
-        youtube:`<div style="width:80px;height:60px;display:flex;align-items:center;justify-content:center"><div style="width:60px;height:40px;background:#FF0000;border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px"></div></div></div>`,
-        other:`<div style="width:60px;height:60px;background:#7AA6C8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff">?</div>`
+        netflix:`<div style="width:100px;height:50px;background:#E50914;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:#fff;font-family:Impact,sans-serif;letter-spacing:2px">N</div>`,
+        spotify:`<div style="width:70px;height:70px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="#000"><path d="M6 15c-.2 0-.4-.1-.6-.2-.5-.3-.6-.9-.3-1.4 1.7-3 5.2-3.9 8.4-2.7.5.2.7.8.5 1.3-.2.5-.8.7-1.3.5-2.3-.8-5.3-.2-6.9 2.1-.3.4-.8.6-1.2.5l1.4.4zM14.3 12.3c-.2 0-.3-.1-.5-.2-1.2-1.8-3.7-2.3-5.9-1.6-.5.2-.9-.1-1.1-.5-.2-.5.1-.9.5-1.1 2.7-.8 5.7-.3 7.3 2 .4.5.2 1.1-.4 1.4z"/><path d="M16 10.5c-.2 0-.3 0-.5-.1-1.5-2.4-4.5-3-6.8-2.1-.5.2-1.1-.1-1.3-.6-.2-.5.1-1.1.6-1.3 2.8-1 6.2-.4 8.1 2.4.5.6.2 1.2-.5 1.5-.1.1-.3.2-.6.2z"/></svg></div>`,
+        max:`<div style="font-size:44px;font-weight:700;color:#fff;font-family:'Arial',sans-serif;letter-spacing:1px">max</div>`,
+        prime:`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1"><span style="font-size:20px;font-weight:700;color:#00A8E1;font-family:'Arial',sans-serif">prime</span><span style="font-size:14px;color:#fff;font-family:'Arial',sans-serif">video</span><svg width="70" height="6" viewBox="0 0 70 6"><path d="M0 5 Q35 0 70 5" stroke="#00A8E1" stroke-width="2" fill="none"/></svg></div>`,
+        disney:`<div style="font-size:24px;font-weight:700;color:#fff;font-family:'Arial',sans-serif">Disney+</div>`,
+        youtube:`<div style="width:60px;height:42px;background:#FF0000;border-radius:10px;display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:3px"></div></div>`,
+        other:`<div style="width:50px;height:50px;background:#7AA6C8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff">?</div>`
       };
       const logo = logos[cls] || logos.other;
       return `<article class="product ${available?"":"unavailable"}">
@@ -662,7 +659,6 @@
           <div class="logo-word">${logo}</div>
         </div>
         <div class="product-body">
-          <h3>${serviceName(p.name)}</h3>
           <span class="mini">${isPersonal?"1 operador por cuenta":`${MAX_OPERATORS_PER_PRODUCT} operadores max.`}</span>
           <div class="price">${money(price)}</div>
           <div class="divider"></div>
