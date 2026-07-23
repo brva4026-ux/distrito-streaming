@@ -84,7 +84,8 @@
     .primary::after{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .5s ease}
     .primary:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(8,119,255,.28)}
     .primary:hover::after{left:120%}
-    .ghost{background:var(--panel);border:1px solid var(--line);color:var(--blue)}
+    .ghost{background:var(--panel);border:1px solid var(--line);color:var(--blue);transition:all .18s ease}
+    .ghost:hover{background:rgba(8,119,255,.06);border-color:rgba(8,119,255,.3);transform:translateY(-1px)}
     .danger-btn{background:#fff6ed;border:1px solid #ffd6ad;color:#e65100}
     body.dark .danger-btn{background:rgba(50,27,16,.6);border-color:rgba(107,52,20,.5);color:#ffb36e}
     .ok-btn{background:#12a454;color:#fff;box-shadow:0 12px 24px rgba(18,164,84,.16)}
@@ -540,7 +541,7 @@
             <div class="top-actions">
               ${!isAdmin()?`<button class="pill" onclick="openTopup()"><span class="mini-ico">${icons.wallet}</span><span><small>Saldo</small>${money(u.balance)}</span></button>`:`<button class="pill"><span class="mini-ico">${icons.wallet}</span><span><small>Saldo admin</small>${money(u.balance)}</span></button>`}
               <button class="pill" onclick="toggleAlerts(event)"><span class="mini-ico">${icons.bell}</span>Avisos <span class="notice-dot">${unread}</span></button>
-              <button class="ghost" title="Modo oscuro" onclick="toggleDark()">${icons.moon}</button>
+              <button class="ghost" title="${localStorage.dsDark==="1"?"Modo claro":"Modo oscuro"}" onclick="toggleDark()" style="display:flex;align-items:center;gap:6px;padding:8px 12px">${localStorage.dsDark==="1"?`<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;stroke:var(--blue)"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`:`${icons.moon}`} ${localStorage.dsDark==="1"?"Claro":"Oscuro"}</button>
               <button class="danger-btn" onclick="logout()">Salir</button>
             </div>
           </header>
