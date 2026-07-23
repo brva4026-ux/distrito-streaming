@@ -32,12 +32,13 @@
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:rgba(8,119,255,.25);border-radius:999px}
     ::-webkit-scrollbar-thumb:hover{background:rgba(8,119,255,.4)}
-    body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
-    button,input,select,textarea{font:inherit;border:0}
-    button{cursor:pointer;transition:all .18s ease}
+    body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+    button,input,select,textarea{font:inherit;border:0;-webkit-appearance:none;appearance:none}
+    button{cursor:pointer;transition:all .18s ease;touch-action:manipulation}
     button:disabled{cursor:not-allowed;opacity:.5}
     a{color:var(--blue);text-decoration:none;font-weight:700;transition:color .15s}
     img{max-width:100%;display:block}
+    input:focus,select:focus,textarea:focus{outline:none}
     .muted{color:var(--muted)}
     .hide{display:none!important}
 
@@ -273,45 +274,73 @@
       .login-panel{padding:28px 20px}
       .login-panel h1{font-size:30px}
       .app{grid-template-columns:1fr}
-      .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:6px;border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--panel)}
+      .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:8px 6px env(safe-area-inset-bottom,8px);border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--panel);backdrop-filter:blur(16px)}
       body.dark .side{background:rgba(13,29,49,.95)}
-      .side-brand,.profile-card,.nav-title{display:none}
-      .nav{display:flex;overflow-x:auto;gap:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .side-brand,.nav-title{display:none}
+      .profile-card{display:none!important}
+      .nav{display:flex;overflow-x:auto;gap:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 4px}
       .nav::-webkit-scrollbar{display:none}
-      .nav button{min-width:76px;justify-content:center;flex-direction:column;font-size:10px;padding:8px 6px;gap:3px;min-height:48px}
-      .nav button svg{width:20px;height:20px}
-      .main{padding:14px 12px 80px}
-      .top{flex-direction:column;align-items:flex-start}
-      .top-actions{width:100%;justify-content:flex-start}
+      .nav button{min-width:64px;justify-content:center;flex-direction:column;font-size:10px;padding:10px 8px;gap:4px;min-height:52px;border-radius:12px}
+      .nav button svg{width:22px;height:22px}
+      .nav button.active{background:linear-gradient(135deg,#2aa0ff,#005be6);color:#fff;box-shadow:0 4px 12px rgba(8,119,255,.3)}
+      .main{padding:16px 14px calc(80px + env(safe-area-inset-bottom,0px))}
+      .top{flex-direction:column;align-items:flex-start;gap:12px}
+      .top-actions{width:100%;justify-content:flex-start;flex-wrap:wrap;gap:8px}
       .quick,.metrics,.split{grid-template-columns:1fr}
-      .store-grid{grid-template-columns:repeat(2,1fr)}
+      .store-grid{grid-template-columns:repeat(2,1fr);gap:12px}
       .list-row.compact-order{grid-template-columns:1fr}
       .client-data{grid-template-columns:1fr 1fr}
-      .quick-intro{padding:6px}
-      .quick-btn{min-height:68px;font-size:12px}
+      .quick-intro{padding:8px}
+      .quick-btn{min-height:72px;font-size:12px;border-radius:14px}
       .product h3{font-size:14px}
-      .poster{height:118px}
+      .poster{height:120px}
       .report-status{grid-template-columns:repeat(2,1fr)}
-      .admin-action{grid-template-columns:36px 1fr}
-      .admin-action .ghost,.admin-action .primary{grid-column:1/-1;width:100%}
-      .ops-toolbar{flex-direction:column;align-items:stretch}
-      .ops-toolbar input{min-width:0}
-      .toast{bottom:auto;top:16px}
+      .admin-action{grid-template-columns:40px 1fr;gap:12px;padding:14px}
+      .admin-action .ghost,.admin-action .primary{grid-column:1/-1;width:100%;min-height:44px}
+      .ops-toolbar{flex-direction:column;align-items:stretch;gap:10px}
+      .ops-toolbar input{min-width:0;min-height:44px}
+      .toast{bottom:auto;top:16px;left:16px;right:16px;transform:none;text-align:center}
+      .toast.show{transform:none}
+      .pwa-banner{padding:14px 16px env(safe-area-inset-bottom,14px)}
+      .pill{min-height:44px}
+      .pill:hover{transform:none}
     }
     @media(max-width:560px){
-      .store-grid{grid-template-columns:1fr}
-      .pill{font-size:12px;padding:6px 10px}
+      .store-grid{grid-template-columns:1fr;gap:16px}
+      .pill{font-size:12px;padding:8px 12px}
       .top-actions .ghost.danger-btn{display:none}
       .client-data{grid-template-columns:1fr}
-      .pay-card{grid-template-columns:70px 1fr}
-      .dialog{padding:16px}
-      .card{padding:14px}
-      .metrics{grid-template-columns:repeat(2,1fr)}
+      .pay-card{grid-template-columns:80px 1fr;gap:16px;padding:16px}
+      .dialog{padding:20px;margin:10px;max-height:calc(100vh - 20px)}
+      .card{padding:16px;border-radius:16px}
+      .metrics{grid-template-columns:1fr 1fr;gap:10px}
+      .metric{flex-direction:column;text-align:center;gap:8px;padding:12px}
+      .metric b{font-size:18px}
       .report-status{grid-template-columns:1fr 1fr}
       .login-panel h1{font-size:26px}
       .login-panel>p{font-size:13px}
-      .field{height:48px;padding:0 14px}
-      .field input{font-size:14px}
+      .field{height:52px;padding:0 16px;border-radius:14px}
+      .field input{font-size:16px}
+      .form input,.form select,.form textarea{min-height:48px;font-size:16px}
+      .btn,.primary,.ghost,.danger-btn,.ok-btn{min-height:48px;font-size:15px}
+      .product .price{font-size:24px}
+      .product .primary{padding:14px;font-size:14px}
+      .list-row{padding:14px;gap:12px}
+      .table-wrap{border-radius:12px}
+      .modal{padding:8px}
+      .alerts-panel{right:8px;left:8px;width:auto}
+    }
+    @media(max-width:380px){
+      .store-grid{grid-template-columns:1fr}
+      .nav button{min-width:56px;font-size:9px;padding:8px 4px}
+      .nav button svg{width:20px;height:20px}
+      .top h1{font-size:20px}
+      .product .price{font-size:22px}
+    }
+    @supports(padding:env(safe-area-inset-bottom)){
+      .side{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+      .main{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+      .pwa-banner{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
     }
 
     /* ─── DARK MODE: OVERRIDE COMPLETO ─── */
