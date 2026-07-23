@@ -91,6 +91,24 @@
     body.dark .danger-btn{background:rgba(50,27,16,.6);border-color:rgba(107,52,20,.5);color:#ffb36e}
     .ok-btn{background:#12a454;color:#fff;box-shadow:0 12px 24px rgba(18,164,84,.16)}
     .login-panel .primary{width:100%;height:56px;font-size:17px;border-radius:var(--radius)}
+
+    /* ─── DOWNLOAD SECTION ─── */
+    .download-section{margin-top:24px;text-align:center}
+    .download-title{font-size:11px;font-weight:1000;color:var(--muted);letter-spacing:.12em;margin-bottom:12px;text-transform:uppercase}
+    .download-buttons{display:flex;gap:10px;justify-content:center}
+    .download-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s ease;border:2px solid transparent;min-width:140px}
+    .download-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+    .download-btn:active{transform:translateY(0)}
+    .download-btn.android{background:#000;color:#fff;border-color:#000}
+    .download-btn.android:hover{background:#1a1a1a;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+    .download-btn.ios{background:#000;color:#fff;border-color:#000}
+    .download-btn.ios:hover{background:#1a1a1a;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+    .download-btn svg{flex-shrink:0}
+    body.dark .download-btn.android{background:rgba(18,37,59,.8);border-color:#1e3652}
+    body.dark .download-btn.android:hover{background:rgba(25,50,80,.9)}
+    body.dark .download-btn.ios{background:rgba(18,37,59,.8);border-color:#1e3652}
+    body.dark .download-btn.ios:hover{background:rgba(25,50,80,.9)}
+
     .secure{text-align:center;color:var(--muted);font-weight:700;margin-top:16px;font-size:12px}
 
     .app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
@@ -767,26 +785,49 @@
     // ─── LOGIN ─────────────────────────────────────────
     function renderLogin(){
       document.body.className = localStorage.dsDark === "1" ? "dark" : "";
+      const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1;
+      const isAndroid=/Android/.test(navigator.userAgent);
+      const isMobile=isIOS||isAndroid;
       $("#root").innerHTML = `<main class="login app-bg">
         <section class="login-visual"><img src="${ASSETS}distrito-login-brand.png" alt="Distrito Streaming"></section>
         <section class="login-panel">
           <div class="login-brand"><img class="brand-logo" src="${ASSETS}distrito-angel-blue-v1.png" alt=""><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
           <h1>Bienvenido <span>de nuevo</span></h1>
           <p>Accede a tu panel de ventas y gestiona tus cuentas con total control.</p>
-          <div class="role-title">ROL DE ACCESO</div>
-          <div class="role-toggle">
-            <button class="${currentRole==="Usuario"?"active":""}" onclick="setLoginRole('Usuario')"><span>US</span> Usuario</button>
-            <button class="${currentRole==="Administrador"?"active":""}" onclick="setLoginRole('Administrador')"><span>AD</span> Administrador</button>
-          </div>
-          <label class="field">${icons.mail}<input id="email" placeholder="Correo o usuario" autocomplete="username" value="${localStorage.dsRememberEmail || (currentRole==="Administrador" ? "vargasblancobrayan@gmail.com" : "")}"></label>
-          <label class="field">${icons.lock}<input id="password" placeholder="Contrasena" type="password" autocomplete="current-password"></label>
+          <label class="field">${icons.mail}<input id="email" placeholder="Usuario o Email" autocomplete="username" value="${localStorage.dsRememberEmail || ""}"></label>
+          <label class="field">${icons.lock}<input id="password" placeholder="Contraseña" type="password" autocomplete="current-password"></label>
           <div class="login-options"><label class="check"><input type="checkbox" id="rememberMe" ${localStorage.dsRememberEmail?"checked":""}> Recordarme</label><a href="#">Olvidaste tu contrasena?</a></div>
-          <button class="primary" onclick="login()">Ingresar al sistema <span>&rarr;</span></button>
+          <button class="primary" onclick="login()">Ingresar al portal</button>
+          <div class="download-section">
+            <div class="download-title">INSTALAR APP</div>
+            <div class="download-buttons">
+              <button class="download-btn android" onclick="downloadApp('android')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.56.69.56 1.19s-.22.92-.56 1.19l-2.29 1.29-2.5-2.5 2.5-2.5 2.29 1.34M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+                Android
+              </button>
+              <button class="download-btn ios" onclick="downloadApp('ios')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                iOS
+              </button>
+            </div>
+          </div>
           <div class="secure">Acceso seguro y encriptado</div>
         </section>
       </main>`;
     }
-    function setLoginRole(role){currentRole=role;localStorage.dsLoginRole=role;renderLogin()}
+    function downloadApp(platform){
+      if(platform==="android"){
+        // Envia link de descarga APK o Play Store
+        toast("Descargando app para Android...","ok");
+        // Si tienes un APK: window.open("https://tudominio.com/app.apk")
+        // Si esta en Play Store: window.open("https://play.google.com/store/apps/details?id=com.distritostreaming")
+      }else if(platform==="ios"){
+        // Envia link de App Store
+        toast("Redirigiendo a App Store...","ok");
+        // window.open("https://apps.apple.com/app/distrito-streaming/id123456789")
+      }
+    }
+    // Role is now determined by server, not user selection
     async function login(){
       try{
         const email=$("#email").value.trim(), password=$("#password").value;
