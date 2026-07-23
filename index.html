@@ -45,20 +45,20 @@
     .app-bg{min-height:100vh;background:linear-gradient(110deg,rgba(255,255,255,.6),rgba(229,240,255,.7)),radial-gradient(circle at 92% 0,rgba(8,119,255,.12),transparent 32%),radial-gradient(circle at 16% 88%,rgba(39,194,255,.08),transparent 28%),var(--bg)}
     body.dark .app-bg{background:radial-gradient(circle at 90% 0,rgba(8,119,255,.14),transparent 34%),radial-gradient(circle at 12% 88%,rgba(39,194,255,.07),transparent 28%),var(--bg)}
 
-    .login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:32px;padding:28px;overflow:hidden}
-    .login-visual{height:calc(100vh - 56px);min-height:580px;border-radius:28px;overflow:hidden;background:#eef6ff;box-shadow:var(--shadow2);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both}
+    .login{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:24px;padding:24px;overflow:hidden}
+    .login-visual{height:calc(100vh - 48px);min-height:600px;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#e8f4ff,#d4e8ff);box-shadow:var(--shadow2);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both;position:relative;display:flex;align-items:center;justify-content:center}
     .login-visual img{width:100%;height:100%;object-fit:cover}
-    .login-panel{width:min(520px,100%);justify-self:center;background:rgba(255,255,255,.92);border:1px solid rgba(216,230,248,.9);border-radius:var(--radius-lg);box-shadow:var(--shadow2);padding:40px 36px 32px;backdrop-filter:blur(12px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both}
+    .login-panel{width:min(480px,100%);justify-self:center;background:rgba(255,255,255,.95);border:1px solid rgba(216,230,248,.8);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.08);padding:36px 32px 28px;backdrop-filter:blur(16px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both}
     body.dark .login-panel{background:rgba(13,29,49,.92);border-color:rgba(30,54,82,.6)}
     body.dark .login-visual{background:#071526}
     body.dark .login-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,38,.12),rgba(7,21,38,.35));pointer-events:none}
-    .login-brand{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:20px}
-    .brand-logo{width:56px;height:56px;border-radius:16px;object-fit:cover;box-shadow:0 14px 28px rgba(8,119,255,.18);background:#eaf4ff}
-    .brand-title{font-weight:1000;font-size:28px;line-height:.9}
-    .brand-title em{display:block;color:var(--blue);font-style:italic}
-    .login-panel h1{text-align:center;font-size:38px;line-height:1.05;margin-bottom:10px}
+    .login-brand{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:16px}
+    .brand-logo{width:52px;height:52px;border-radius:14px;object-fit:cover;box-shadow:0 8px 24px rgba(8,119,255,.15);background:#eaf4ff}
+    .brand-title{font-weight:1000;font-size:24px;line-height:.9}
+    .brand-title em{display:block;color:var(--blue);font-style:italic;font-weight:900}
+    .login-panel h1{text-align:center;font-size:32px;line-height:1.1;margin-bottom:8px;font-weight:900}
     .login-panel h1 span{color:var(--blue)}
-    .login-panel>p{text-align:center;color:var(--muted);font-size:15px;margin-bottom:24px}
+    .login-panel>p{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.5}
     .role-title{text-align:center;color:var(--blue);font-size:11px;font-weight:1000;letter-spacing:.14em;margin-bottom:8px}
     .role-toggle{display:grid;grid-template-columns:1fr 1fr;padding:6px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.6);box-shadow:inset 0 2px 8px rgba(15,23,42,.03)}
     body.dark .role-toggle{background:rgba(18,37,59,.8)}
@@ -66,11 +66,12 @@
     body.dark .role-toggle button{color:#8da0b8}
     .role-toggle button:hover:not(.active){background:var(--soft);color:var(--text)}
     .role-toggle button.active{background:linear-gradient(135deg,#2ca0ff,#0057dc);color:#fff;box-shadow:0 12px 28px rgba(8,119,255,.25)}
-    .field{height:52px;margin-top:14px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.7);padding:0 16px;box-shadow:0 6px 18px rgba(15,23,42,.03);transition:border-color .2s,box-shadow .2s}
-    .field:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,119,255,.12)}
+    .field{height:50px;margin-top:12px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;background:rgba(255,255,255,.8);padding:0 16px;box-shadow:0 2px 8px rgba(15,23,42,.02);transition:border-color .2s,box-shadow .2s}
+    .field:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,119,255,.1),0 4px 12px rgba(8,119,255,.08)}
     body.dark .field{background:rgba(18,37,59,.85);border-color:#1e3652}
     body.dark .field svg,.body.dark .field .mini-ico svg{stroke:#4da6ff}
-    .field svg,.mini-ico svg{width:18px;height:18px;stroke:var(--blue);flex-shrink:0}
+    .field svg,.mini-ico svg{width:18px;height:18px;stroke:var(--muted);flex-shrink:0;transition:stroke .2s}
+    .field:focus-within svg{stroke:var(--blue)}
     .mini-ico{display:inline-flex;align-items:center;justify-content:center;min-width:20px}
     .field input{width:100%;outline:0;background:transparent!important;color:var(--text);font-size:15px;-webkit-text-fill-color:var(--text);caret-color:var(--text)}
     body.dark .field input{background:rgba(18,37,59,.95)!important;-webkit-text-fill-color:#eef6ff!important;color:#eef6ff!important;caret-color:#eef6ff}
@@ -90,7 +91,7 @@
     .danger-btn{background:#fff6ed;border:1px solid #ffd6ad;color:#e65100}
     body.dark .danger-btn{background:rgba(50,27,16,.6);border-color:rgba(107,52,20,.5);color:#ffb36e}
     .ok-btn{background:#12a454;color:#fff;box-shadow:0 12px 24px rgba(18,164,84,.16)}
-    .login-panel .primary{width:100%;height:56px;font-size:17px;border-radius:var(--radius)}
+    .login-panel .primary{width:100%;height:52px;font-size:16px;border-radius:12px;font-weight:800;letter-spacing:.3px}
 
     /* ─── DOWNLOAD SECTION ─── */
     .download-section{margin-top:24px;text-align:center}
@@ -428,10 +429,11 @@
     @keyframes heroIn{from{opacity:0;transform:translateX(-16px) scale(.985)}to{opacity:1;transform:none}}
 
     @media(max-width:1020px){
-      .login{grid-template-columns:1fr;padding:16px}
+      .login{grid-template-columns:1fr;padding:16px;gap:0}
       .login-visual{display:none}
-      .login-panel{padding:28px 20px}
-      .login-panel h1{font-size:30px}
+      .login-panel{padding:32px 24px;max-width:100%}
+      .login-panel h1{font-size:28px}
+      .login-panel>p{font-size:14px}
       .app{grid-template-columns:1fr}
       .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:8px 6px env(safe-area-inset-bottom,8px);border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--panel);backdrop-filter:blur(16px)}
       body.dark .side{background:rgba(13,29,49,.95)}
