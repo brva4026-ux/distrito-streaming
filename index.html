@@ -659,6 +659,7 @@
           <div class="logo-word">${logo}</div>
         </div>
         <div class="product-body">
+          <h3>${serviceName(p.name)}</h3>
           <div class="price">${money(price)}</div>
           <div class="divider"></div>
           ${available && canBuy?`<button class="primary" onclick="openBuy('${p.id}')">Comprar pantalla</button>`:
