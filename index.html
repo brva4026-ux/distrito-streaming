@@ -141,31 +141,28 @@
     .quick-btn.primary-q svg{stroke:#fff}
     .quick-btn span{position:relative;z-index:1}
 
-    .store-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-    .product{padding:0;overflow:hidden;border-radius:var(--radius);position:relative;transition:.18s}
-    .product:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(8,119,255,.14)}
-    .poster{height:138px;position:relative;overflow:hidden;padding:12px;background:#0f172a;color:#fff}
-    .poster:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 80% 20%,var(--accent),transparent 28%),linear-gradient(135deg,rgba(255,255,255,.16),transparent 40%);opacity:.92}
-    .poster:after{content:"";position:absolute;left:16px;right:16px;bottom:22px;height:52px;border-radius:10px;background:#09111f;box-shadow:0 16px 24px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.07);transform:perspective(360px) rotateX(4deg)}
-    .poster .svc{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(5,13,24,.4);padding:6px 9px;font-weight:1000;font-size:11px}
-    .poster .stock{position:absolute;right:9px;top:9px;z-index:1;border-radius:999px;background:rgba(255,255,255,.85);color:#142033;padding:5px 9px;font-size:11px;font-weight:1000;backdrop-filter:blur(4px)}
-    .poster .logo-word{position:absolute;left:0;right:0;bottom:36px;z-index:2;text-align:center;font-size:22px;font-weight:1000;color:#fff;text-shadow:0 0 16px var(--accent)}
-    .poster .brandmark{position:absolute;left:16px;bottom:12px;z-index:2;font-size:10px;letter-spacing:.16em;font-weight:1000;color:rgba(255,255,255,.65)}
-    .poster .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.22),transparent 58%);transform:translateX(-100%);animation:shine 6s ease-in-out infinite}
-    @keyframes shine{0%,60%{transform:translateX(-100%)}80%,100%{transform:translateX(100%)}}
-    .netflix{--accent:#ef1437;background:linear-gradient(135deg,#3b0008,#16080c)}
-    .prime{--accent:#00b8ff;background:linear-gradient(135deg,#063047,#071827)}
-    .max{--accent:#7c3aed;background:linear-gradient(135deg,#25104a,#11091e)}
-    .disney{--accent:#0a74ff;background:linear-gradient(135deg,#082b6f,#061529)}
-    .spotify{--accent:#19c263;background:linear-gradient(135deg,#07371e,#06140d)}
-    .youtube{--accent:#ff0033;background:linear-gradient(135deg,#3a0712,#161016)}
-    .other{--accent:#7aa6c8;background:linear-gradient(135deg,#23364d,#121a25)}
-    .product-body{padding:14px}
-    .product.unavailable{opacity:.45;filter:saturate(.3)}
-    .product.unavailable .poster:after{box-shadow:none}
-    .product.unavailable .poster .logo-word{text-shadow:none;color:#c7d3e2}
-    .product.unavailable:before{content:"AGOTADO";position:absolute;z-index:5;right:12px;top:12px;background:#fff;color:#ef4444;border:1px solid #fecaca;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:1000}
-    .product h3{margin:0 0 6px;font-size:15px}
+    .store-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .product{padding:0;overflow:hidden;border-radius:20px;position:relative;transition:.25s;background:linear-gradient(180deg,rgba(13,29,49,.9),rgba(7,21,38,.95));border:1px solid rgba(59,130,246,.15);backdrop-filter:blur(12px)}
+    .product:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(8,119,255,.2),0 0 30px rgba(8,119,255,.08);border-color:rgba(59,130,246,.3)}
+    .poster{height:0;padding:0;overflow:visible;position:relative;background:transparent}
+    .poster:before,.poster:after,.poster .svc,.poster .shine,.poster .brandmark{display:none}
+    .poster .logo-word{position:relative;left:auto;right:auto;bottom:auto;font-size:48px;margin:28px auto 0;width:fit-content;text-shadow:none}
+    .poster .stock{position:absolute;right:14px;top:14px;z-index:2;border-radius:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);padding:6px 12px;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px)}
+    .product-body{padding:8px 20px 20px;text-align:center}
+    .product h3{margin:0 0 4px;font-size:18px;font-weight:800;color:#fff}
+    .product .mini{color:rgba(255,255,255,.5);font-size:11px;margin-bottom:12px;display:block}
+    .product .price{font-size:28px;font-weight:1000;color:#00d4ff;margin:12px 0 16px;text-shadow:0 0 20px rgba(0,212,255,.3)}
+    .product .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.3),transparent);margin:0 0 16px}
+    .product .primary{width:100%;background:linear-gradient(135deg,#0891ff,#00d4ff);border:none;border-radius:12px;padding:14px;font-size:14px;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(0,212,255,.25);transition:all .2s}
+    .product .primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,212,255,.35)}
+    .product.unavailable{opacity:.4;filter:saturate(.3)}
+    .product.unavailable:before{content:"AGOTADO";position:absolute;z-index:5;right:14px;top:14px;background:rgba(239,68,68,.9);color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:1000;backdrop-filter:blur(8px)}
+    .product .tag{position:absolute;left:14px;top:14px;z-index:2;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);font-size:10px;padding:4px 8px}
+    body.dark .product .tag{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6)}
+    .netflix{--accent:#ef1437}.prime{--accent:#00b8ff}.max{--accent:#7c3aed}
+    .disney{--accent:#0a74ff}.spotify{--accent:#1db954}.youtube{--accent:#ff0033}.other{--accent:#7aa6c8}
+    .product-body{padding:8px 20px 20px;text-align:center}
+    .product.unavailable{opacity:.4;filter:saturate(.3)}
     .tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:#e9f9f0;color:#087a35;font-size:11px;font-weight:1000;transition:all .15s ease}
     .tag.warn{background:#fff6d8;color:#8a5b00}.tag.bad{background:#ffe8e8;color:#b91c1c}
     .tag.personal{background:#ede9fe;color:#6d28d9}
@@ -174,15 +171,31 @@
     .mini{font-size:11px;color:var(--muted)}
     .product .primary,.product .ghost{width:100%;margin-top:10px}
 
-    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);-webkit-overflow-scrolling:touch}
-    table{width:100%;border-collapse:collapse;min-width:700px}
-    th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
-    th{font-size:11px;color:var(--muted);background:var(--soft);text-transform:uppercase;font-weight:800;position:sticky;top:0;z-index:1}
-    tr:nth-child(even){background:rgba(8,119,255,.02)}
-    body.dark tr:nth-child(even){background:rgba(8,119,255,.04)}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);-webkit-overflow-scrolling:touch;background:var(--panel)}
+    table{width:100%;border-collapse:collapse;min-width:800px}
+    th,td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+    th{font-size:11px;color:var(--muted);background:var(--soft);text-transform:uppercase;font-weight:800;position:sticky;top:0;z-index:1;letter-spacing:.05em}
+    td{font-size:13px;color:var(--text)}
     tr{transition:background .15s}
-    tr:hover{background:rgba(8,119,255,.05)}
-    body.dark tr:hover{background:rgba(8,119,255,.08)}
+    tr:hover{background:rgba(8,119,255,.03)}
+    body.dark tr:hover{background:rgba(8,119,255,.06)}
+    .op-id{font-weight:800;color:var(--blue);font-size:12px}
+    .op-product{display:flex;align-items:center;gap:10px}
+    .op-product-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:1000;font-size:14px;color:#fff;flex-shrink:0}
+    .op-product-name{font-weight:700;font-size:13px}
+    .op-product-sub{font-size:11px;color:var(--muted)}
+    .op-user{display:flex;align-items:center;gap:8px}
+    .op-user svg{width:16px;height:16px;stroke:var(--muted);flex-shrink:0}
+    .op-date{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+    .op-date svg{width:14px;height:14px;stroke:var(--muted)}
+    .op-amount{font-weight:900;font-size:14px}
+    .status-badge{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800}
+    .status-badge.completed{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.2)}
+    .status-badge.pending{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+    .status-badge.failed{background:rgba(239,68,68,.12);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+    .status-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+    .op-action{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--soft);color:var(--blue);display:grid;place-items:center;cursor:pointer;transition:all .18s}
+    .op-action:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
     td input{border:1px solid var(--line);border-radius:10px;padding:8px 9px;background:var(--soft);color:var(--text);width:110px;font-weight:800}
     body.dark td input{background:rgba(18,37,59,.7);color:var(--text);border-color:#1e3652}
     td input:disabled{opacity:.5}
@@ -631,23 +644,24 @@
       const cls=serviceClass(p.name), price=salePrice(p);
       const isPersonal = p.shared === false || String(p.share_type||"").toLowerCase() === "personal";
       const ops = operatorCount(p.id);
-      return `<article class="card product ${available?"":"unavailable"}">
+      const serviceIcons = {
+        netflix:"N",prime:"P",max:"M",disney:"D",spotify:"S",youtube:"Y",other:"O"
+      };
+      const icon = serviceIcons[cls] || "O";
+      return `<article class="product ${available?"":"unavailable"}">
         <div class="poster ${cls}">
-          <span class="shine"></span><span class="svc">${serviceName(p.name).toUpperCase()}</span><span class="stock">${available?p.stock+" disp.":"Agotado"}</span><div class="logo-word">${serviceName(p.name)}</div><span class="brandmark">DISTRITO</span>
+          <span class="tag">${isPersonal?"Personal":"1 Mes"}</span>
+          <span class="stock">${available?p.stock+" disp.":"Agotado"}</span>
+          <div class="logo-word">${icon}</div>
         </div>
         <div class="product-body">
-          <h3>${p.name}</h3>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
-            <span class="tag ${available?"":"bad"}">${available?"Disponible":"No disponible"}</span>
-            <span class="tag ${isPersonal?"personal":"sharable"}">${isPersonal?"Personal":"Compartida"}</span>
-          </div>
-          ${isPersonal?`<p class="mini">Uso exclusivo: 1 operador por cuenta.</p>`:`<p class="mini">Maximo ${MAX_OPERATORS_PER_PRODUCT} operadores por pantalla.</p>`}
-          ${!isPersonal && isAdmin()?`<div class="limit-bar"><div class="limit-bar-fill ${ops>=MAX_OPERATORS_PER_PRODUCT?"bad":ops>=1?"warn":"ok"}" style="width:${(ops/MAX_OPERATORS_PER_PRODUCT)*100}%"></div></div><p class="mini">${ops}/${MAX_OPERATORS_PER_PRODUCT} operadores activos</p>`:""}
-          <div class="price">${money(price)}</div><p class="mini">Precio por pantalla</p>
-          ${isAdmin()?`<p class="copy-box mini">Proveedor ${money(p.provider_price ?? p.base_price)} - Usuario ${money(p.base_price)} - Stock ${p.stock}</p>`:""}
+          <h3>${serviceName(p.name)}</h3>
+          <span class="mini">${isPersonal?"1 operador por cuenta":`${MAX_OPERATORS_PER_PRODUCT} operadores max.`}</span>
+          <div class="price">${money(price)}</div>
+          <div class="divider"></div>
           ${available && canBuy?`<button class="primary" onclick="openBuy('${p.id}')">Comprar pantalla</button>`:
-            available && !canBuy?`<button class="ghost" disabled>Limite de operadores alcanzado</button>`:
-            `<button class="ghost" disabled>Agotado</button>`}
+            available && !canBuy?`<button class="primary" disabled style="opacity:.5">Limite alcanzado</button>`:
+            `<button class="primary" disabled style="opacity:.5">Agotado</button>`}
         </div>
       </article>`;
     }
@@ -725,20 +739,41 @@
     }
     function orderRows(rows,compact){
       if(!rows.length) return `<p class="muted">Sin registros todavia.</p>`;
-      return rows.map(o=>{
-        const left=daysLeft(o.expires_at), warning=left!==null && left<=5;
-        const data=parseAccount(o.delivered_data||"");
-        return `<div class="list-row ${compact?"compact-order":""}">
-          <div><b>${o.code||"Orden"}</b></div>
-          <div><b>${o.product_name}</b><br><span class="muted">${o.client_name||"Cliente"}</span>${compact?"":`<div class="client-data"><span><b>Cuenta</b><br>${data.email||"-"}</span><span><b>Clave</b><br>${data.password||"-"}</span><span><b>Perfil</b><br>${data.profile||"-"}</span><span><b>PIN</b><br>${data.pin||"-"}</span></div>`}</div>
-          <div class="row-actions">
-            <span class="tag ${warning?"bad":""}">${o.status||"Entregado"}${left!==null?` - ${left}d`: ""}</span>
-            <button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','datos'))">${icons.copy} Datos</button>
-            <button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','renovar'))">Renovar</button>
-            <button class="danger-btn" onclick="openReport('${o.id}')">Reportar</button>
-          </div>
-        </div>`;
-      }).join("");
+      if(compact) {
+        return rows.map(o=>{
+          const left=daysLeft(o.expires_at), warning=left!==null && left<=5;
+          return `<div class="list-row compact-order">
+            <div><b>${o.code||"Orden"}</b></div>
+            <div><b>${o.product_name}</b><br><span class="muted">${o.client_name||"Cliente"}</span></div>
+            <div class="row-actions">
+              <span class="tag ${warning?"bad":""}">${o.status||"Entregado"}${left!==null?` - ${left}d`: ""}</span>
+              <button class="ghost" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','datos'))">${icons.copy}</button>
+            </div>
+          </div>`;
+        }).join("");
+      }
+      const serviceIcons = {netflix:"N",prime:"P",max:"M",disney:"D",spotify:"S",youtube:"Y",other:"O"};
+      const serviceColors = {netflix:"#ef1437",prime:"#00b8ff",max:"#7c3aed",disney:"#0a74ff",spotify:"#1db954",youtube:"#ff0033",other:"#7aa6c8"};
+      return `<div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Producto</th><th>Usuario</th><th>Fecha</th><th>Monto</th><th>Estado</th><th>Accion</th></tr></thead>
+        <tbody>${rows.map(o=>{
+          const left=daysLeft(o.expires_at);
+          const cls=serviceClass(o.product_name);
+          const icon=serviceIcons[cls]||"O";
+          const color=serviceColors[cls]||"#7aa6c8";
+          const statusClass=(o.status||"").includes("Pend")?"pending":(o.status||"").includes("Fall")?"failed":"completed";
+          const statusText=o.status||"Entregado";
+          return `<tr>
+            <td><span class="op-id">${o.code||"#DS-0000"}</span></td>
+            <td><div class="op-product"><div class="op-product-icon" style="background:${color}">${icon}</div><div><div class="op-product-name">${o.product_name}</div><div class="op-product-sub">${left!==null?left+" dias restantes":"Sin fecha"}</div></div></div></td>
+            <td><div class="op-user">${icons.users}<span>${o.client_name||"-"}</span></div></td>
+            <td><div class="op-date">${icons.bell}<span>${o.expires_at||"-"}</span></div></td>
+            <td><span class="op-amount">${money(o.amount||o.total||0)}</span></td>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td><button class="op-action" onclick="copyText(decodeOrderMessage('${safeOrder(o)}','datos'))" title="Copiar datos">${icons.copy}</button></td>
+          </tr>`;
+        }).join("")}</tbody>
+      </table></div>`;
     }
     function parseAccount(text){
       const parts=String(text||"").split(":").map(x=>x.trim()).filter(Boolean);
