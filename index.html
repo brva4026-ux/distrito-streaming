@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="description" content="Panel comercial de Distrito Streaming - compra, vende y gestiona cuentas de streaming." />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/${localStorage.dsDark==='1'?'distrito-angel-blue-v1.png':'distrito-angel-white.png'}" />
+  <link rel="apple-touch-icon" href="assets/distrito-angel-white.png" id="appleTouchIcon" />
   <title>Distrito Streaming</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1069,7 +1069,7 @@
         <section class="login-panel">
           <!-- LOGIN FORM -->
           <div id="loginForm" ${isRegister?'style="display:none"':''}>
-            <div class="login-brand"><img class="brand-logo" src="${ASSETS}${angelImg}" alt=""><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
+            <div class="login-brand"><img class="brand-logo" src="${ASSETS}${angelImg}" alt="Distrito" onerror="this.onerror=null;this.src='${ASSETS}distrito-login-hero.png';this.onerror=function(){this.style.display='none';}"><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
             <h1 style="animation:fadeIn .5s ease .1s both">Bienvenido <span>de nuevo</span></h1>
             <p style="animation:fadeIn .5s ease .2s both">Accede a tu panel de ventas y gestiona tus cuentas con total control.</p>
             <label class="field" style="animation:fadeIn .5s ease .3s both">${icons.mail}<input id="email" placeholder="Usuario o Email" autocomplete="username" value="${localStorage.dsRememberEmail || ""}"></label>
@@ -1095,7 +1095,7 @@
 
           <!-- REGISTER FORM -->
           <div id="registerForm" class="register-panel" ${isRegister?'style="display:block"':''}>
-            <div class="login-brand"><img class="brand-logo" src="${ASSETS}${angelImg}" alt=""><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
+            <div class="login-brand"><img class="brand-logo" src="${ASSETS}${angelImg}" alt="Distrito" onerror="this.onerror=null;this.src='${ASSETS}distrito-login-hero.png';this.onerror=function(){this.style.display='none';}"><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
             ${refBanner}
             <h1 style="animation:fadeIn .5s ease .1s both">Crear <span>cuenta</span></h1>
             <p style="animation:fadeIn .5s ease .2s both">Regístrate para acceder al panel de ventas.</p>
@@ -1268,7 +1268,7 @@
       const u=state.user, unread=state.notifications.filter(n=>!n.read_at).length;
       $("#root").innerHTML = `<div class="app app-bg">
         <aside class="side">
-          <div class="side-brand"><img src="${ASSETS}${localStorage.dsDark==='1'?'distrito-angel-blue-v1.png':'distrito-angel-white.png'}" alt=""><div><b>Distrito</b><em>Streaming</em></div></div>
+          <div class="side-brand"><img src="${ASSETS}${localStorage.dsDark==='1'?'distrito-angel-blue-v1.png':'distrito-angel-white.png'}" alt="Distrito" onerror="this.onerror=null;this.src='${ASSETS}distrito-login-hero.png';this.onerror=function(){this.style.display='none';}"><div><b>Distrito</b><em>Streaming</em></div></div>
           <div class="nav-title">Navegacion</div>
           <nav class="nav">${navItems().map(([v,t,svg])=>`<button class="${state.view===v?"active":""}" onclick="setView('${v}')">${svg}<span>${t}</span></button>`).join("")}</nav>
         </aside>
@@ -2907,7 +2907,7 @@
           </button>
         </div>`);
     }
-    function toggleDark(){localStorage.dsDark=localStorage.dsDark==="1"?"0":"1";renderApp()}
+    function toggleDark(){localStorage.dsDark=localStorage.dsDark==="1"?"0":"1";const icon=document.getElementById('appleTouchIcon');if(icon)icon.href=localStorage.dsDark==="1"?"assets/distrito-angel-blue-v1.png":"assets/distrito-angel-white.png";renderApp()}
     function toggleAlerts(ev){
       ev?.stopPropagation();
       const panel=$("#alerts"), unread=state.notifications.filter(n=>!n.read_at).length;
@@ -2973,6 +2973,7 @@
     if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(r=>r.unregister()));caches.keys().then(keys=>keys.forEach(k=>caches.delete(k)));navigator.serviceWorker.register("sw.js").catch(()=>{})}
 
     // ─── INIT ──────────────────────────────────────────
+    const icon=document.getElementById('appleTouchIcon');if(icon)icon.href=localStorage.dsDark==="1"?"assets/distrito-angel-blue-v1.png":"assets/distrito-angel-white.png";
     token ? boot().catch(()=>{localStorage.removeItem("dsToken");token="";renderLogin()}) : renderLogin();
   </script>
 </body>
