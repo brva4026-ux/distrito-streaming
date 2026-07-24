@@ -1201,7 +1201,19 @@
         if(!email || !password) return toast("Ingresa correo y contraseña","bad");
         btn?.classList.add("loading");
         showLoading("Ingresando...");
+
+        // Pre-verificar si el usuario está bloqueado (funciona cuando el Edge Function
+        // tiene la ruta /check-user-status, sino falla silenciosamente)
+        try{
+          const check=await api("check-user-status",{method:"POST",body:JSON.stringify({email})});
+          if(check.blocked){showBlockedModal();return}
+        }catch(_){}
+
         const res=await api("login",{method:"POST",body:JSON.stringify({email,password})});
+
+        // Si el Edge Function devolvió blocked:true
+        if(res.blocked){showBlockedModal();return}
+
         token=res.token || res.session; localStorage.dsToken=token; state.user=res.user;
         if(state.user.status==="Bloqueado"||state.user.status==="Inactivo"){
           token=""; localStorage.removeItem("dsToken"); state.user=null;
