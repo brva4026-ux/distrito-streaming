@@ -1203,7 +1203,7 @@
         showLoading("Ingresando...");
         const res=await api("login",{method:"POST",body:JSON.stringify({email,password})});
         token=res.token || res.session; localStorage.dsToken=token; state.user=res.user;
-        if(state.user.status==="Bloqueado"){
+        if(state.user.status==="Bloqueado"||state.user.status==="Inactivo"){
           token=""; localStorage.removeItem("dsToken"); state.user=null;
           showBlockedModal();
           return;
@@ -1211,11 +1211,11 @@
         if($("#rememberMe")?.checked){localStorage.dsRememberEmail=email}else{localStorage.removeItem("dsRememberEmail")}
         await boot(); toast("Bienvenido, " + state.user.name,"ok");
       }catch(e){
-        const msg=e.message||"";
-        if(msg.toLowerCase().includes("bloqueado")||msg.toLowerCase().includes("blocked")){
+        const msg=(e.message||"").toLowerCase();
+        if(msg.includes("bloqueado")||msg.includes("blocked")||msg.includes("inactivo")||msg.includes("inactive")||msg.includes("suspendido")||msg.includes("suspended")){
           showBlockedModal();
         }else{
-          toast(msg||"Correo o contraseña incorrectos","bad");
+          toast(e.message||"Correo o contraseña incorrectos","bad");
         }
       }
       finally{btn?.classList.remove("loading");hideLoading()}
