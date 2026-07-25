@@ -1,4 +1,4 @@
-const CACHE_NAME = "distrito-v4";
+const CACHE_NAME = "distrito-v6";
 const ASSETS_TO_CACHE = ["/", "/manifest.json", "/assets/distrito-angel-blue-v1.png"];
 
 self.addEventListener("install", e => {
@@ -17,9 +17,17 @@ self.addEventListener("activate", e => {
 
 self.addEventListener("fetch", e => {
   if (e.request.url.includes("supabase.co")) return;
+  // Siempre fetch fresh para HTML (navegacion)
   if (e.request.mode === "navigate" || e.request.url.endsWith("/") || e.request.url.includes("index.html")) {
-    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    e.respondWith(
+      fetch(e.request).then(resp => {
+        const clone = resp.clone();
+        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+        return resp;
+      }).catch(() => caches.match(e.request))
+    );
     return;
   }
+  // Cache-first para assets estaticos
   e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
 });
