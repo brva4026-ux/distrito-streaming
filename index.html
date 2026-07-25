@@ -112,7 +112,8 @@
     .compra-item .compra-price{font-size:14px;font-weight:1000;color:var(--purple)}
     .compra-item .compra-date{font-size:10px;color:var(--muted)}
 
-    .login{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px;padding:32px;overflow:hidden}
+    .login{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px;padding:32px;overflow:hidden;position:relative}
+    .login::before{content:"";position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%,rgba(8,119,255,.04) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(8,119,255,.03) 0%,transparent 50%);animation:ambientFloat 20s ease-in-out infinite;pointer-events:none;z-index:0}
     .login-visual{height:calc(100vh - 64px);min-height:600px;border-radius:28px;overflow:hidden;background:linear-gradient(160deg,#f8faff 0%,#eef2ff 30%,#e8eeff 60%,#f0f4ff 100%);box-shadow:var(--shadow2),0 0 0 1px rgba(8,119,255,.06);animation:heroIn .7s cubic-bezier(.2,.8,.2,1) both;position:relative;display:flex;align-items:center;justify-content:center}
     .login-visual img{width:100%;height:100%;object-fit:contain;object-position:center center;position:relative;z-index:2;filter:drop-shadow(0 8px 32px rgba(8,119,255,.15))}
     .login-visual::before{content:"";position:absolute;top:50%;left:50%;width:min(420px,85%);height:min(420px,85%);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(8,119,255,.08) 0%,rgba(8,119,255,.03) 40%,transparent 70%);z-index:1;animation:heroGlow 6s ease-in-out infinite alternate}
@@ -134,6 +135,30 @@
     body.dark .login-visual::after{background:linear-gradient(180deg,transparent 70%,rgba(10,22,40,.3))}
     body.dark .login-visual::before{background:radial-gradient(circle,rgba(59,130,246,.1) 0%,rgba(59,130,246,.04) 40%,transparent 70%)}
     body.dark .hero-rings .ring{border-color:rgba(8,119,255,.2)}
+
+    /* ─── MOBILE HERO ─── */
+    .mobile-hero{display:none;position:relative;width:100%;height:200px;margin:-44px -40px 24px;border-radius:0 0 28px 28px;overflow:hidden;background:linear-gradient(135deg,#0a1628 0%,#0d1d31 40%,#111f3a 100%)}
+    .mobile-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 80%,rgba(8,119,255,.25) 0%,transparent 60%);animation:mobileGlow 2s ease-in-out infinite alternate}
+    .mobile-hero::after{content:"";position:absolute;width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(8,119,255,.15);animation:mobileRing 3s linear infinite}
+    @keyframes mobileGlow{0%{opacity:.5;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
+    @keyframes mobileRing{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    .mobile-hero .hero-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:3}
+    .mobile-hero .hero-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(8,119,255,.4);box-shadow:0 0 40px rgba(8,119,255,.4),0 0 80px rgba(8,119,255,.15);animation:heroLogoPulse 1.5s ease-in-out infinite}
+    @keyframes heroLogoPulse{0%,100%{box-shadow:0 0 40px rgba(8,119,255,.4),0 0 80px rgba(8,119,255,.15);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 60px rgba(8,119,255,.6),0 0 120px rgba(8,119,255,.25);transform:translate(-50%,-50%) scale(1.05)}}
+    .mobile-hero .hero-glow{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(8,119,255,.3),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:mobileGlow 1.5s ease-in-out infinite}
+    .mobile-hero .hero-orb{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#4da6ff,#0066ff);box-shadow:0 4px 16px rgba(8,119,255,.4);animation:orbFloat 3s ease-in-out infinite}
+    .mobile-hero .hero-orb.o1{width:16px;height:16px;top:20%;right:15%;animation-delay:0s}
+    .mobile-hero .hero-orb.o2{width:10px;height:10px;bottom:25%;left:10%;animation-delay:.8s}
+    .mobile-hero .hero-orb.o3{width:8px;height:8px;top:30%;left:20%;animation-delay:1.5s}
+    .mobile-hero .hero-orb.o4{width:12px;height:12px;bottom:20%;right:20%;animation-delay:2s}
+    @keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.1)}}
+    .mobile-hero .hero-rings-m{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:180px;height:180px}
+    .mobile-hero .hero-rings-m .ring{position:absolute;border-radius:50%;border:1.5px solid rgba(8,119,255,.12);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringPulse 2s ease-in-out infinite}
+    .mobile-hero .hero-rings-m .ring:nth-child(1){width:100%;height:100%}
+    .mobile-hero .hero-rings-m .ring:nth-child(2){width:70%;height:70%;border-color:rgba(8,119,255,.18);animation-delay:.5s}
+    .mobile-hero .hero-rings-m .ring:nth-child(3){width:40%;height:40%;border-color:rgba(8,119,255,.24);animation-delay:1s}
+
+    body.dark .mobile-hero{background:linear-gradient(135deg,#050d1a 0%,#0a1628 40%,#0d1d31 100%)}
     body.dark .hero-sphere{background:radial-gradient(circle at 30% 30%,#3b82f6,#1d4ed8);box-shadow:0 8px 24px rgba(8,119,255,.35),inset 0 -4px 8px rgba(0,0,0,.25)}
     .login-panel{width:min(460px,100%);justify-self:center;background:rgba(255,255,255,.97);border:1px solid rgba(216,230,248,.5);border-radius:28px;box-shadow:0 28px 72px rgba(0,0,0,.07),0 0 0 1px rgba(255,255,255,.9) inset;backdrop-filter:blur(24px);animation:loginIn .55s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden;padding:44px 40px 36px}
     .login-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(8,119,255,.4),rgba(8,119,255,.3),transparent)}
@@ -688,17 +713,29 @@
     @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
     @media(max-width:1020px){
-      .login{grid-template-columns:1fr;padding:20px;gap:0;align-content:center}
+      .login{grid-template-columns:1fr;padding:0;gap:0;align-content:center;background:linear-gradient(180deg,#0a1628 0%,#0d1d31 40%,#111f3a 100%);min-height:100vh;min-height:100dvh}
       .login-visual{display:none}
-      .login-panel{padding:36px 28px;max-width:100%;border-radius:22px}
-      .login-panel h1{font-size:28px;letter-spacing:-.02em}
+      .mobile-hero{display:block}
+      .login-panel{padding:0;max-width:100%;border-radius:0;background:var(--panel);border:none;box-shadow:0 -20px 60px rgba(0,0,0,.2);animation:loginIn .5s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden}
+      .login-panel::before{display:none}
+      .login-panel::after{display:none}
+      .login-panel>#loginForm,.login-panel>#registerForm{padding:28px 24px 32px}
+      .login-panel h1{font-size:26px;letter-spacing:-.02em;margin-bottom:6px}
       .login-panel h1 span::after{height:2px;bottom:-2px}
-      .login-panel>p{font-size:13px;max-width:280px}
-      .brand-logo{width:46px;height:46px}
-      .brand-title{font-size:21px}
-      .brand-title em{font-size:23px}
-      .field{height:48px}
-      .download-btn{min-width:130px;padding:12px 20px;font-size:13px}
+      .login-panel>p{font-size:13px;max-width:280px;margin-bottom:18px}
+      .login-brand{margin-bottom:16px}
+      .brand-logo{width:44px;height:44px;border-radius:12px}
+      .brand-title{font-size:20px}
+      .brand-title em{font-size:22px}
+      .field{height:52px;margin-top:10px;border-radius:14px}
+      .field input{font-size:16px}
+      .login-options{margin:12px 0 20px}
+      .login-panel .primary{height:54px;font-size:16px;border-radius:14px;letter-spacing:.5px}
+      .download-section{margin-top:20px}
+      .download-buttons{flex-direction:column;gap:10px}
+      .download-btn{min-width:0;width:100%;padding:16px 20px;font-size:14px;border-radius:14px;min-height:54px}
+      .download-btn:active{transform:scale(.97);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+      .secure{margin-top:16px;font-size:11px}
       .app{grid-template-columns:1fr}
       .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;z-index:20;padding:8px 6px env(safe-area-inset-bottom,8px);border-top:1px solid var(--line);border-right:0;border-radius:var(--radius) var(--radius) 0 0;background:var(--panel);backdrop-filter:blur(16px)}
       body.dark .side{background:rgba(13,29,49,.95)}
@@ -753,10 +790,15 @@
       .metric{flex-direction:column;text-align:center;gap:8px;padding:12px}
       .metric b{font-size:18px}
       .report-status{grid-template-columns:1fr 1fr}
-      .login-panel h1{font-size:26px}
-      .login-panel>p{font-size:13px}
-      .field{height:52px;padding:0 16px;border-radius:14px}
+      .login-panel>#loginForm,.login-panel>#registerForm{padding:20px 16px 28px}
+      .login-panel h1{font-size:24px}
+      .login-panel>p{font-size:12px}
+      .mobile-hero{height:170px}
+      .mobile-hero .hero-logo{width:68px;height:68px}
+      .field{height:54px;padding:0 14px;border-radius:14px}
       .field input{font-size:16px}
+      .login-panel .primary{height:56px;font-size:16px;border-radius:14px}
+      .download-btn{padding:14px 16px;font-size:13px;min-height:52px}
       .form input,.form select,.form textarea{min-height:48px;font-size:16px}
       .btn,.primary,.ghost,.danger-btn,.ok-btn{min-height:48px;font-size:15px}
       .product .price{font-size:24px}
@@ -765,6 +807,14 @@
       .table-wrap{border-radius:12px}
       .modal{padding:8px}
       .alerts-panel{right:8px;left:8px;width:auto}
+      .loader-rings{width:120px;height:120px}
+      .loader-ring.r1{width:120px;height:120px}
+      .loader-ring.r2{width:90px;height:90px}
+      .loader-ring.r3{width:60px;height:60px}
+      .loader-logo-wrap{width:44px;height:44px}
+      .loader-logo{width:28px;height:28px}
+      .loader-brand{font-size:18px}
+      .loader-progress{width:140px}
     }
     @media(max-width:380px){
       .store-grid{grid-template-columns:1fr}
@@ -1270,6 +1320,12 @@
       $("#root").innerHTML = `<main class="login app-bg">
         <section class="login-visual"><div class="hero-rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div><div class="hero-sphere s1"></div><div class="hero-sphere s2"></div><div class="hero-sphere s3"></div><div class="hero-sphere s4"></div><img src="${ASSETS}distrito-login-brand.png" alt="Distrito Streaming"></section>
         <section class="login-panel">
+          <div class="mobile-hero">
+            <div class="hero-rings-m"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+            <div class="hero-glow"></div>
+            <div class="hero-orb o1"></div><div class="hero-orb o2"></div><div class="hero-orb o3"></div><div class="hero-orb o4"></div>
+            <div class="hero-center"><img src="${ASSETS}${angelImg}" alt="Distrito" class="hero-logo" onerror="this.style.display='none'"></div>
+          </div>
           <!-- LOGIN FORM -->
           <div id="loginForm" ${isRegister?'style="display:none"':''}>
             <div class="login-brand"><img class="brand-logo" src="${ASSETS}${angelImg}" alt="Distrito" onerror="this.onerror=null;this.src='${ASSETS}distrito-login-hero.png';this.onerror=function(){this.style.display='none';}"><div class="brand-title">DISTRITO<em>Streaming</em></div></div>
