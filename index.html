@@ -1363,7 +1363,6 @@
       if(textEl) textEl.textContent="Instalando...";
 
       if(platform==="android"){
-        // Intentar instalar como PWA primero
         if(deferredPrompt){
           deferredPrompt.prompt();
           deferredPrompt.userChoice.then(choice=>{
@@ -1376,47 +1375,9 @@
             if(textEl) textEl.textContent=origText;
           });
         } else {
-          // Mostrar modal con instrucciones para instalar desde Chrome
           setTimeout(()=>{
             btn.classList.remove("loading");
             if(textEl) textEl.textContent=origText;
-            const isChrome=/Chrome/.test(navigator.userAgent)&&!/Edg/.test(navigator.userAgent);
-            const isEdge=/Edg/.test(navigator.userAgent);
-            const isMobile=/Android|iPhone|iPad/i.test(navigator.userAgent);
-            let installSteps="";
-            if(isMobile){
-              installSteps=`
-                <div style="text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px">
-                  <div style="display:flex;gap:12px;align-items:start;margin-bottom:14px">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">1</div>
-                    <div><b style="font-size:13px">Toca los tres puntos</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">Esquina superior derecha del navegador</p></div>
-                  </div>
-                  <div style="display:flex;gap:12px;align-items:start;margin-bottom:14px">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">2</div>
-                    <div><b style="font-size:13px">Selecciona "Instalar app"</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">O "Agregar a pantalla de inicio"</p></div>
-                  </div>
-                  <div style="display:flex;gap:12px;align-items:start">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">3</div>
-                    <div><b style="font-size:13px">Confirma la instalacion</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">La app aparecera en tu pantalla de inicio</p></div>
-                  </div>
-                </div>`;
-            } else {
-              installSteps=`
-                <div style="text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px">
-                  <div style="display:flex;gap:12px;align-items:start;margin-bottom:14px">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">1</div>
-                    <div><b style="font-size:13px">Busca el icono de instalar</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">${isChrome||isEdge?"En la barra de direcciones, al final, veras un icono de install":"En la barra de direcciones"}</p></div>
-                  </div>
-                  <div style="display:flex;gap:12px;align-items:start;margin-bottom:14px">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">2</div>
-                    <div><b style="font-size:13px">Haz clic en "Instalar"</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">Tambien puedes usar Ctrl+Shift+I</p></div>
-                  </div>
-                  <div style="display:flex;gap:12px;align-items:start">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">3</div>
-                    <div><b style="font-size:13px">Listo!</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">La app se abrira como un programa independiente</p></div>
-                  </div>
-                </div>`;
-            }
             openModal(`
               <div style="background:linear-gradient(135deg,#0877ff,#0057dc);border-radius:16px;padding:28px;text-align:center;margin:-20px -20px 20px;position:relative;overflow:hidden">
                 <div style="position:absolute;top:-30%;right:-20%;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,.15),transparent 70%);border-radius:50%"></div>
@@ -1424,21 +1385,29 @@
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 </div>
                 <h2 style="margin:0;color:#fff;font-size:20px;font-weight:1000;letter-spacing:.02em">INSTALAR APP</h2>
-                <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:13px">Acceso rapido desde tu escritorio</p>
+                <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:13px">Distrito Streaming para tu dispositivo</p>
               </div>
               <div style="padding:0 4px;text-align:center">
-                <p style="font-size:14px;color:var(--text);margin:0 0 16px;font-weight:600">Sigue estos pasos para instalar la app:</p>
-                ${installSteps}
-                <div style="background:rgba(8,119,255,.06);border:1px solid rgba(8,119,255,.15);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--blue);text-align:left">
-                  <b>Que es una PWA?</b> Es una app web que funciona como una app nativa. Se instala sin Play Store, sin espacio extra, y siempre esta actualizada.
+                <p style="font-size:14px;color:var(--text);margin:0 0 16px;font-weight:600">Elige como quieres instalar:</p>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+                  <a href="${window.location.href}" onclick="triggerInstall()" style="display:flex;align-items:center;gap:14px;padding:16px;background:linear-gradient(135deg,#0877ff,#0057dc);border-radius:12px;color:#fff;text-decoration:none;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 8px 24px rgba(8,119,255,.3)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(8,119,255,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(8,119,255,.3)'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <div style="text-align:left"><div style="font-size:14px">Instalar como App</div><div style="font-size:11px;opacity:.8;font-weight:600">Se agrega a tu pantalla de inicio</div></div>
+                  </a>
+                  <a href="${window.location.href}" download="Distrito-Streaming.html" style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--panel);border:2px solid var(--line);border-radius:12px;color:var(--text);text-decoration:none;font-weight:800;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(8,119,255,.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8m-4-4h8"/></svg>
+                    <div style="text-align:left"><div style="font-size:14px;color:var(--text)">Descargar Pagina</div><div style="font-size:11px;color:var(--muted);font-weight:600">Guarda un acceso directo en tu dispositivo</div></div>
+                  </a>
                 </div>
-                <button onclick="closeModal()" style="width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#0877ff,#0057dc);color:#fff;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(8,119,255,.3);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(8,119,255,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(8,119,255,.3)'">Entendido</button>
+                <div style="background:rgba(8,119,255,.06);border:1px solid rgba(8,119,255,.15);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--blue);text-align:left">
+                  <b>Recomendado:</b> Usa "Instalar como App" para tener la mejor experiencia. La app funciona sin internet y se actualiza automaticamente.
+                </div>
+                <button onclick="closeModal()" style="width:100%;padding:14px;border:0;border-radius:12px;background:var(--soft);color:var(--text);font-weight:800;font-size:14px;cursor:pointer;border:1px solid var(--line);transition:all .2s" onmouseover="this.style.background='var(--line)'" onmouseout="this.style.background='var(--soft)'">Cerrar</button>
               </div>
             `);
           }, 1200);
         }
       } else if(platform==="ios"){
-        // iOS - mostrar instrucciones para agregar a pantalla de inicio
         setTimeout(()=>{
           btn.classList.remove("loading");
           if(textEl) textEl.textContent=origText;
@@ -1452,7 +1421,7 @@
               <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:13px">Agrega a tu pantalla de inicio</p>
             </div>
             <div style="padding:0 4px;text-align:center">
-              <p style="font-size:14px;color:var(--text);margin:0 0 16px;font-weight:600">Sigue estos pasos:</p>
+              <p style="font-size:14px;color:var(--text);margin:0 0 16px;font-weight:600">Sigue estos pasos en Safari:</p>
               <div style="text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px">
                 <div style="display:flex;gap:12px;align-items:start;margin-bottom:14px">
                   <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0">1</div>
@@ -1467,11 +1436,29 @@
                   <div><b style="font-size:13px">Toca "Agregar"</b><p style="font-size:12px;color:var(--muted);margin:2px 0 0">La app aparecera en tu pantalla de inicio</p></div>
                 </div>
               </div>
+              <a href="${window.location.href}" download="Distrito-Streaming.html" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;background:var(--soft);border:1px solid var(--line);color:var(--text);text-decoration:none;font-weight:800;font-size:14px;margin-bottom:12px;transition:all .2s" onmouseover="this.style.borderColor='rgba(8,119,255,.4)'" onmouseout="this.style.borderColor='var(--line)'">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                O Descargar Pagina
+              </a>
               <button onclick="closeModal()" style="width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#0877ff,#0057dc);color:#fff;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(8,119,255,.3);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">Entendido</button>
             </div>
           `);
         }, 1200);
       }
+    }
+    function triggerInstall(){
+      if(deferredPrompt){
+        closeModal();
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choice=>{
+          if(choice.outcome==="accepted") toast("App instalada correctamente","ok");
+          deferredPrompt=null;
+        });
+      } else {
+        closeModal();
+        toast("Busca el icono de instalar en la barra de direcciones","ok");
+      }
+    }
     }
     // Role is now determined by server, not user selection
     function showBlockedModal(){
