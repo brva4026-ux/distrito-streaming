@@ -2691,40 +2691,19 @@
       const products=state.products||[];
       const invAvailable=inv.filter(i=>i.status==="Disponible").length;
       const invDelivered=inv.filter(i=>i.status==="Entregada").length;
-      const tabBtn=(tab,label,icon)=>`<button onclick="storeTab='${tab}';renderApp()" style="flex:1;padding:12px 8px;border:0;border-bottom:2px solid ${storeTab===tab?"var(--blue)":"transparent"};margin-bottom:-2px;background:transparent;color:${storeTab===tab?"var(--blue)":"var(--muted)"};font-weight:800;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s">${icon} ${label}</button>`;
-      const productosTab=`<section class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-          <div><b>${isAdmin()?"Inventario del proveedor":"Productos disponibles"}</b><p class="muted" style="margin:3px 0 0">${isAdmin()?"Administra stock, precios y tipo de pantalla (compartida/personal).":"Solo ves productos con stock para comprar."}</p></div>
-          <span class="tag">${available.length} disponibles</span>
-        </div>
-      </section>
-      <section class="grid store-grid section">${visible.map(productCard).join("") || "<p class='muted'>No hay productos disponibles ahora.</p>"}</section>
-      ${isAdmin()&&unavailable.length?`<section class="card section"><h2>Agotados o pausados</h2><div class="grid store-grid section">${unavailable.map(productCard).join("")}</div></section>`:""}`;
-      const cuentasTab=`<div class="card section">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-          <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4105ab,#6b21a8);display:grid;place-items:center;flex-shrink:0"><span style="color:#fff;font-weight:1000;font-size:14px">STG</span></div>
-          <div><h2 style="margin:0">Importar desde STGLIAK</h2><p class="muted" style="margin:2px 0 0">Copia la tabla de STGLIAK y pegala aqui</p></div>
-        </div>
-        <div class="form">
-          <label>Producto destino<select id="importProduct">${products.map(p=>`<option value="${p.id}">${p.name}</option>`).join("")}</select></label>
-          <label>Datos de STGLIAK (pega la tabla)</label>
-          <textarea id="importData" rows="6" placeholder="Pega aqui el contenido de la tabla de STGLIAK..." style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:12px;font-family:monospace;background:var(--panel);color:var(--text);resize:vertical"></textarea>
-          <div style="display:flex;gap:8px"><button class="primary" onclick="importFromSTGLIAK()" style="flex:1">Importar cuentas</button><button class="ghost" onclick="previewImport()" style="flex:1">Vista previa</button></div>
-        </div>
-        <div id="importPreview" style="display:none;margin-top:12px"></div>
-      </div>
-      <div class="card section">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-          <div><h2>Cuentas en inventario</h2><p class="muted">Gestiona las cuentas disponibles para entregar.</p></div>
-        </div>
-        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
-          <button class="ghost" onclick="filterInventory('all')" style="font-size:12px">Todas (${inv.length})</button>
-          <button class="ghost" onclick="filterInventory('Disponible')" style="font-size:12px;color:var(--ok)">Disponibles (${invAvailable})</button>
-          <button class="ghost" onclick="filterInventory('Entregada')" style="font-size:12px;color:var(--blue)">Entregadas (${invDelivered})</button>
-        </div>
-        <div id="inventoryList">${inv.length?inv.map(i=>{const product=products.find(p=>p.id===i.product_id);const statusColor=i.status==="Disponible"?"var(--ok)":i.status==="Entregada"?"var(--blue)":"var(--bad)";return `<div style="border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;border-left:4px solid ${statusColor}"><div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div style="flex:1"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><b style="font-size:12px">${product?.name||"Producto"}</b><span class="tag ${i.status==='Disponible'?'':'warn'}" style="font-size:9px">${i.status}</span></div><div style="font-size:12px">📧 ${i.email}</div><div style="font-size:11px;color:var(--muted)">🔑 ${i.password}</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button onclick="editInventoryItem('${i.id}')" style="padding:4px 8px;border:0;border-radius:6px;background:rgba(8,119,255,.1);color:var(--blue);font-size:10px;cursor:pointer;font-weight:700">Editar</button>${i.status==="Disponible"?`<button onclick="deleteInventory('${i.id}')" style="padding:4px 8px;border:0;border-radius:6px;background:rgba(239,68,68,.1);color:var(--bad);font-size:10px;cursor:pointer">Eliminar</button>`:""}</div></div></div>`}).join(""):`<div style="text-align:center;padding:30px"><p class="muted">Sin cuentas en inventario. Importa desde STGLIAK.</p></div>`}</div>
-      </div>`;
-      return `<div style="display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:16px">${tabBtn("productos","Productos",icons.store)}${tabBtn("cuentas","Cuentas",icons.admin)}</div>${storeTab==="productos"?productosTab:cuentasTab}`;
+      let tabs=`<div style="display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:16px">`;
+      tabs+=`<button onclick="storeTab='productos';renderApp()" style="flex:1;padding:12px 8px;border:0;border-bottom:2px solid ${storeTab==="productos"?"var(--blue)":"transparent"};margin-bottom:-2px;background:transparent;color:${storeTab==="productos"?"var(--blue)":"var(--muted)"};font-weight:800;font-size:13px;cursor:pointer;transition:all .15s">Productos</button>`;
+      tabs+=`<button onclick="storeTab='cuentas';renderApp()" style="flex:1;padding:12px 8px;border:0;border-bottom:2px solid ${storeTab==="cuentas"?"var(--blue)":"transparent"};margin-bottom:-2px;background:transparent;color:${storeTab==="cuentas"?"var(--blue)":"var(--muted)"};font-weight:800;font-size:13px;cursor:pointer;transition:all .15s">Cuentas</button>`;
+      tabs+=`</div>`;
+      let content="";
+      if(storeTab==="productos"){
+        content=`<section class="card" style="padding:12px 14px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><b>${isAdmin()?"Inventario del proveedor":"Productos disponibles"}</b><p class="muted" style="margin:3px 0 0">${isAdmin()?"Administra stock, precios y tipo de pantalla.":"Solo ves productos con stock para comprar."}</p></div><span class="tag">${available.length} disponibles</span></div></section><section class="grid store-grid section">${visible.map(productCard).join("")||"<p class='muted'>No hay productos disponibles ahora.</p>"}</section>`;
+        if(isAdmin()&&unavailable.length) content+=`<section class="card section"><h2>Agotados o pausados</h2><div class="grid store-grid section">${unavailable.map(productCard).join("")}</div></section>`;
+      } else {
+        content=`<div class="card section"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4105ab,#6b21a8);display:grid;place-items:center;flex-shrink:0"><span style="color:#fff;font-weight:1000;font-size:14px">STG</span></div><div><h2 style="margin:0">Importar desde STGLIAK</h2><p class="muted" style="margin:2px 0 0">Copia la tabla de STGLIAK y pegala aqui</p></div></div><div class="form"><label>Producto destino<select id="importProduct">${products.map(p=>`<option value="${p.id}">${p.name}</option>`).join("")}</select></label><label>Datos de STGLIAK (pega la tabla)</label><textarea id="importData" rows="6" placeholder="Pega aqui el contenido..." style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:12px;font-family:monospace;background:var(--panel);color:var(--text);resize:vertical"></textarea><div style="display:flex;gap:8px"><button class="primary" onclick="importFromSTGLIAK()" style="flex:1">Importar</button><button class="ghost" onclick="previewImport()" style="flex:1">Vista previa</button></div></div><div id="importPreview" style="display:none;margin-top:12px"></div></div>`;
+        content+=`<div class="card section"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px"><div><h2>Cuentas en inventario</h2><p class="muted">Gestiona las cuentas disponibles para entregar.</p></div></div><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><button class="ghost" onclick="filterInventory('all')" style="font-size:12px">Todas (${inv.length})</button><button class="ghost" onclick="filterInventory('Disponible')" style="font-size:12px;color:var(--ok)">Disponibles (${invAvailable})</button><button class="ghost" onclick="filterInventory('Entregada')" style="font-size:12px;color:var(--blue)">Entregadas (${invDelivered})</button></div><div id="inventoryList">${inv.length?inv.map(i=>{const product=products.find(p=>p.id===i.product_id);const sc=i.status==="Disponible"?"var(--ok)":i.status==="Entregada"?"var(--blue)":"var(--bad)";return `<div style="border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;border-left:4px solid ${sc}"><div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div style="flex:1"><b style="font-size:12px">${product?.name||"Producto"}</b> <span class="tag ${i.status==='Disponible'?'':'warn'}" style="font-size:9px">${i.status}</span><div style="font-size:12px;margin-top:4px">📧 ${i.email}</div><div style="font-size:11px;color:var(--muted)">🔑 ${i.password}</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button onclick="editInventoryItem('${i.id}')" style="padding:4px 8px;border:0;border-radius:6px;background:rgba(8,119,255,.1);color:var(--blue);font-size:10px;cursor:pointer;font-weight:700">Editar</button>${i.status==="Disponible"?`<button onclick="deleteInventory('${i.id}')" style="padding:4px 8px;border:0;border-radius:6px;background:rgba(239,68,68,.1);color:var(--bad);font-size:10px;cursor:pointer">Eliminar</button>`:""}</div></div></div>`}).join(""):`<div style="text-align:center;padding:30px"><p class="muted">Sin cuentas en inventario.</p></div>`}</div></div>`;
+      }
+      return tabs+content;
     }
     function productCard(p){
       const available=p.status==="Disponible" && Number(p.stock)>0;
