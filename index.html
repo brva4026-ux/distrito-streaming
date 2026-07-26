@@ -496,6 +496,79 @@
     .admin-action svg{width:22px;height:22px;stroke:var(--blue)}
     .admin-action b{display:block;font-size:14px}
     .admin-action .ghost,.admin-action .primary{min-width:100px;font-size:13px}
+
+    /* ─── PREMIUM METRIC CARDS ─── */
+    .premium-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+    .premium-card{position:relative;border-radius:20px;padding:24px 16px 20px;text-align:center;overflow:hidden;cursor:pointer;transition:all .3s cubic-bezier(.2,.8,.2,1);border:1px solid rgba(255,255,255,.08);min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+    .premium-card::before{content:"";position:absolute;inset:0;opacity:.15;transition:opacity .3s}
+    .premium-card::after{content:"";position:absolute;top:50%;left:50%;width:200px;height:200px;transform:translate(-50%,-50%);border-radius:50%;opacity:.08;animation:premiumPulse 3s ease-in-out infinite}
+    .premium-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+    .premium-card:hover::before{opacity:.25}
+
+    /* Card themes */
+    .premium-card.blue{background:linear-gradient(135deg,#0a1628 0%,#0d2847 50%,#0a1e3d 100%)}
+    .premium-card.blue::before{background:radial-gradient(circle at 50% 60%,rgba(8,119,255,.4) 0%,transparent 70%)}
+    .premium-card.blue::after{background:radial-gradient(circle,rgba(8,119,255,.3),transparent 70%);animation-delay:0s}
+    .premium-card.green{background:linear-gradient(135deg,#0a1a14 0%,#0d2e1f 50%,#0a2018 100%)}
+    .premium-card.green::before{background:radial-gradient(circle at 50% 60%,rgba(16,185,129,.4) 0%,transparent 70%)}
+    .premium-card.green::after{background:radial-gradient(circle,rgba(16,185,129,.3),transparent 70%);animation-delay:.5s}
+    .premium-card.orange{background:linear-gradient(135deg,#1a1408 0%,#2e1f0d 50%,#20180a 100%)}
+    .premium-card.orange::before{background:radial-gradient(circle at 50% 60%,rgba(245,158,11,.4) 0%,transparent 70%)}
+    .premium-card.orange::after{background:radial-gradient(circle,rgba(245,158,11,.3),transparent 70%);animation-delay:1s}
+    .premium-card.red{background:linear-gradient(135deg,#1a0a0a 0%,#2e0d0d 50%,#200a0a 100%)}
+    .premium-card.red::before{background:radial-gradient(circle at 50% 60%,rgba(239,68,68,.4) 0%,transparent 70%)}
+    .premium-card.red::after{background:radial-gradient(circle,rgba(239,68,68,.3),transparent 70%);animation-delay:1.5s}
+    @keyframes premiumPulse{0%,100%{opacity:.05;transform:translate(-50%,-50%) scale(1)}50%{opacity:.15;transform:translate(-50%,-50%) scale(1.2)}}
+
+    /* Orb container */
+    .premium-orb-wrap{position:relative;width:90px;height:90px;z-index:2}
+    .premium-orb{position:absolute;inset:0;border-radius:50%;border:2.5px solid transparent;animation:orbSpin 2s linear infinite}
+    .premium-card.blue .premium-orb{border-top-color:rgba(8,119,255,.6);border-right-color:rgba(8,119,255,.3);filter:drop-shadow(0 0 8px rgba(8,119,255,.5))}
+    .premium-card.green .premium-orb{border-top-color:rgba(16,185,129,.6);border-right-color:rgba(16,185,129,.3);filter:drop-shadow(0 0 8px rgba(16,185,129,.5))}
+    .premium-card.orange .premium-orb{border-top-color:rgba(245,158,11,.6);border-right-color:rgba(245,158,11,.3);filter:drop-shadow(0 0 8px rgba(245,158,11,.5))}
+    .premium-card.red .premium-orb{border-top-color:rgba(239,68,68,.6);border-right-color:rgba(239,68,68,.3);filter:drop-shadow(0 0 8px rgba(239,68,68,.5))}
+    .premium-orb.r2{inset:8px;animation-direction:reverse;animation-duration:1.5s;opacity:.5}
+    .premium-orb.r3{inset:16px;animation-duration:2.5s;opacity:.3}
+    @keyframes orbSpin{to{transform:rotate(360deg)}}
+
+    /* Center number */
+    .premium-center{position:absolute;inset:0;display:grid;place-items:center;z-index:3}
+    .premium-num{font-size:28px;font-weight:1000;color:#fff;text-shadow:0 0 20px currentColor;line-height:1}
+    .premium-card.blue .premium-num{color:#60a5fa;text-shadow:0 0 20px rgba(8,119,255,.6)}
+    .premium-card.green .premium-num{color:#34d399;text-shadow:0 0 20px rgba(16,185,129,.6)}
+    .premium-card.orange .premium-num{color:#fbbf24;text-shadow:0 0 20px rgba(245,158,11,.6)}
+    .premium-card.red .premium-num{color:#f87171;text-shadow:0 0 20px rgba(239,68,68,.6)}
+
+    /* Particles */
+    .premium-particles{position:absolute;inset:0;pointer-events:none;z-index:1}
+    .premium-particles span{position:absolute;width:3px;height:3px;border-radius:50%;animation:premiumParticle 2s ease-in-out infinite}
+    .premium-card.blue .premium-particles span{background:#0877ff}
+    .premium-card.green .premium-particles span{background:#10b981}
+    .premium-card.orange .premium-particles span{background:#f59e0b}
+    .premium-card.red .premium-particles span{background:#ef4444}
+    .premium-particles span:nth-child(1){top:15%;left:20%;animation-delay:0s}
+    .premium-particles span:nth-child(2){top:25%;right:15%;animation-delay:.4s}
+    .premium-particles span:nth-child(3){bottom:20%;left:25%;animation-delay:.8s}
+    .premium-particles span:nth-child(4){bottom:30%;right:20%;animation-delay:1.2s}
+    @keyframes premiumParticle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:.8;transform:scale(1.5)}}
+
+    /* Label */
+    .premium-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.05em;text-transform:uppercase;z-index:2;position:relative}
+
+    /* Mobile */
+    @media(max-width:1020px){
+      .premium-metrics{grid-template-columns:repeat(2,1fr);gap:10px}
+      .premium-card{min-height:150px;padding:18px 12px 16px}
+      .premium-orb-wrap{width:72px;height:72px}
+      .premium-num{font-size:24px}
+    }
+    @media(max-width:380px){
+      .premium-metrics{gap:8px}
+      .premium-card{min-height:130px;padding:14px 10px 12px;border-radius:16px}
+      .premium-orb-wrap{width:60px;height:60px}
+      .premium-num{font-size:20px}
+      .premium-label{font-size:10px}
+    }
     .report-status{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
     .status-chip{border:1px solid var(--line);background:var(--soft);border-radius:var(--radius);padding:9px;font-size:11px;font-weight:900}
     .status-chip b{display:block;font-size:17px}
@@ -1883,46 +1956,46 @@
       const expiring=state.orders.filter(o=>{const left=daysLeft(o.expires_at);return left!==null&&left>=0&&left<=7}).length;
       const totalOrders=state.orders.length||1;
       return `
-      <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
-        <article class="card" onclick="setView('store')" style="cursor:pointer;padding:20px;text-align:center;transition:all .2s;border-radius:16px" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="position:relative;width:80px;height:80px;margin:0 auto 12px">
-            <svg viewBox="0 0 36 36" style="width:100%;height:100%;transform:rotate(-90deg)">
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0877ff" stroke-width="2.5" stroke-dasharray="${Math.min((activeOrders().length/totalOrders)*100,100)}, 100" stroke-linecap="round"/>
-            </svg>
-            <div style="position:absolute;inset:0;display:grid;place-items:center"><b style="font-size:20px;color:var(--text)">${activeOrders().length}</b></div>
+      <section class="premium-metrics">
+        <article class="premium-card blue" onclick="setView('store')">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap">
+            <div class="premium-orb"></div>
+            <div class="premium-orb r2"></div>
+            <div class="premium-orb r3"></div>
+            <div class="premium-center"><span class="premium-num">${activeOrders().length}</span></div>
           </div>
-          <div style="font-size:12px;font-weight:700;color:var(--muted)">Compras</div>
+          <div class="premium-label">Compras</div>
         </article>
-        <article class="card" onclick="setView('users')" style="cursor:pointer;padding:20px;text-align:center;transition:all .2s;border-radius:16px" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="position:relative;width:80px;height:80px;margin:0 auto 12px">
-            <svg viewBox="0 0 36 36" style="width:100%;height:100%;transform:rotate(-90deg)">
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="${Math.min((activeUsers/Math.max(state.users.length,1))*100,100)}, 100" stroke-linecap="round"/>
-            </svg>
-            <div style="position:absolute;inset:0;display:grid;place-items:center"><b style="font-size:20px;color:var(--text)">${activeUsers}</b></div>
+        <article class="premium-card green" onclick="setView('users')">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap">
+            <div class="premium-orb"></div>
+            <div class="premium-orb r2"></div>
+            <div class="premium-orb r3"></div>
+            <div class="premium-center"><span class="premium-num">${activeUsers}</span></div>
           </div>
-          <div style="font-size:12px;font-weight:700;color:var(--muted)">Usuarios</div>
+          <div class="premium-label">Usuarios</div>
         </article>
-        <article class="card" onclick="setView('payments')" style="cursor:pointer;padding:20px;text-align:center;transition:all .2s;border-radius:16px" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="position:relative;width:80px;height:80px;margin:0 auto 12px">
-            <svg viewBox="0 0 36 36" style="width:100%;height:100%;transform:rotate(-90deg)">
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="${pendingTopups>0?Math.min((pendingTopups/Math.max(state.topups.length,1))*100,100):0}, 100" stroke-linecap="round"/>
-            </svg>
-            <div style="position:absolute;inset:0;display:grid;place-items:center"><b style="font-size:20px;${pendingTopups>0?'color:var(--warn)':''}">${pendingTopups}</b></div>
+        <article class="premium-card orange" onclick="setView('payments')">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap">
+            <div class="premium-orb"></div>
+            <div class="premium-orb r2"></div>
+            <div class="premium-orb r3"></div>
+            <div class="premium-center"><span class="premium-num">${pendingTopups}</span></div>
           </div>
-          <div style="font-size:12px;font-weight:700;color:var(--muted)">Por aprobar</div>
+          <div class="premium-label">Por aprobar</div>
         </article>
-        <article class="card" onclick="setView('analytics')" style="cursor:pointer;padding:20px;text-align:center;transition:all .2s;border-radius:16px" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-          <div style="position:relative;width:80px;height:80px;margin:0 auto 12px">
-            <svg viewBox="0 0 36 36" style="width:100%;height:100%;transform:rotate(-90deg)">
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="${expiring>0?'#ef4444':'#10b981'}" stroke-width="2.5" stroke-dasharray="${expiring>0?Math.min((expiring/totalOrders)*100,100):100}, 100" stroke-linecap="round"/>
-            </svg>
-            <div style="position:absolute;inset:0;display:grid;place-items:center"><b style="font-size:20px;${expiring>0?'color:var(--bad)':'color:var(--ok)'}">${expiring}</b></div>
+        <article class="premium-card red" onclick="setView('analytics')">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap">
+            <div class="premium-orb"></div>
+            <div class="premium-orb r2"></div>
+            <div class="premium-orb r3"></div>
+            <div class="premium-center"><span class="premium-num">${expiring}</span></div>
           </div>
-          <div style="font-size:12px;font-weight:700;color:var(--muted)">Por vencer</div>
+          <div class="premium-label">Por vencer</div>
         </article>
       </section>
 
