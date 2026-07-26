@@ -1658,37 +1658,14 @@
       finally{btn?.classList.remove("loading");hideLoading()}
     }
     async function boot(){
-      showLoading("Cargando datos...");
+      showLoading("Cargando...");
       try{
         const res=await api("bootstrap");
         state={...emptyState(),...res,view:state.view || "home"};
-        // Cargar settings de pago desde API si estan disponibles
-        if(state.settings && state.settings.payment){
+        if(state.settings&&state.settings.payment){
           paymentSettings={...DEFAULT_PAYMENT,...state.settings.payment};
           updatePaymentConstants();
-        } else {
-          // Intentar cargar settings directamente
-          try{
-            const settingsRes=await api("settings");
-            if(settingsRes && settingsRes.payment){
-              if(!state.settings) state.settings={};
-              state.settings.payment=settingsRes.payment;
-              paymentSettings={...DEFAULT_PAYMENT,...settingsRes.payment};
-              updatePaymentConstants();
-            }
-          }catch(e){}
         }
-        // Siempre intentar cargar desde localStorage como fallback
-        try{
-          const local=JSON.parse(localStorage.dsPayment||"null");
-          if(local&&local.number){
-            // Si la API no tiene settings, usar localStorage
-            if(!state.settings||!state.settings.payment||!state.settings.payment.number){
-              paymentSettings={...DEFAULT_PAYMENT,...local};
-              updatePaymentConstants();
-            }
-          }
-        }catch(e){}
         if(!state.user) throw new Error("Sesion invalida");
         normalizeViewForRole();
         renderApp();
@@ -4937,29 +4914,16 @@
       const notifs=[];
       // Pagos pendientes
       const pendingTopups=state.topups.filter(t=>t.status==="Pendiente");
-      if(pendingTopups.length>0) notifs.push({type:"warn",icon:"💰",title:`${pendingTopups.length} pagos pendientes`,body:"Revisa y aprueba los pagos recibidos.",action:"setView('payments')"});
-      // Reportes abiertos
+      if(pendingTopups.length>0) notifs.push({type:"warn",icon:"💰",title:`${pendingTopups.length} pagos pendientes`,body:"Aprueba los pagos recibidos.",action:"setView('payments')"});
       const openReports=state.reports.filter(r=>r.status!=="Resuelto");
-      if(openReports.length>0) notifs.push({type:"danger",icon:"⚠️",title:`${openReports.length} reportes abiertos`,body:"Reportes de clientes esperando respuesta.",action:"setView('reports')"});
-      // Stock bajo
-      const lowStock=state.products.filter(p=>Number(p.stock||0)<=2&&p.status==="Disponible");
-      if(lowStock.length>0) notifs.push({type:"warn",icon:"📦",title:`Stock bajo`,body:lowStock.map(p=>p.name).join(", "),action:"setView('store')"});
-      // Cuentas por vencer
-      const expiring=state.orders.filter(o=>{const left=daysLeft(o.expires_at);return left!==null&&left>=0&&left<=7});
-      if(expiring.length>0) notifs.push({type:"info",icon:"⏰",title:`${expiring.length} cuentas por vencer`,body:"Cuentas que vencen en 7 dias o menos.",action:"setView('analytics')"});
-      // Usuarios bloqueados recien
-      const blocked=state.users.filter(u=>u.status==="Inactivo");
-      if(blocked.length>0) notifs.push({type:"info",icon:"🔒",title:`${blocked.length} usuarios bloqueados`,body:"Usuarios con acceso desactivado.",action:"setView('users')"});
-      // Notificaciones del servidor
-      state.notifications.filter(n=>!n.read_at).forEach(n=>notifs.push({type:"info",icon:"🔔",title:n.title,body:n.body||""}));
+      if(openReports.length>0) notifs.push({type:"danger",icon:"⚠️",title:`${openReports.length} reportes abiertos`,body:"Esperando respuesta.",action:"setView('reports')"});
+      state.notifications.filter(n=>!n.read_at).slice(0,3).forEach(n=>notifs.push({type:"info",icon:"🔔",title:n.title,body:n.body||""}));
 
-      const html=notifs.length?notifs.map(n=>`<div class="list-row" style="padding:10px;cursor:pointer;border-left:3px solid ${n.type==='danger'?'var(--bad)':n.type==='warn'?'var(--warn)':'var(--blue)'}" onclick="${n.action||''};toggleAlerts()">
-        <div style="display:flex;gap:10px;align-items:start">
-          <span style="font-size:20px;flex-shrink:0">${n.icon}</span>
-          <div><b style="font-size:13px">${n.title}</b><p class="mini">${n.body}</p></div>
-        </div>
-      </div>`).join(""):"<p class='muted' style='padding:20px;text-align:center'>Sin notificaciones nuevas.</p>";
-      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)"><b>Notificaciones</b><span style="font-size:12px;color:var(--muted)">${notifs.length} avisos</span></div><div class="list" style="max-height:400px;overflow-y:auto">${html}</div>`;
+      const html=notifs.length?notifs.slice(0,5).map(n=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer;border-radius:10px;border-left:3px solid ${n.type==='danger'?'var(--bad)':n.type==='warn'?'var(--warn)':'var(--blue)'};background:var(--soft);transition:background .15s" onclick="${n.action||''};toggleAlerts()" onmouseover="this.style.background='rgba(8,119,255,.06)'" onmouseout="this.style.background='var(--soft)'">
+        <span style="font-size:18px">${n.icon}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:12px">${n.title}</b><div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.body}</div></div>
+      </div>`).join(""):"<p class='muted' style='padding:20px;text-align:center'>Sin notificaciones.</p>";
+      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)"><b style="font-size:14px">Notificaciones</b><span style="font-size:11px;color:var(--muted)">${notifs.length}</span></div><div style="display:grid;gap:6px;max-height:320px;overflow-y:auto;padding-top:8px">${html}</div>`;
       panel.classList.toggle("show");
     }
     function toggleUserMenu(ev){
