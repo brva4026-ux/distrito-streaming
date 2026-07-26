@@ -2978,7 +2978,6 @@
     function history(){
       const movements = [];
 
-      // Agregar recargas (créditos)
       state.topups.forEach(t => {
         if(t.status === "Aprobada") {
           movements.push({
@@ -2987,34 +2986,32 @@
             type: "crédito",
             description: `Recarga ${t.method || "Nequi/Wompi"}`,
             icon: "💰",
-            color: "#16a34a"
+            color: "#16a34a",
+            orderData: null
           });
         }
       });
 
-      // Agregar compras (débitos)
       state.orders.forEach(o => {
         movements.push({
           date: o.created_at || o.expires_at || "",
           amount: -(Number(o.amount || o.total || 0)),
           type: "débito",
-          description: `Compra de: ${o.product_name || "Producto"}`,
+          description: `${o.product_name || "Producto"}`,
           icon: "🛒",
-          color: "#ef4444"
+          color: "#ef4444",
+          orderData: o
         });
       });
 
-      // Ordenar por fecha (más reciente primero)
       movements.sort((a,b) => (b.date || "").localeCompare(a.date || ""));
 
-      // Calcular totales
       const totalCredito = movements.filter(m => m.amount > 0).reduce((s,m) => s + m.amount, 0);
       const totalDebito = movements.filter(m => m.amount < 0).reduce((s,m) => s + Math.abs(m.amount), 0);
-      const balance = totalCredito - totalDebito;
+
+      function formatDate(d){if(!d)return"-";try{const dt=new Date(d);return dt.toLocaleDateString("es-CO",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return d}}
 
       return `
-
-        <!-- Resumen -->
         <div class="premium-metrics" style="margin-bottom:16px">
           <div class="premium-card green" style="cursor:default">
             <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
@@ -3038,36 +3035,43 @@
           </div>
         </div>
 
-        <!-- Tabla de movimientos -->
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-            <div><h2 style="margin:0;font-size:16px">Detalle de Movimientos</h2><p class="muted" style="margin:2px 0 0;font-size:12px">Créditos y débitos de tu cuenta</p></div>
+        <div class="card" style="overflow:hidden">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--line)">
+            <h2 style="margin:0;font-size:16px;font-weight:900;color:var(--purple)">Detalle de Movimientos</h2>
+            <p class="muted" style="margin:2px 0 0;font-size:12px">Créditos y débitos de tu cuenta</p>
           </div>
           <div style="overflow-x:auto">
             <table class="expiring-table">
               <thead>
                 <tr>
-                  <th>Fecha</th>
-                  <th>Monto</th>
-                  <th>Tipo</th>
+                  <th style="width:180px">Fecha</th>
+                  <th style="width:120px">Monto</th>
+                  <th style="width:100px">Tipo</th>
                   <th>Descripción</th>
+                  <th style="width:80px;text-align:center">Acción</th>
                 </tr>
               </thead>
               <tbody>
-                ${movements.length ? movements.map(m => `
-                  <tr>
-                    <td style="font-size:12px;white-space:nowrap">${m.date || "-"}</td>
-                    <td style="font-weight:800;color:${m.color}">${m.amount > 0 ? "+" : ""}$${Math.abs(m.amount).toLocaleString("es-CO")}</td>
+                ${movements.length ? movements.map((m,i) => `
+                  <tr style="${i%2===0?"background:rgba(124,58,237,.02)":""}">
+                    <td style="font-size:12px;white-space:nowrap;color:var(--muted)">${formatDate(m.date)}</td>
+                    <td style="font-weight:900;font-size:14px;color:${m.color}">${m.amount>0?"+":""}$${Math.abs(m.amount).toLocaleString("es-CO")}</td>
                     <td>
-                      <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:800;background:${m.type === "crédito" ? "rgba(22,163,74,.1)" : "rgba(239,68,68,.1)"};color:${m.color}">
-                        ${m.icon} ${m.type === "crédito" ? "Crédito" : "Débito"}
+                      <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;background:${m.type==="crédito"?"rgba(22,163,74,.12)":"rgba(239,68,68,.12)"};color:${m.color}">
+                        ${m.type==="crédito"?"Crédito":"Débito"}
                       </span>
                     </td>
-                    <td style="font-size:13px">${m.description}</td>
+                    <td style="font-size:13px;font-weight:600">${m.description}</td>
+                    <td style="text-align:center">
+                      ${m.orderData ? `<button onclick="openAccountModal('${safeOrder(m.orderData)}')" style="padding:5px 10px;border:1px solid var(--purple);border-radius:8px;background:transparent;color:var(--purple);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px" onmouseover="this.style.background='var(--purple)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--purple)'">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        Ver
+                      </button>` : `<span style="color:var(--muted);font-size:11px">-</span>`}
+                    </td>
                   </tr>
                 `).join("") : `
                   <tr>
-                    <td colspan="4" style="text-align:center;color:var(--muted);padding:32px">
+                    <td colspan="5" style="text-align:center;color:var(--muted);padding:40px">
                       <div style="font-size:32px;margin-bottom:8px">📊</div>
                       <b>Sin movimientos</b><br>
                       <span style="font-size:12px">Tus recargas y compras aparecerán aquí</span>
