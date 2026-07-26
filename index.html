@@ -3033,42 +3033,26 @@
         </div>
 
         <!-- Resumen -->
-        <div class="grid metrics" style="margin-bottom:16px">
-          <div class="card metric">
-            <div style="width:40px;height:40px;border-radius:10px;background:rgba(22,163,74,.1);display:grid;place-items:center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" width="20" height="20"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
-            <div>
-              <span class="muted" style="font-size:11px">Total Recargas</span>
-              <br><b style="color:#16a34a">$${totalCredito.toLocaleString("es-CO")}</b>
-            </div>
+        <div class="premium-metrics" style="margin-bottom:16px">
+          <div class="premium-card green" style="cursor:default">
+            <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+            <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num" style="font-size:20px">$${totalCredito.toLocaleString("es-CO")}</span></div></div>
+            <div class="premium-label">Total Recargas</div>
           </div>
-          <div class="card metric">
-            <div style="width:40px;height:40px;border-radius:10px;background:rgba(239,68,68,.1);display:grid;place-items:center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" width="20" height="20"><path d="M5 12h14"/></svg>
-            </div>
-            <div>
-              <span class="muted" style="font-size:11px">Total Compras</span>
-              <br><b style="color:#ef4444">$${totalDebito.toLocaleString("es-CO")}</b>
-            </div>
+          <div class="premium-card red" style="cursor:default">
+            <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+            <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num" style="font-size:20px">$${totalDebito.toLocaleString("es-CO")}</span></div></div>
+            <div class="premium-label">Total Compras</div>
           </div>
-          <div class="card metric">
-            <div style="width:40px;height:40px;border-radius:10px;background:rgba(8,119,255,.1);display:grid;place-items:center">
-              ${icons.wallet}
-            </div>
-            <div>
-              <span class="muted" style="font-size:11px">Saldo Actual</span>
-              <br><b style="color:var(--blue)">${money(state.user?.balance || 0)}</b>
-            </div>
+          <div class="premium-card blue" style="cursor:default">
+            <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+            <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num" style="font-size:20px">${money(state.user?.balance || 0)}</span></div></div>
+            <div class="premium-label">Saldo Actual</div>
           </div>
-          <div class="card metric">
-            <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,58,237,.1);display:grid;place-items:center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div>
-              <span class="muted" style="font-size:11px">Movimientos</span>
-              <br><b style="color:#7c3aed">${movements.length}</b>
-            </div>
+          <div class="premium-card blue" style="cursor:default">
+            <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+            <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${movements.length}</span></div></div>
+            <div class="premium-label">Movimientos</div>
           </div>
         </div>
 
@@ -3308,9 +3292,8 @@
         <article class="card metric" style="cursor:default"><span class="mini-ico" style="width:44px;height:44px;border-radius:12px;background:rgba(8,119,255,.1);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#0877ff" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><div><span class="muted">Mis reportes</span><br><b style="font-size:22px">${my.length}</b></div></article>
         <article class="card metric" style="cursor:default"><span class="mini-ico" style="width:44px;height:44px;border-radius:12px;background:rgba(245,158,11,.1);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><div><span class="muted">Abiertos</span><br><b style="font-size:22px;color:var(--warn)">${open}</b></div></article>
       </section>
-      <section class="grid split section">
+      <section class="section">
         <div class="card"><h2>Mis reportes</h2><p class="muted">Seguimiento de tus reportes enviados.</p><div id="reportList" class="list section">${reportRowsUser(my)}</div></div>
-        <div class="card"><h2>Nuevo reporte</h2><p class="muted">Reporta un problema con tu cuenta.</p><button class="primary" onclick="openReport()">Reportar problema</button></div>
       </section>`;
     }
     function reportRowsUser(rows){
