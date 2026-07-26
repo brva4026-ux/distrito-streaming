@@ -1712,9 +1712,8 @@
     // ─── NAVEGACION ────────────────────────────────────
     function navItems(){
       if(isAdmin()) return [
-        ["admin","Panel",icons.admin],["users","Usuarios",icons.users],["store","Inventario",icons.store],
-        ["payments","Recargas",icons.wallet],["reports","Reportes",icons.reports],
-        ["ads","Publicidad",icons.ads],["analytics","Estudios",icons.chart],["settings","Datos de pago",icons.admin]
+        ["admin","Panel",icons.admin],["users","Usuarios",icons.users],["payments","Recargas",icons.wallet],["reports","Reportes",icons.reports],
+        ["store","Inventario",icons.store],["ads","Publicidad",icons.ads],["analytics","Estudios",icons.chart],["settings","Datos de pago",icons.admin]
       ];
       return [["home","Inicio",icons.home],["store","Tienda",icons.store],["orders","Compras",icons.orders],["history","Movimientos",icons.history],["reports","Soporte",icons.reports],["ads","Material",icons.ads]];
     }
@@ -3027,20 +3026,6 @@
       const balance = totalCredito - totalDebito;
 
       return `
-        <div class="card" style="margin-bottom:16px">
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center">
-                ${icons.history}
-              </div>
-              <div>
-                <h2 style="margin:0;font-size:18px">Historial de Movimientos</h2>
-                <p class="muted" style="margin:2px 0 0;font-size:12px">${state.user?.name || "Usuario"}</p>
-              </div>
-            </div>
-            <button class="ghost" onclick="exportHistoryCsv()">Exportar</button>
-          </div>
-        </div>
 
         <!-- Resumen -->
         <div class="premium-metrics" style="margin-bottom:16px">
@@ -3298,9 +3283,17 @@
       const my=state.reports;
       const open=my.filter(r=>r.status!=="Resuelto").length;
       return `
-      <section class="grid metrics">
-        <article class="card metric" style="cursor:default"><span class="mini-ico" style="width:44px;height:44px;border-radius:12px;background:rgba(8,119,255,.1);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#0877ff" stroke-width="2" width="20" height="20"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><div><span class="muted">Mis reportes</span><br><b style="font-size:22px">${my.length}</b></div></article>
-        <article class="card metric" style="cursor:default"><span class="mini-ico" style="width:44px;height:44px;border-radius:12px;background:rgba(245,158,11,.1);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><div><span class="muted">Abiertos</span><br><b style="font-size:22px;color:var(--warn)">${open}</b></div></article>
+      <section class="premium-metrics" style="margin-bottom:16px">
+        <div class="premium-card blue" style="cursor:default">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${my.length}</span></div></div>
+          <div class="premium-label">Mis reportes</div>
+        </div>
+        <div class="premium-card orange" style="cursor:default">
+          <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
+          <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${open}</span></div></div>
+          <div class="premium-label">Abiertos</div>
+        </div>
       </section>
       <section class="section">
         <div class="card"><h2>Mis reportes</h2><p class="muted">Seguimiento de tus reportes enviados.</p><div id="reportList" class="list section">${reportRowsUser(my)}</div></div>
