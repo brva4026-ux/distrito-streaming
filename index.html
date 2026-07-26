@@ -2825,7 +2825,6 @@
         <div class="ops-toolbar">
           <input id="orderSearch" oninput="filterOrders()" placeholder="Buscar pedido, producto, cliente o cuenta">
           <select id="orderScope" onchange="filterOrders()"><option value="all">Todas</option><option value="active">Activas</option><option value="expired">Vencidas</option></select>
-          <button class="ghost" onclick="exportOrdersCsv()">Exportar</button>
         </div>
         <div id="ordersList" class="list section">${orderRows(allOrders,false)}</div>
       </section>`;
