@@ -1706,11 +1706,15 @@
       document.body.className = localStorage.dsDark === "1" ? "dark" : "";
       if(!state.user) return renderLogin();
       const u=state.user;
-      const pendingTopups=state.topups.filter(t=>t.status==="Pendiente").length;
-      const openReports=state.reports.filter(r=>r.status!=="Resuelto").length;
-      const lowStock=state.products.filter(p=>Number(p.stock||0)<=2&&p.status==="Disponible").length;
-      const expiring=state.orders.filter(o=>{const left=daysLeft(o.expires_at);return left!==null&&left>=0&&left<=7}).length;
-      const notifCount=pendingTopups+openReports+lowStock+expiring+state.notifications.filter(n=>!n.read_at).length;
+      let notifCount=0;
+      if(isAdmin()){
+        notifCount+=state.topups.filter(t=>t.status==="Pendiente").length;
+        notifCount+=state.reports.filter(r=>r.status!=="Resuelto").length;
+        notifCount+=state.products.filter(p=>Number(p.stock||0)<=2&&p.status==="Disponible").length;
+      } else {
+        notifCount+=state.reports.filter(r=>r.status!=="Resuelto").length;
+        notifCount+=state.orders.filter(o=>{const left=daysLeft(o.expires_at);return left!==null&&left>=0&&left<=3}).length;
+      }
       $("#root").innerHTML = `<div class="app app-bg">
         <aside class="side">
           <div class="side-brand"><img src="${ASSETS}${localStorage.dsDark==='1'?'distrito-angel-blue-v1.png':'distrito-angel-white.png'}" alt="Distrito" onerror="this.onerror=null;this.src='${ASSETS}distrito-login-hero.png';this.onerror=function(){this.style.display='none';}"><div><b>Distrito</b><em>Streaming</em></div></div>
@@ -4910,20 +4914,37 @@
     function toggleAlerts(ev){
       ev?.stopPropagation();
       const panel=$("#alerts");
-      // Generar notificaciones automaticas
       const notifs=[];
-      // Pagos pendientes
-      const pendingTopups=state.topups.filter(t=>t.status==="Pendiente");
-      if(pendingTopups.length>0) notifs.push({type:"warn",icon:"💰",title:`${pendingTopups.length} pagos pendientes`,body:"Aprueba los pagos recibidos.",action:"setView('payments')"});
-      const openReports=state.reports.filter(r=>r.status!=="Resuelto");
-      if(openReports.length>0) notifs.push({type:"danger",icon:"⚠️",title:`${openReports.length} reportes abiertos`,body:"Esperando respuesta.",action:"setView('reports')"});
-      state.notifications.filter(n=>!n.read_at).slice(0,3).forEach(n=>notifs.push({type:"info",icon:"🔔",title:n.title,body:n.body||""}));
+      const now=Date.now();
+      const h24=24*60*60*1000;
 
-      const html=notifs.length?notifs.slice(0,5).map(n=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer;border-radius:10px;border-left:3px solid ${n.type==='danger'?'var(--bad)':n.type==='warn'?'var(--warn)':'var(--blue)'};background:var(--soft);transition:background .15s" onclick="${n.action||''};toggleAlerts()" onmouseover="this.style.background='rgba(8,119,255,.06)'" onmouseout="this.style.background='var(--soft)'">
+      if(isAdmin()){
+        // Admin: todo lo importante
+        const newUsers=state.users.filter(u=>{const t=new Date(u.created_at).getTime();return now-t<h24}).length;
+        if(newUsers>0) notifs.push({type:"ok",icon:"👤",title:`${newUsers} usuario(s) nuevos`,body:"Se registraron en las ultimas 24h.",action:"setView('users')"});
+        const pending=state.topups.filter(t=>t.status==="Pendiente");
+        if(pending.length>0) notifs.push({type:"warn",icon:"💰",title:`${pending.length} recarga(s) por aprobar`,body:`$${pending.reduce((s,t)=>s+Number(t.amount||0),0).toLocaleString("es-CO")} pendiente.`,action:"setView('payments')"});
+        const openR=state.reports.filter(r=>r.status!=="Resuelto");
+        if(openR.length>0) notifs.push({type:"danger",icon:"⚠️",title:`${openR.length} reporte(s) abierto(s)`,body:"Clientes esperando respuesta.",action:"setView('reports')"});
+        const newOrders=state.orders.filter(o=>{const t=new Date(o.created_at||o.expires_at).getTime();return now-t<h24}).length;
+        if(newOrders>0) notifs.push({type:"info",icon:"🛒",title:`${newOrders} compra(s) hoy`,body:"Operaciones de las ultimas 24h.",action:"setView('admin')"});
+        const lowStock=state.products.filter(p=>Number(p.stock||0)<=2&&p.status==="Disponible");
+        if(lowStock.length>0) notifs.push({type:"warn",icon:"📦",title:`${lowStock.length} producto(s) con stock bajo`,body:lowStock.map(p=>p.name).join(", "),action:"setView('store')"});
+      } else {
+        // Operador/Revendedor: solo lo suyo
+        const myOrders=state.orders.filter(o=>{const t=new Date(o.created_at||o.expires_at).getTime();return now-t<h24}).length;
+        if(myOrders>0) notifs.push({type:"info",icon:"🛒",title:`${myOrders} compra(s) reciente(s)`,body:"Tus compras de hoy.",action:"setView('orders')"});
+        const myReports=state.reports.filter(r=>r.status!=="Resuelto");
+        if(myReports.length>0) notifs.push({type:"warn",icon:"⚠️",title:`${myReports.length} reporte(s) pendiente(s)`,body:"Esperando respuesta del admin.",action:"setView('reports')"});
+        const expiring=state.orders.filter(o=>{const left=daysLeft(o.expires_at);return left!==null&&left>=0&&left<=3}).length;
+        if(expiring>0) notifs.push({type:"danger",icon:"⏰",title:`${expiring} cuenta(s) por vencer`,body:"Vencen en 3 dias o menos.",action:"setView('orders')"});
+      }
+
+      const html=notifs.length?notifs.map(n=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer;border-radius:10px;border-left:3px solid ${n.type==='danger'?'var(--bad)':n.type==='warn'?'var(--warn)':n.type==='ok'?'var(--ok)':'var(--blue)'};background:var(--soft);transition:background .15s" onclick="${n.action||''};toggleAlerts()" onmouseover="this.style.background='rgba(8,119,255,.06)'" onmouseout="this.style.background='var(--soft)'">
         <span style="font-size:18px">${n.icon}</span>
         <div style="flex:1;min-width:0"><b style="font-size:12px">${n.title}</b><div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.body}</div></div>
-      </div>`).join(""):"<p class='muted' style='padding:20px;text-align:center'>Sin notificaciones.</p>";
-      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)"><b style="font-size:14px">Notificaciones</b><span style="font-size:11px;color:var(--muted)">${notifs.length}</span></div><div style="display:grid;gap:6px;max-height:320px;overflow-y:auto;padding-top:8px">${html}</div>`;
+      </div>`).join(""):"<p class='muted' style='padding:20px;text-align:center'>Todo en orden.</p>";
+      panel.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)"><b style="font-size:14px">Panel de gestion</b><span style="font-size:11px;color:var(--muted)">${notifs.length} alerta${notifs.length!==1?"s":""}</span></div><div style="display:grid;gap:6px;max-height:360px;overflow-y:auto;padding-top:8px">${html}</div>`;
       panel.classList.toggle("show");
     }
     function toggleUserMenu(ev){
