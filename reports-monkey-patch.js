@@ -58,15 +58,6 @@ function patchReportFunctions() {
               </div>
             `}
           </div>
-
-          <!-- SECCIÓN DE CREAR REPORTE -->
-          <div class="card" style="margin-top:20px">
-            <h2>Crear Nuevo Reporte</h2>
-            <p class="muted">¿Tienes un problema con una compra? Cuéntanos aquí</p>
-            <div id="newReportContainer">
-              ${generateNewReportForm()}
-            </div>
-          </div>
         </div>
       `;
     };
