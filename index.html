@@ -5253,6 +5253,11 @@
     const icon=document.getElementById('appleTouchIcon');if(icon)icon.href=localStorage.dsDark==="1"?"assets/distrito-angel-blue-v1.png":"assets/distrito-angel-white.png";
     token ? boot().catch(()=>{localStorage.removeItem("dsToken");token="";renderLogin()}) : renderLogin();
   </script>
+<!-- MEJORAS DE REPORTES Y SOPORTE -->
+<link rel="stylesheet" href="reports-styles.css">
+<script src="reports-functions.js"></script>
+<script src="reports-monkey-patch.js"></script>
+<script src="reports-bootstrap.js"></script>
 </body>
 </html>
 
