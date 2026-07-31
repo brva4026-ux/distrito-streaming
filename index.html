@@ -2907,7 +2907,7 @@
          const o=JSON.parse(decodeURIComponent(encoded));
          const account=parseAccount(o.delivered_data);
          const left=daysLeft(o.expires_at);
-         const fullText=`Producto: ${o.product_name}\nOrden: ${o.code||o.id||"-"}\nCliente: ${o.client_name||"-"}\nCuenta: ${o.delivered_data||"Sin datos"}\nVencimiento: ${o.expires_at||"-"}`;
+         const fullText=`Producto: ${o.product_name}\nOrden: ${o.code||o.id||"-"}\nCliente: ${o.client_name||"-"}\nCuenta: ${o.delivered_data||"Sin datos"}\nMonto descontado: -${money(o.amount||0)}\nMotivo: Compra de servicio de streaming\nVencimiento: ${o.expires_at||"-"}`;
          const statusColor=o.status==="Entregada"?"var(--ok)":o.status==="Pendiente"?"var(--warn)":"var(--muted)";
          openModal(`<div style="margin:-20px -20px 0;border-radius:20px;overflow:hidden">
            <div style="background:linear-gradient(135deg,#0877ff,#0057dc);padding:24px;text-align:center;position:relative">
@@ -2919,33 +2919,52 @@
              <button onclick="closeModal()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.15);color:#fff;font-size:14px;display:grid;place-items:center;cursor:pointer">&times;</button>
            </div>
            <div style="padding:20px;background:var(--panel)">
-             ${o.id||o.code?`
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Orden #${o.code||o.id||""}</div>
-               <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px">
-                 <span style="flex:1;font-size:13px;font-weight:700;color:var(--text)">${o.code||o.id||"-"}</span>
-                 <button onclick="copyText('${escapeJs(o.code||o.id||"")}')" style="background:var(--blue);color:#fff;border:0;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Copiar</button>
+             <div style="margin-bottom:16px;padding:16px;background:var(--soft);border:1px solid var(--line);border-radius:12px">
+               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:8px;letter-spacing:.05em">Resumen de la compra</div>
+               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                 <span style="font-size:12px;color:var(--muted)">Producto</span>
+                 <span style="font-size:13px;font-weight:700;color:var(--text)">${o.product_name||"-"}</span>
                </div>
-             </div>`:""}
-             ${o.client_name?`
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Cliente</div>
-               <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;font-weight:700;color:var(--text)">${o.client_name}</div>
-             </div>`:""}
-             ${o.created_at?`
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Fecha de compra</div>
-               <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;color:var(--text)">${formatDate(o.created_at)}</div>
-             </div>`:""}
-             ${o.status?`
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Estado</div>
-               <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;font-weight:700;color:${statusColor}">${o.status}</div>
-             </div>`:""}
-             ${account.email?`
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Correo electronico</div>
-               <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px">
+               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                 <span style="font-size:12px;color:var(--muted)">Monto descontado</span>
+                 <span style="font-size:14px;font-weight:900;color:var(--bad)">-${money(o.amount||0)}</span>
+               </div>
+               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                 <span style="font-size:12px;color:var(--muted)">Motivo</span>
+                 <span style="font-size:12px;color:var(--text)">Compra de servicio de streaming</span>
+               </div>
+               <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:6px;margin-top:6px">
+                 <span style="font-size:12px;color:var(--muted)">Saldo actual</span>
+                 <span style="font-size:14px;font-weight:900;color:var(--text)">${money(state.user?.balance||0)}</span>
+               </div>
+              </div>
+              ${o.id||o.code?`
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Orden #${o.code||o.id||""}</div>
+                <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px">
+                  <span style="flex:1;font-size:13px;font-weight:700;color:var(--text)">${o.code||o.id||"-"}</span>
+                  <button onclick="copyText('${escapeJs(o.code||o.id||"")}')" style="background:var(--blue);color:#fff;border:0;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Copiar</button>
+                </div>
+              </div>`:""}
+              ${o.client_name?`
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Cliente</div>
+                <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;font-weight:700;color:var(--text)">${o.client_name}</div>
+              </div>`:""}
+              ${o.created_at?`
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Fecha de compra</div>
+                <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;color:var(--text)">${formatDate(o.created_at)}</div>
+              </div>`:""}
+              ${o.status?`
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Estado</div>
+                <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:13px;font-weight:700;color:${statusColor}">${o.status}</div>
+              </div>`:""}
+              ${account.email?`
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Correo electronico</div>
+                <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px">
                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
                  <span style="flex:1;font-size:14px;font-weight:700;word-break:break-all">${account.email}</span>
                  <button onclick="copyText('${escapeJs(account.email)}');toast('Correo copiado','ok')" style="background:var(--blue);color:#fff;border:0;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Copiar</button>
@@ -2998,20 +3017,39 @@
      function openTopupModal(encoded){
        try{
          const t=JSON.parse(decodeURIComponent(encoded));
-         const fullText=`Recarga: $${Number(t.amount||0).toLocaleString("es-CO")}\nMetodo: ${t.method||"Nequi"}\nReferencia: ${t.reference||"-"}\nEstado: ${t.status||"Pendiente"}\nFecha: ${t.created_at||"-"}`;
-         const statusColor=t.status==="Aprobada"?"var(--ok)":t.status==="Rechazada"?"var(--bad)":"var(--warn)";
-         openModal(`<div style="margin:-20px -20px 0;border-radius:20px;overflow:hidden">
-           <div style="background:linear-gradient(135deg,#10b981,#059669);padding:24px;text-align:center;position:relative">
-             <div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 auto 12px;display:grid;place-items:center;backdrop-filter:blur(8px)">
-               <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="28" height="28"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
-             </div>
-             <h2 style="margin:0;color:#fff;font-size:18px;font-weight:1000">DETALLE DE RECARGA</h2>
-             <p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:13px">$${Number(t.amount||0).toLocaleString("es-CO")}</p>
-             <button onclick="closeModal()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.15);color:#fff;font-size:14px;display:grid;place-items:center;cursor:pointer">&times;</button>
-           </div>
-           <div style="padding:20px;background:var(--panel)">
-             <div style="margin-bottom:12px">
-               <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Monto</div>
+          const fullText=`Recarga: $${Number(t.amount||0).toLocaleString("es-CO")}\nMetodo: ${t.method||"Nequi"}\nReferencia: ${t.reference||"-"}\nEstado: ${t.status||"Pendiente"}\nMotivo: Recarga de saldo\nFecha: ${t.created_at||"-"}`;
+          const statusColor=t.status==="Aprobada"?"var(--ok)":t.status==="Rechazada"?"var(--bad)":"var(--warn)";
+          openModal(`<div style="margin:-20px -20px 0;border-radius:20px;overflow:hidden">
+            <div style="background:linear-gradient(135deg,#10b981,#059669);padding:24px;text-align:center;position:relative">
+              <div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 auto 12px;display:grid;place-items:center;backdrop-filter:blur(8px)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="28" height="28"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+              </div>
+              <h2 style="margin:0;color:#fff;font-size:18px;font-weight:1000">DETALLE DE RECARGA</h2>
+              <p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:13px">$${Number(t.amount||0).toLocaleString("es-CO")}</p>
+              <button onclick="closeModal()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.15);color:#fff;font-size:14px;display:grid;place-items:center;cursor:pointer">&times;</button>
+            </div>
+            <div style="padding:20px;background:var(--panel)">
+              <div style="margin-bottom:16px;padding:16px;background:var(--soft);border:1px solid var(--line);border-radius:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:8px;letter-spacing:.05em">Resumen de la recarga</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--muted)">Método de pago</span>
+                  <span style="font-size:13px;font-weight:700;color:var(--text)">${t.method||"Nequi/Wompi"}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--muted)">Monto agregado</span>
+                  <span style="font-size:14px;font-weight:900;color:var(--ok)">+${money(t.amount||0)}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--muted)">Motivo</span>
+                  <span style="font-size:12px;color:var(--text)">Recarga de saldo</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:6px;margin-top:6px">
+                  <span style="font-size:12px;color:var(--muted)">Saldo actual</span>
+                  <span style="font-size:14px;font-weight:900;color:var(--text)">${money(state.user?.balance||0)}</span>
+                </div>
+              </div>
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:.05em">Monto</div>
                <div style="padding:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:16px;font-weight:900;color:var(--text)">${money(t.amount)}</div>
              </div>
              <div style="margin-bottom:12px">
