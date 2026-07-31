@@ -3405,19 +3405,18 @@
      }
     function reportsUser(){
       const my=state.reports;
-      const open=my.filter(r=>r.status!=="Resuelto"&&r.status!=="Rechazado").length;
-      const resolved=my.filter(r=>r.status==="Resuelto").length;
+      const open=my.filter(r=>r.status!=="Resuelto").length;
       return `
       <section class="premium-metrics" style="margin-bottom:16px">
         <div class="premium-card blue" style="cursor:default">
           <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
           <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${my.length}</span></div></div>
-          <div class="premium-label">Activos vs Resueltos</div>
+          <div class="premium-label">Mis reportes</div>
         </div>
         <div class="premium-card orange" style="cursor:default">
           <div class="premium-particles"><span></span><span></span><span></span><span></span></div>
-          <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${resolved}</span></div></div>
-          <div class="premium-label">Resueltos</div>
+          <div class="premium-orb-wrap"><div class="premium-orb"></div><div class="premium-orb r2"></div><div class="premium-center"><span class="premium-num">${open}</span></div></div>
+          <div class="premium-label">Abiertos</div>
         </div>
       </section>
       <section class="section">
@@ -5254,11 +5253,6 @@
     const icon=document.getElementById('appleTouchIcon');if(icon)icon.href=localStorage.dsDark==="1"?"assets/distrito-angel-blue-v1.png":"assets/distrito-angel-white.png";
     token ? boot().catch(()=>{localStorage.removeItem("dsToken");token="";renderLogin()}) : renderLogin();
   </script>
-<!-- MEJORAS DE REPORTES Y SOPORTE -->
-<link rel="stylesheet" href="reports-styles.css">
-<script src="reports-functions.js"></script>
-<script src="reports-monkey-patch.js"></script>
-<script src="reports-bootstrap.js"></script>
 </body>
 </html>
 

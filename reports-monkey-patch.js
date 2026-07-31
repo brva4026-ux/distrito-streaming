@@ -57,19 +57,38 @@ function generateReportCardImproved(report) {
   const statusColor = {
     'Resuelto': 'var(--ok)',
     'Rechazado': 'var(--bad)',
-    'En proceso': '#f59e0b'
+    'En proceso': '#f59e0b',
+    'En revisión': '#8b5cf6',
+    'Abierto': '#3b82f6'
   }[report.status] || 'var(--warn)';
 
   const statusClass = report.status === 'Resuelto' ? 'ok' : report.status === 'Rechazado' ? 'bad' : 'warn';
 
+  // Generar progreso del reporte
+  const stages = ['Abierto', 'En revisión', 'En proceso', 'Resuelto'];
+  const currentStageIndex = stages.indexOf(report.status);
+  const progressHTML = stages.map((stage, index) => {
+    let stageClass = 'pending';
+    if (index < currentStageIndex) stageClass = 'completed';
+    if (index === currentStageIndex) stageClass = 'active';
+    
+    return `<div class="progress-stage ${stageClass}"><span class="progress-label-small">${stage}</span></div>`;
+  }).join('');
+
   return `
-    <div class="list-row report-card-improved" style="border-left:4px solid ${statusColor};margin-bottom:12px;padding:16px;border-radius:10px;background:var(--soft);transition:all 0.2s ease" onmouseover="this.style.boxShadow='0 4px 12px rgba(8,119,255,0.15)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+    <div class="list-row report-card-with-progress" style="border-left:4px solid ${statusColor};margin-bottom:12px;padding:16px;border-radius:10px;background:var(--soft);transition:all 0.2s ease" onmouseover="this.style.boxShadow='0 4px 12px rgba(8,119,255,0.15)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
       <div style="flex:1">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
           <b style="font-size:14px;color:var(--text)">${report.code || 'REPORTE'}</b>
           <span class="tag ${statusClass}" style="font-size:11px;font-weight:700;padding:4px 8px">${statusEmoji} ${report.status || 'En revisión'}</span>
         </div>
         <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">${report.product_name || 'Producto'}</div>
+        
+        <!-- PROGRESS BAR VISUAL -->
+        <div class="report-progress-bar">
+          ${progressHTML}
+        </div>
+
         <div style="font-size:12px;color:var(--muted);margin-bottom:8px">
           ${report.reason ? `<div>📌 ${report.reason}</div>` : ''}
           ${report.created_at ? `<div>📅 ${new Date(report.created_at).toLocaleDateString('es-ES')} ${new Date(report.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})}</div>` : ''}
