@@ -5256,6 +5256,9 @@
   </script>
 <!-- MEJORAS DE REPORTES Y SOPORTE -->
 <link rel="stylesheet" href="reports-styles.css">
+<!-- Seguridad: Cargar primero para que validadores estén disponibles -->
+<script src="reports-security.js"></script>
+<!-- Luego: Funciones y mejoras visuales -->
 <script src="reports-functions.js"></script>
 <script src="reports-monkey-patch.js"></script>
 <script src="reports-bootstrap.js"></script>
